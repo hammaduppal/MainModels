@@ -1,0 +1,228 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "OneDb",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "MainModels",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[Business].[Branches]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Business].[BusinessCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Business].[BusinessEntityType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Business].[BusinessStoreType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Business].[Organizations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Cities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Countries]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Department]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Employee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[EmployeeDesignation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[LaneAddresses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[LoginHistory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[LoginUserDeviceDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[LoginUsers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Persons]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[StateProvince]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Supplier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[UserAssignedBranches]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[Categories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[Colors]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[Departments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[Material]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[ProductImages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[Products]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[ProductVariants]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[Sizes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[SubCategoryId]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[UOM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[UOMSub]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[MEDIA].[FileManager]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[AssignedRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[ErpPermissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[Settings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[UrlMenu]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[Website]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[WebsiteData]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[CmsContentSharedCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[CmsEmail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[CMSEmailSent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[Comments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[Content]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[ContentCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[ContentType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[LinkedContentItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[Reviews]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": true,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false
+}
