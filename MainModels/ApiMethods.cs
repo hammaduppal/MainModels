@@ -14,7 +14,7 @@ namespace MainModels
             clientHandler = new HttpClientHandler();
             client = new HttpClient(clientHandler);
         }
-        public async Task<ApiResponse> PostMethodAsync(string BaseURL, string APIUrl, string content, string cc)
+        public async Task<ApiResponse> PostMethodNew(string BaseURL, string APIUrl, string content, string cc)
         {
             ApiResponse response = new ApiResponse();
             string text = "";

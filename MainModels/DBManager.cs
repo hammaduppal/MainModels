@@ -13,7 +13,40 @@ namespace MainModels
 
             _dap = new DapperContext(_config);
         }
+        public async Task<IEnumerable<T>> GetDataListWithQueryAndParam<T>(string query, object parameters = null)
+        {
+            try
+            {
+                using (var con = _dap.CreateConnection())
+                {
+                    if (con.State != ConnectionState.Open)
+                        con.Open();
 
+                    return await con.QueryAsync<T>(query, parameters);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error executing query.", ex);
+            }
+        }
+        public async Task<T> GetSingleItemDatatWithQueryAndParam<T>(string query, object parameters = null)
+        {
+            try
+            {
+                using (var con = _dap.CreateConnection())
+                {
+                    if (con.State != ConnectionState.Open)
+                        con.Open();
+
+                    return await con.QuerySingleOrDefaultAsync<T>(query, parameters);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error executing query.", ex);
+            }
+        }
 
         public async Task<IEnumerable<T>> ExecuteQueryList<T>(string query)
         {
@@ -64,7 +97,7 @@ namespace MainModels
                 throw new Exception("Error executing query.", ex);
             }
         }
-        public async Task<int> ExecuteQuery<T>(string query, object param)
+        public async Task<T> ExecuteQuery<T>(string query, object param)
         {
             try
             {
@@ -77,7 +110,7 @@ namespace MainModels
                     {
                         try
                         {
-                            int result = await con.ExecuteAsync(query, param, transaction);
+                            var result = await con.QuerySingleAsync<T>(query, param, transaction);
                             transaction.Commit();
                             return result;
                         }
@@ -91,9 +124,11 @@ namespace MainModels
             }
             catch (Exception ex)
             {
-                throw new Exception("Error executing insert query.", ex);
+                throw new Exception("Error executing query with return value.", ex);
             }
         }
+
+
         public async Task<int> GetMaxId(string tableName, string idColumn)
         {
             try

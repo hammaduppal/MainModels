@@ -23,5 +23,7 @@ public partial class Size
 
     public bool? IsDeleted { get; set; }
 
+    public string SizeSlug { get; set; }
+
     public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 }

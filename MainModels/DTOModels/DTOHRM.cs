@@ -16,6 +16,7 @@
         public DateTime? CreatedOn { get; set; }
 
         public Guid? BranchId { get; set; }
+        public string BranchName { get; set; }
         public Guid? LoginGuid { get; set; }
         public bool Remember { get; set; }
         public bool IsDeleted { get; set; }
@@ -93,7 +94,11 @@
 
         public bool? IsActive { get; set; }
 
-        public int? BranchId { get; set; }
+        public Guid? BranchId { get; set; }
+        //public string? BranchName { get; set; }
+        //public string? BranchCode { get; set; }
+        //public string? OrganizationName { get; set; }
+        public  BranchVM Branch{ get; set; }
 
     }
 

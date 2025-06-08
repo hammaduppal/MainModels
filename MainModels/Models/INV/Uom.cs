@@ -27,5 +27,7 @@ public partial class Uom
 
     public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
     public virtual ICollection<Uomsub> Uomsubs { get; set; } = new List<Uomsub>();
 }

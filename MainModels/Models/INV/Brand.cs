@@ -5,16 +5,14 @@ using System.Collections.Generic;
 
 namespace MainModels.Models;
 
-public partial class SubCategoryId
+public partial class Brand
 {
-    public Guid SubCategoryId1 { get; set; }
+    public Guid BrandId { get; set; }
 
-    public string SubCategoryName { get; set; }
+    public string BrandName { get; set; }
 
-    public Guid? CategoryId { get; set; }
-
-    public Guid? BusinessStoreId { get; set; }
-
+    public Guid? BranchId { get; set; }
+    public string? BrandSlug { get; set; }
     public DateTime? CreatedOn { get; set; }
 
     public int? Createdby { get; set; }
@@ -25,7 +23,7 @@ public partial class SubCategoryId
 
     public bool? IsDeleted { get; set; }
 
-    public virtual Category Category { get; set; }
+    public bool? IsDefault { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

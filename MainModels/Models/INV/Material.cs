@@ -23,5 +23,7 @@ public partial class Material
 
     public bool? IsDeleted { get; set; }
 
+    public string MaterialSlug { get; set; }
+
     public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 }

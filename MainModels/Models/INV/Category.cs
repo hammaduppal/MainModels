@@ -25,7 +25,9 @@ public partial class Category
 
     public bool? IsDeleted { get; set; }
 
+    public string CategorySlug { get; set; }
+
     public virtual Department1 Department { get; set; }
 
-    public virtual ICollection<SubCategoryId> SubCategoryIds { get; set; } = new List<SubCategoryId>();
+    public virtual ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
 }

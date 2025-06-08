@@ -24,7 +24,7 @@
         public bool? IsDeleted { get; set; }
     }
 
-    public partial class DepartmentVM
+    public class DepartmentVM
     {
         public Guid DepartmentId { get; set; }
         public string DepartmentName { get; set; }
@@ -51,16 +51,25 @@
     public partial class ProductVM
     {
         public Guid ProductId { get; set; }
-        public string ProductName { get; set; }
-        public string ProductDescription { get; set; }
+        public string? ProductName { get; set; }
+        public string? ProductDescription { get; set; }
         public decimal? Qoh { get; set; }
         public Guid? SubCategoryId { get; set; }
+        public string? SubCategoryName { get; set; }
+        public string? CategoryName { get; set; }
+        public string ?DepartmentName { get; set; }
+
         public Guid? BusinessStoreId { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? Createdby { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
+        public string ImageUrl { get; set; }
+        public Guid? UOMId { get; set; }
+        public string? UOMName { get; set; }
+        public Guid BrandId { get; set; }
+
     }
 
     public partial class ProductImageVM
@@ -70,6 +79,7 @@
         public string Caption { get; set; }
         public short? Priority { get; set; }
         public Guid? ProductId { get; set; }
+        public bool IsDefault { get; set; }
         public Guid? BusinessStoreId { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? Createdby { get; set; }
@@ -81,26 +91,65 @@
     public partial class ProductVariantVM
     {
         public Guid VariantId { get; set; }
+
         public Guid? MaterialId { get; set; }
+
         public Guid? ColorId { get; set; }
+
         public Guid? SizeId { get; set; }
+
         public Guid? ProductId { get; set; }
-        public Guid? Qty { get; set; }
+
+        public decimal? QoH { get; set; }
+
         public decimal? Cost { get; set; }
+
+        public string BarCode { get; set; }
+
         public decimal? SalesPrice { get; set; }
+
         public decimal? PromotionPrice { get; set; }
+
         public decimal? RetailPrice { get; set; }
+        public int? MinQty { get; set; }
+        public int? MaxQty { get; set; }
+
         public DateTime? LastPurchase { get; set; }
+
         public DateTime? LastSold { get; set; }
+
         public DateTime? CreatedOn { get; set; }
+
         public int? Createdby { get; set; }
+
         public DateTime? ModifiedOn { get; set; }
+
         public bool? IsActive { get; set; }
+
         public bool? IsDeleted { get; set; }
-        public Guid? BusinessStoreId { get; set; }
-        public Guid? ProductImageId { get; set; }
+
+        public Guid? BranchId { get; set; }
+
+        public Guid? VariantImageId { get; set; }
+
+
+        public string? ProductName { get; set; }
+        public string? ProductDescription { get; set; }
+        public string? ProductSlug { get; set; }
+        public string? ColorName { get; set; }
+        public string? MaterialName { get; set; }
+        public string? SizeName { get; set; }
+        public string? UOMName { get; set; }
+        public string? SubUOMName { get; set; }
         public Guid? Uomid { get; set; }
+        public int? PriceFormat { get; set; }
         public Guid? SubUomid { get; set; }
+        public string? BrandName { get; set; }
+        public decimal? QuantityPerUnit { get; set; }
+
+        public bool? IsSerial { get; set; }
+
+       
     }
 
     public partial class SizeVM
@@ -113,6 +162,7 @@
         public DateTime? ModifiedOn { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
+        public string SizeSlug { get; set; }
     }
     public partial class SubCategoryVM
     {
@@ -129,7 +179,7 @@
     public partial class UomVM
     {
         public Guid Uomid { get; set; }
-        public string Uomname { get; set; }
+        public string UOMName { get; set; }
         public string Uomtype { get; set; }
         public Guid? BusinessStoreId { get; set; }
         public DateTime? CreatedOn { get; set; }
@@ -141,9 +191,9 @@
 
     public partial class UomsubVM
     {
-        public Guid SubUomid { get; set; }
-        public Guid? Uomid { get; set; }
-        public string SubUomname { get; set; }
+        public Guid SubUomId { get; set; }
+        public Guid? UOMId { get; set; }
+        public string SubUOMName { get; set; }
         public decimal? ConversionFactor { get; set; }
         public Guid? BusinessStoreId { get; set; }
         public DateTime? CreatedOn { get; set; }
@@ -152,5 +202,23 @@
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
     }
+    public class BrandVM
+    {
+        public Guid BrandId { get; set; }
+        public string? BrandName { get; set; }
+        public string? BrandSlug { get; set; }
+        public Guid? BranchId { get; set; }
 
+        public DateTime? CreatedOn { get; set; }
+
+        public int? Createdby { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public bool? IsDeleted { get; set; }
+
+        public bool? IsDefault { get; set; }
+    }
 }

@@ -11,9 +11,11 @@ public partial class City
 
     public string CityName { get; set; }
 
+    public int? StateProvinceId { get; set; }
+
     public int? CountryId { get; set; }
 
     public virtual ICollection<LaneAddress> LaneAddresses { get; set; } = new List<LaneAddress>();
 
-    public virtual ICollection<StateProvince> StateProvinces { get; set; } = new List<StateProvince>();
+    public virtual StateProvince StateProvince { get; set; }
 }

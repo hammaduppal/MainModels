@@ -23,5 +23,7 @@ public partial class Color
 
     public bool? IsDeleted { get; set; }
 
+    public string ColorSlug { get; set; }
+
     public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 }

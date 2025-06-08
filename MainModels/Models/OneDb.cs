@@ -17,6 +17,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Branch> Branches { get; set; }
 
+    public virtual DbSet<Brand> Brands { get; set; }
+
     public virtual DbSet<BusinessCategory> BusinessCategories { get; set; }
 
     public virtual DbSet<BusinessEntityType> BusinessEntityTypes { get; set; }
@@ -89,7 +91,7 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<StateProvince> StateProvinces { get; set; }
 
-    public virtual DbSet<SubCategoryId> SubCategoryIds { get; set; }
+    public virtual DbSet<SubCategory> SubCategories { get; set; }
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
@@ -153,6 +155,16 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK_Branches_Organizations");
         });
 
+        modelBuilder.Entity<Brand>(entity =>
+        {
+            entity.ToTable("Brands", "INV");
+
+            entity.Property(e => e.BrandId).ValueGeneratedNever();
+            entity.Property(e => e.BrandName).HasMaxLength(500);
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<BusinessCategory>(entity =>
         {
             entity.HasKey(e => e.BusinessCategoryId).HasName("PK__Business__4024A26DA2DD4A2E");
@@ -195,6 +207,7 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.CategoryId).ValueGeneratedNever();
             entity.Property(e => e.CategoryName).HasMaxLength(1000);
+            entity.Property(e => e.CategorySlug).HasMaxLength(500);
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
@@ -211,6 +224,10 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.CityId).ValueGeneratedNever();
             entity.Property(e => e.CityName).HasMaxLength(1000);
+
+            entity.HasOne(d => d.StateProvince).WithMany(p => p.Cities)
+                .HasForeignKey(d => d.StateProvinceId)
+                .HasConstraintName("FK_Cities_StateProvince");
         });
 
         modelBuilder.Entity<CmsContentSharedCategory>(entity =>
@@ -288,6 +305,7 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.ColorId).ValueGeneratedNever();
             entity.Property(e => e.ColorName).HasMaxLength(500);
+            entity.Property(e => e.ColorSlug).HasMaxLength(500);
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
         });
@@ -411,6 +429,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.DepartmentId).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.DepartmentName).HasMaxLength(1000);
+            entity.Property(e => e.DepartmentSlug).HasMaxLength(500);
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
         });
 
@@ -492,7 +511,7 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.City).WithMany(p => p.LaneAddresses)
                 .HasForeignKey(d => d.CityId)
-                .HasConstraintName("FK_LaneAddresses_Cities");
+                .HasConstraintName("FK_LaneAddresses_Cities1");
 
             entity.HasOne(d => d.Person).WithMany(p => p.LaneAddresses)
                 .HasForeignKey(d => d.PersonId)
@@ -575,6 +594,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.MaterialId).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.MaterialName).HasMaxLength(500);
+            entity.Property(e => e.MaterialSlug).HasMaxLength(500);
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
         });
 
@@ -618,13 +638,19 @@ public partial class OneDb : DbContext
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.ProductDescription).HasMaxLength(1000);
             entity.Property(e => e.ProductName).HasMaxLength(1000);
+            entity.Property(e => e.ProductSlug).HasMaxLength(500);
             entity.Property(e => e.Qoh)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("QOH");
+            entity.Property(e => e.Uomid).HasColumnName("UOMId");
 
             entity.HasOne(d => d.Branch).WithMany(p => p.Products)
                 .HasForeignKey(d => d.BranchId)
                 .HasConstraintName("FK_Products_Branches");
+
+            entity.HasOne(d => d.Brand).WithMany(p => p.Products)
+                .HasForeignKey(d => d.BrandId)
+                .HasConstraintName("FK_Products_Brands");
 
             entity.HasOne(d => d.SubCategory).WithMany(p => p.Products)
                 .HasForeignKey(d => d.SubCategoryId)
@@ -633,6 +659,10 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Supplier).WithMany(p => p.Products)
                 .HasForeignKey(d => d.SupplierId)
                 .HasConstraintName("FK_Products_Supplier");
+
+            entity.HasOne(d => d.Uom).WithMany(p => p.Products)
+                .HasForeignKey(d => d.Uomid)
+                .HasConstraintName("FK_Products_UOM");
         });
 
         modelBuilder.Entity<ProductImage>(entity =>
@@ -657,12 +687,15 @@ public partial class OneDb : DbContext
             entity.ToTable("ProductVariants", "INV");
 
             entity.Property(e => e.VariantId).ValueGeneratedNever();
+            entity.Property(e => e.BarCode).HasMaxLength(500);
             entity.Property(e => e.Cost).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.LastPurchase).HasColumnType("datetime");
             entity.Property(e => e.LastSold).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.PromotionPrice).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.QoH).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.QuantityPerUnit).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.RetailPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.SalesPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.SubUomid).HasColumnName("SubUOMId");
@@ -683,6 +716,10 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Size).WithMany(p => p.ProductVariants)
                 .HasForeignKey(d => d.SizeId)
                 .HasConstraintName("FK_ProductVariants_Sizes");
+
+            entity.HasOne(d => d.SubUom).WithMany(p => p.ProductVariants)
+                .HasForeignKey(d => d.SubUomid)
+                .HasConstraintName("FK_ProductVariants_UOMSub1");
 
             entity.HasOne(d => d.Uom).WithMany(p => p.ProductVariants)
                 .HasForeignKey(d => d.Uomid)
@@ -739,6 +776,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.SizeName).HasMaxLength(1000);
+            entity.Property(e => e.SizeSlug).HasMaxLength(100);
         });
 
         modelBuilder.Entity<StateProvince>(entity =>
@@ -750,29 +788,24 @@ public partial class OneDb : DbContext
             entity.Property(e => e.StateProvinceId).ValueGeneratedNever();
             entity.Property(e => e.StateProvinceName).HasMaxLength(1000);
 
-            entity.HasOne(d => d.City).WithMany(p => p.StateProvinces)
-                .HasForeignKey(d => d.CityId)
-                .HasConstraintName("FK_StateProvince_Cities");
-
             entity.HasOne(d => d.Country).WithMany(p => p.StateProvinces)
                 .HasForeignKey(d => d.CountryId)
                 .HasConstraintName("FK_StateProvince_Countries");
         });
 
-        modelBuilder.Entity<SubCategoryId>(entity =>
+        modelBuilder.Entity<SubCategory>(entity =>
         {
-            entity.HasKey(e => e.SubCategoryId1);
+            entity.HasKey(e => e.SubCategoryId).HasName("PK_SubCategoryId");
 
-            entity.ToTable("SubCategoryId", "INV");
+            entity.ToTable("SubCategory", "INV");
 
-            entity.Property(e => e.SubCategoryId1)
-                .ValueGeneratedNever()
-                .HasColumnName("SubCategoryId");
+            entity.Property(e => e.SubCategoryId).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.SubCategoryName).HasMaxLength(1000);
+            entity.Property(e => e.SubCategorySlug).HasMaxLength(500);
 
-            entity.HasOne(d => d.Category).WithMany(p => p.SubCategoryIds)
+            entity.HasOne(d => d.Category).WithMany(p => p.SubCategories)
                 .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK_SubCategoryId_Categories");
         });
@@ -829,11 +862,6 @@ public partial class OneDb : DbContext
                 .HasMaxLength(500)
                 .HasColumnName("SubUOMName");
             entity.Property(e => e.Uomid).HasColumnName("UOMId");
-
-            entity.HasOne(d => d.SubUom).WithOne(p => p.Uomsub)
-                .HasForeignKey<Uomsub>(d => d.SubUomid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_UOMSub_ProductVariants");
 
             entity.HasOne(d => d.Uom).WithMany(p => p.Uomsubs)
                 .HasForeignKey(d => d.Uomid)

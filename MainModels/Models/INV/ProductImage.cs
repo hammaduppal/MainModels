@@ -29,5 +29,7 @@ public partial class ProductImage
 
     public bool? IsDeleted { get; set; }
 
+    public bool? IsDefault { get; set; }
+
     public virtual Product Product { get; set; }
 }

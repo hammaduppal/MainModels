@@ -27,7 +27,7 @@ public partial class Uomsub
 
     public bool? IsDeleted { get; set; }
 
-    public virtual ProductVariant SubUom { get; set; }
+    public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 
     public virtual Uom Uom { get; set; }
 }

@@ -33,7 +33,7 @@ public partial class Person
 
     public bool? IsActive { get; set; }
 
-    public int? BranchId { get; set; }
+    public Guid? BranchId { get; set; }
 
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 

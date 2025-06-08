@@ -1,4 +1,7 @@
-﻿namespace MainModels.Util
+﻿using System.Text.RegularExpressions;
+using System;
+
+namespace MainModels.Util
 {
     public class HelperClass
     {
@@ -8,6 +11,32 @@
         {
             _config = config;
             _db = new DBManager(_config);
+        }
+        private static readonly Random random = new Random();
+
+        public static  string CreateSlug(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                try
+                {
+                    var row = value.Replace(' ', '-').ToLower();
+                    var sanitized = Regex.Replace(row, "[^a-z0-9-]", string.Empty);
+                    string result = sanitized /*+ "-" + random.Next(1000, 10000)*/;
+                    return result;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                return "";
+            }
+
+
         }
         public async Task<ReturnDataofQuery> BuildDataTableQueryAsync(string baseQuery, DataTableRequest request, List<string> columnMap, string tableName)
         {
@@ -56,7 +85,7 @@
         {
             return new CommonParams
             {
-                BusinessStoreId = AppDataUtility.SessionUser.BusinessStoreId,
+                BranchId= AppDataUtility.SessionUser.BranchId,
                 CreatedBy = AppDataUtility.SessionUser.Id,
                 CreatedOn = DateTime.Now,
                 IsActive = true,
@@ -66,13 +95,15 @@
         }
         public class CommonParams
         {
-            public Guid BusinessStoreId { get; set; }
+            public Guid? BranchId { get; set; }
+            public string BusinessName { get; set; }
             public DateTime? CreatedOn { get; set; }
             public DateTime? ModifiedOn { get; set; }
             public bool? IsActive { get; set; }
             public int? CreatedBy { get; set; }
             public bool? IsDeleted { get; set; }
         }
+       
     }
 
 }

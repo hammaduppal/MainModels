@@ -17,9 +17,11 @@ public partial class ProductVariant
 
     public Guid? ProductId { get; set; }
 
-    public Guid? Qty { get; set; }
+    public decimal? QoH { get; set; }
 
     public decimal? Cost { get; set; }
+
+    public string BarCode { get; set; }
 
     public decimal? SalesPrice { get; set; }
 
@@ -43,11 +45,19 @@ public partial class ProductVariant
 
     public Guid? BranchId { get; set; }
 
-    public Guid? ProductImageId { get; set; }
+    public Guid? VariantImageId { get; set; }
 
     public Guid? Uomid { get; set; }
 
     public Guid? SubUomid { get; set; }
+
+    public decimal? QuantityPerUnit { get; set; }
+
+    public bool? IsSerial { get; set; }
+
+    public int? MinQty { get; set; }
+
+    public int? MaxQty { get; set; }
 
     public virtual Color Color { get; set; }
 
@@ -57,7 +67,7 @@ public partial class ProductVariant
 
     public virtual Size Size { get; set; }
 
-    public virtual Uom Uom { get; set; }
+    public virtual Uomsub SubUom { get; set; }
 
-    public virtual Uomsub Uomsub { get; set; }
+    public virtual Uom Uom { get; set; }
 }

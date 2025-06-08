@@ -31,13 +31,23 @@ public partial class Product
 
     public int? SupplierId { get; set; }
 
+    public string ProductSlug { get; set; }
+
+    public Guid? Uomid { get; set; }
+
+    public Guid? BrandId { get; set; }
+
     public virtual Branch Branch { get; set; }
+
+    public virtual Brand Brand { get; set; }
 
     public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
 
     public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 
-    public virtual SubCategoryId SubCategory { get; set; }
+    public virtual SubCategory SubCategory { get; set; }
 
     public virtual Supplier Supplier { get; set; }
+
+    public virtual Uom Uom { get; set; }
 }
