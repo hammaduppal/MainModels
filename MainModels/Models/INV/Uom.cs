@@ -13,8 +13,6 @@ public partial class Uom
 
     public string Uomtype { get; set; }
 
-    public Guid? BranchId { get; set; }
-
     public DateTime? CreatedOn { get; set; }
 
     public int? Createdby { get; set; }
@@ -24,8 +22,6 @@ public partial class Uom
     public bool? IsActive { get; set; }
 
     public bool? IsDeleted { get; set; }
-
-    public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 

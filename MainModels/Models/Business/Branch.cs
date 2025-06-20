@@ -29,7 +29,9 @@ public partial class Branch
 
     public virtual Organization Organization { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public virtual ICollection<Person> People { get; set; } = new List<Person>();
+
+    public virtual ICollection<ProductBranch> ProductBranches { get; set; } = new List<ProductBranch>();
 
     public virtual ICollection<UserAssignedBranch> UserAssignedBranches { get; set; } = new List<UserAssignedBranch>();
 }

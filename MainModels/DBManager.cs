@@ -68,7 +68,7 @@ namespace MainModels
         public async Task<T> ExecuteQuery<T>(string query)
         {
             try
-            {
+            {   
                 using (var con = _dap.CreateConnection())
                 {
                     if (con.State != ConnectionState.Open)

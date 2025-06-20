@@ -15,8 +15,6 @@ public partial class Uomsub
 
     public decimal? ConversionFactor { get; set; }
 
-    public Guid? BranchId { get; set; }
-
     public DateTime? CreatedOn { get; set; }
 
     public int? Createdby { get; set; }

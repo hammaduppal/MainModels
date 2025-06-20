@@ -69,7 +69,7 @@
         public Guid? UOMId { get; set; }
         public string? UOMName { get; set; }
         public Guid BrandId { get; set; }
-
+        public string BrandName { get; set; }
     }
 
     public partial class ProductImageVM

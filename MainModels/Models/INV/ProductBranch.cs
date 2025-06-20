@@ -5,11 +5,13 @@ using System.Collections.Generic;
 
 namespace MainModels.Models;
 
-public partial class Organization
+public partial class ProductBranch
 {
-    public int OrganizationId { get; set; }
+    public Guid ProductBranchesId { get; set; }
 
-    public string OrganizationName { get; set; }
+    public Guid? ProductId { get; set; }
+
+    public Guid? BranchId { get; set; }
 
     public bool? IsActive { get; set; }
 
@@ -19,9 +21,7 @@ public partial class Organization
 
     public int? CreatedBy { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public virtual Branch Branch { get; set; }
 
-    public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
-
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public virtual Product Product { get; set; }
 }

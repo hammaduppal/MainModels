@@ -17,8 +17,6 @@ public partial class ProductImage
 
     public Guid? ProductId { get; set; }
 
-    public Guid? BranchId { get; set; }
-
     public DateTime? CreatedOn { get; set; }
 
     public int? Createdby { get; set; }

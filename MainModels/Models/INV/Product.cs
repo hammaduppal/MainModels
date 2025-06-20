@@ -15,9 +15,9 @@ public partial class Product
 
     public decimal? Qoh { get; set; }
 
-    public Guid? SubCategoryId { get; set; }
+    public Guid? BrandId { get; set; }
 
-    public Guid? BranchId { get; set; }
+    public Guid? SubCategoryId { get; set; }
 
     public DateTime? CreatedOn { get; set; }
 
@@ -35,11 +35,13 @@ public partial class Product
 
     public Guid? Uomid { get; set; }
 
-    public Guid? BrandId { get; set; }
-
-    public virtual Branch Branch { get; set; }
+    public int? OrganizationId { get; set; }
 
     public virtual Brand Brand { get; set; }
+
+    public virtual Organization Organization { get; set; }
+
+    public virtual ICollection<ProductBranch> ProductBranches { get; set; } = new List<ProductBranch>();
 
     public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
 

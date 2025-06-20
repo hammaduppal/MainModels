@@ -11,8 +11,6 @@ public partial class Department1
 
     public string DepartmentName { get; set; }
 
-    public Guid? BusinessStoreId { get; set; }
-
     public DateTime? CreatedOn { get; set; }
 
     public int? Createdby { get; set; }

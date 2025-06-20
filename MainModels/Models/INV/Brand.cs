@@ -11,8 +11,6 @@ public partial class Brand
 
     public string BrandName { get; set; }
 
-    public Guid? BranchId { get; set; }
-    public string? BrandSlug { get; set; }
     public DateTime? CreatedOn { get; set; }
 
     public int? Createdby { get; set; }
@@ -24,6 +22,8 @@ public partial class Brand
     public bool? IsDeleted { get; set; }
 
     public bool? IsDefault { get; set; }
+
+    public string BrandSlug { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

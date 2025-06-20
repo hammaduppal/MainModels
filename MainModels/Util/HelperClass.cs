@@ -86,6 +86,7 @@ namespace MainModels.Util
             return new CommonParams
             {
                 BranchId= AppDataUtility.SessionUser.BranchId,
+                OrganizationId = AppDataUtility.SessionUser.PersonVM.Branch.Organization.OrganizationId,
                 CreatedBy = AppDataUtility.SessionUser.Id,
                 CreatedOn = DateTime.Now,
                 IsActive = true,
@@ -96,6 +97,7 @@ namespace MainModels.Util
         public class CommonParams
         {
             public Guid? BranchId { get; set; }
+            public int OrganizationId { get; set; }
             public string BusinessName { get; set; }
             public DateTime? CreatedOn { get; set; }
             public DateTime? ModifiedOn { get; set; }

@@ -13,8 +13,6 @@ public partial class SubCategory
 
     public Guid? CategoryId { get; set; }
 
-    public Guid? BusinessStoreId { get; set; }
-
     public DateTime? CreatedOn { get; set; }
 
     public int? Createdby { get; set; }

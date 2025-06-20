@@ -43,11 +43,7 @@ public partial class ProductVariant
 
     public bool? IsDeleted { get; set; }
 
-    public Guid? BranchId { get; set; }
-
     public Guid? VariantImageId { get; set; }
-
-    public Guid? Uomid { get; set; }
 
     public Guid? SubUomid { get; set; }
 
@@ -59,6 +55,8 @@ public partial class ProductVariant
 
     public int? MaxQty { get; set; }
 
+    public int? PriceFormat { get; set; }
+
     public virtual Color Color { get; set; }
 
     public virtual Material Material { get; set; }
@@ -68,6 +66,4 @@ public partial class ProductVariant
     public virtual Size Size { get; set; }
 
     public virtual Uomsub SubUom { get; set; }
-
-    public virtual Uom Uom { get; set; }
 }

@@ -77,6 +77,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<ProductBranch> ProductBranches { get; set; }
+
     public virtual DbSet<ProductImage> ProductImages { get; set; }
 
     public virtual DbSet<ProductVariant> ProductVariants { get; set; }
@@ -161,6 +163,7 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.BrandId).ValueGeneratedNever();
             entity.Property(e => e.BrandName).HasMaxLength(500);
+            entity.Property(e => e.BrandSlug).HasMaxLength(500);
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
         });
@@ -627,6 +630,10 @@ public partial class OneDb : DbContext
             entity.Property(e => e.MobileNumber).HasMaxLength(50);
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.SocialSecurity).HasMaxLength(10);
+
+            entity.HasOne(d => d.Branc).WithMany(p => p.People)
+                .HasForeignKey(d => d.BrancId)
+                .HasConstraintName("FK_Persons_Branches");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -644,13 +651,13 @@ public partial class OneDb : DbContext
                 .HasColumnName("QOH");
             entity.Property(e => e.Uomid).HasColumnName("UOMId");
 
-            entity.HasOne(d => d.Branch).WithMany(p => p.Products)
-                .HasForeignKey(d => d.BranchId)
-                .HasConstraintName("FK_Products_Branches");
-
             entity.HasOne(d => d.Brand).WithMany(p => p.Products)
                 .HasForeignKey(d => d.BrandId)
                 .HasConstraintName("FK_Products_Brands");
+
+            entity.HasOne(d => d.Organization).WithMany(p => p.Products)
+                .HasForeignKey(d => d.OrganizationId)
+                .HasConstraintName("FK_Products_Organizations");
 
             entity.HasOne(d => d.SubCategory).WithMany(p => p.Products)
                 .HasForeignKey(d => d.SubCategoryId)
@@ -663,6 +670,25 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Uom).WithMany(p => p.Products)
                 .HasForeignKey(d => d.Uomid)
                 .HasConstraintName("FK_Products_UOM");
+        });
+
+        modelBuilder.Entity<ProductBranch>(entity =>
+        {
+            entity.HasKey(e => e.ProductBranchesId);
+
+            entity.ToTable("ProductBranches", "INV");
+
+            entity.Property(e => e.ProductBranchesId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.ProductBranches)
+                .HasForeignKey(d => d.BranchId)
+                .HasConstraintName("FK_ProductBranches_Branches");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductBranches)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK_ProductBranches_Products");
         });
 
         modelBuilder.Entity<ProductImage>(entity =>
@@ -699,7 +725,6 @@ public partial class OneDb : DbContext
             entity.Property(e => e.RetailPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.SalesPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.SubUomid).HasColumnName("SubUOMId");
-            entity.Property(e => e.Uomid).HasColumnName("UOMId");
 
             entity.HasOne(d => d.Color).WithMany(p => p.ProductVariants)
                 .HasForeignKey(d => d.ColorId)
@@ -720,10 +745,6 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.SubUom).WithMany(p => p.ProductVariants)
                 .HasForeignKey(d => d.SubUomid)
                 .HasConstraintName("FK_ProductVariants_UOMSub1");
-
-            entity.HasOne(d => d.Uom).WithMany(p => p.ProductVariants)
-                .HasForeignKey(d => d.Uomid)
-                .HasConstraintName("FK_ProductVariants_UOM");
         });
 
         modelBuilder.Entity<Review>(entity =>

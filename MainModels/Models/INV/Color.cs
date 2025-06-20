@@ -25,5 +25,7 @@ public partial class Color
 
     public string ColorSlug { get; set; }
 
+    public Guid? BranchId { get; set; }
+
     public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 }

@@ -1,4 +1,6 @@
-﻿namespace MainModels.DTOModels
+﻿using MainModels.Models;
+
+namespace MainModels.DTOModels
 {
     public partial class LoginUserVM
     {
@@ -16,11 +18,12 @@
         public DateTime? CreatedOn { get; set; }
 
         public Guid? BranchId { get; set; }
-        public string BranchName { get; set; }
+        public string RoleName { get; set; }
         public Guid? LoginGuid { get; set; }
         public bool Remember { get; set; }
         public bool IsDeleted { get; set; }
         public ICollection<AssignedRoleVM>? AssignedRoles { get; set; }
+    
         public List<RolesVM>? Roles { get; set; }
         public PersonVM? PersonVM { get; set; }
         public Guid BusinessStoreId { get; set; }
@@ -99,6 +102,59 @@
         //public string? BranchCode { get; set; }
         //public string? OrganizationName { get; set; }
         public  BranchVM Branch{ get; set; }
+        public List<LaneAddressVM> LaneAddress{ get; set; }
+    }
+    public partial class LaneAddressVM
+    {
+        public int AddressId { get; set; }
+
+        public string LaneAddressOne { get; set; }
+
+        public string LaneAddressTwo { get; set; }
+
+        public string Area { get; set; }
+
+        public string FamousPlace { get; set; }
+
+        public int? PersonId { get; set; }
+
+        public int? CityId { get; set; }
+        public int StateProvinceId { get; set; }
+        public int CountryId { get; set; }
+        public string? AddressType { get; set; }
+        public CityVM? City { get; set; }
+    }
+    public partial class CityVM
+    {
+        public int CityId { get; set; }
+
+        public string? CityName { get; set; }
+
+        public int? StateProvinceId { get; set; }
+
+        public int? CountryId { get; set; }
+        public StateProvinceVM? StateProvince { get; set; }
+
+    }
+    public partial class StateProvinceVM
+    {
+        public int StateProvinceId { get; set; }
+
+        public string StateProvinceName { get; set; }
+
+        public int? CountryId { get; set; }
+        public CountryVM? Country { get; set; }
+    }
+    public partial class CountryVM
+    {
+        public int CountryId { get; set; }
+
+        public string CountryName { get; set; }
+
+    }
+    public class AssignRolesVM {
+        public int Id { get; set; }
+        public List<int> RoleIds { get; set; }
 
     }
 
