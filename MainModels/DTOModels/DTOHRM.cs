@@ -158,4 +158,21 @@ namespace MainModels.DTOModels
 
     }
 
+    public partial class SupplierVM
+    {
+        public int SupplierId { get; set; }
+
+        public string SupplierCode { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+
+        public string Ntn { get; set; }
+
+        public string CompanyLogo { get; set; }
+
+        public int? PersonId { get; set; }
+
+        public bool? IsActive { get; set; }
+
+    }
 }

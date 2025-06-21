@@ -9,7 +9,7 @@ namespace MainModels.DTOModels
         public List<RolesVM> Roles { get; set; }
         public List<CountryVM> Countries { get; set; }
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
-
+        public List<SupplierVM> Suppliers { get; set; }
         public List<DepartmentVM>? Departments { get; set; }
         public List<CategoryVM>? Categories { get; set; }
         public List<UomVM>? UOMs { get; set; }
@@ -90,5 +90,5 @@ namespace MainModels.DTOModels
     {
         public string UnlockKey { get; set; }
     }
-   
+
 }
