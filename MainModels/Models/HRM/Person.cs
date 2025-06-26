@@ -33,7 +33,7 @@ public partial class Person
 
     public bool? IsActive { get; set; }
 
-    public Guid? BrancId { get; set; }
+    public Guid? BranchId { get; set; }
 
     public virtual Branch Branc { get; set; }
 
@@ -43,5 +43,5 @@ public partial class Person
 
     public virtual ICollection<LoginUser> LoginUsers { get; set; } = new List<LoginUser>();
 
-    public virtual ICollection<Supplier> Suppliers { get; set; } = new List<Supplier>();
+    public virtual ICollection<SupplierContact> SupplierContacts { get; set; } = new List<SupplierContact>();
 }

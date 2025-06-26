@@ -83,6 +83,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[HRM].[SupplierContact]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[HRM].[UserAssignedBranches]",
          "ObjectType": 0
       },

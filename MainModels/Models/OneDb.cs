@@ -97,6 +97,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
+    public virtual DbSet<SupplierContact> SupplierContacts { get; set; }
+
     public virtual DbSet<Uom> Uoms { get; set; }
 
     public virtual DbSet<Uomsub> Uomsubs { get; set; }
@@ -632,7 +634,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.SocialSecurity).HasMaxLength(10);
 
             entity.HasOne(d => d.Branc).WithMany(p => p.People)
-                .HasForeignKey(d => d.BrancId)
+                .HasForeignKey(d => d.BranchId)
                 .HasConstraintName("FK_Persons_Branches");
         });
 
@@ -843,11 +845,27 @@ public partial class OneDb : DbContext
             entity.Property(e => e.Ntn)
                 .HasMaxLength(100)
                 .HasColumnName("NTN");
+            entity.Property(e => e.SupplierBusinessName).HasMaxLength(500);
             entity.Property(e => e.SupplierCode).HasMaxLength(500);
+        });
 
-            entity.HasOne(d => d.Person).WithMany(p => p.Suppliers)
+        modelBuilder.Entity<SupplierContact>(entity =>
+        {
+            entity.HasKey(e => e.SpplierContactId);
+
+            entity.ToTable("SupplierContact", "HRM");
+
+            entity.Property(e => e.SpplierContactId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.SupplierContacts)
                 .HasForeignKey(d => d.PersonId)
-                .HasConstraintName("FK_Supplier_Persons");
+                .HasConstraintName("FK_SupplierContact_Persons");
+
+            entity.HasOne(d => d.Supplier).WithMany(p => p.SupplierContacts)
+                .HasForeignKey(d => d.SupplierId)
+                .HasConstraintName("FK_SupplierContact_Supplier");
         });
 
         modelBuilder.Entity<Uom>(entity =>

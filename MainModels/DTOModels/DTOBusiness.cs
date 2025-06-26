@@ -5,6 +5,17 @@ namespace MainModels.DTOModels
     public class DTOBusiness
     {
     }
+    public class OrganizationRegistrationDto
+    {
+        public string BusinessName { get; set; }
+        public string BranchName { get; set; }
+        public string Website { get; set; }
+        public short BusinessCategory { get; set; }
+        public short BusinessEntity { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
     public partial class OrganizationVM
     {
         public int OrganizationId { get; set; }

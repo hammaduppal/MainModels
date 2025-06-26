@@ -9,6 +9,8 @@ public partial class Supplier
 {
     public int SupplierId { get; set; }
 
+    public string SupplierBusinessName { get; set; }
+
     public string SupplierCode { get; set; }
 
     public DateTime? CreatedOn { get; set; }
@@ -17,11 +19,9 @@ public partial class Supplier
 
     public string CompanyLogo { get; set; }
 
-    public int? PersonId { get; set; }
-
     public bool? IsActive { get; set; }
 
-    public virtual Person Person { get; set; }
-
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
+    public virtual ICollection<SupplierContact> SupplierContacts { get; set; } = new List<SupplierContact>();
 }

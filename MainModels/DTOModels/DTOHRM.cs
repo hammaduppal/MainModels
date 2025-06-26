@@ -162,17 +162,38 @@ namespace MainModels.DTOModels
     {
         public int SupplierId { get; set; }
 
-        public string SupplierCode { get; set; }
+        public string? SupplierBusinessName { get; set; }
+
+        public string? SupplierCode { get; set; }
 
         public DateTime? CreatedOn { get; set; }
 
-        public string Ntn { get; set; }
+        public string? Ntn { get; set; }
 
-        public string CompanyLogo { get; set; }
+        public string? CompanyLogo { get; set; }
+
+        public bool IsActive { get; set; }
+        public PersonVM Person { get; set; }
+
+        public List<SupplierContactVM>? SupplierContacts { get; set; }
+
+    }
+    public class SupplierContactVM
+    {
+        public int SpplierContactId { get; set; }
 
         public int? PersonId { get; set; }
 
+        public int? SupplierId { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
         public bool? IsActive { get; set; }
+
+        public bool? IsDeleted { get; set; }
+        public PersonVM Person { get; set; }
 
     }
 }

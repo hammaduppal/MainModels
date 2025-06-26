@@ -14,7 +14,6 @@
         public const string Product = "Product";
         public const string Purchase = "Purchase";
 
-
         public const string Accounts = "Accounts";
         public const string POSUser = "POSUser";
         public const string Sales = "Sales";
