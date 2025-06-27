@@ -35,7 +35,7 @@ public partial class Person
 
     public Guid? BranchId { get; set; }
 
-    public virtual Branch Branc { get; set; }
+    public virtual Branch Branch { get; set; }
 
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 

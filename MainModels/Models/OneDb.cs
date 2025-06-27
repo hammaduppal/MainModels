@@ -115,7 +115,7 @@ public partial class OneDb : DbContext
     {
         modelBuilder.Entity<AssignedRole>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Assigned__3214EC07B88445F7");
+            entity.HasKey(e => e.Id).HasName("PK__Assigned__3214EC079F2A4CCC");
 
             entity.ToTable("AssignedRoles", "SYSTEM");
 
@@ -125,11 +125,11 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.AssignedRoles)
                 .HasForeignKey(d => d.LoginId)
-                .HasConstraintName("FK__AssignedR__Login__2CF2ADDF");
+                .HasConstraintName("FK__AssignedR__Login__3587F3E0");
 
             entity.HasOne(d => d.Role).WithMany(p => p.AssignedRoles)
                 .HasForeignKey(d => d.RoleId)
-                .HasConstraintName("FK__AssignedR__RoleI__2DE6D218");
+                .HasConstraintName("FK__AssignedR__RoleI__367C1819");
         });
 
         modelBuilder.Entity<Branch>(entity =>
@@ -172,7 +172,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<BusinessCategory>(entity =>
         {
-            entity.HasKey(e => e.BusinessCategoryId).HasName("PK__Business__4024A26DA2DD4A2E");
+            entity.HasKey(e => e.BusinessCategoryId).HasName("PK__Business__4024A26D5C2BB52F");
 
             entity.ToTable("BusinessCategory", "Business");
 
@@ -184,7 +184,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<BusinessEntityType>(entity =>
         {
-            entity.HasKey(e => e.BusinessEntityTypeId).HasName("PK__Business__837393DAFE0EAB5C");
+            entity.HasKey(e => e.BusinessEntityTypeId).HasName("PK__Business__837393DA16DC05EE");
 
             entity.ToTable("BusinessEntityType", "Business");
 
@@ -223,7 +223,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<City>(entity =>
         {
-            entity.HasKey(e => e.CityId).HasName("PK__Cities__F2D21B76833C04B8");
+            entity.HasKey(e => e.CityId).HasName("PK__Cities__F2D21B764D606662");
 
             entity.ToTable("Cities", "HRM");
 
@@ -237,7 +237,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<CmsContentSharedCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__CmsConte__3214EC07410C3E57");
+            entity.HasKey(e => e.Id).HasName("PK__CmsConte__3214EC073ACDA7FC");
 
             entity.ToTable("CmsContentSharedCategory", "WEBCMS");
 
@@ -246,16 +246,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Category).WithMany(p => p.CmsContentSharedCategories)
                 .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK__CmsConten__Categ__31B762FC");
+                .HasConstraintName("FK__CmsConten__Categ__3A4CA8FD");
 
             entity.HasOne(d => d.Content).WithMany(p => p.CmsContentSharedCategories)
                 .HasForeignKey(d => d.ContentId)
-                .HasConstraintName("FK__CmsConten__Conte__32AB8735");
+                .HasConstraintName("FK__CmsConten__Conte__3B40CD36");
         });
 
         modelBuilder.Entity<CmsEmail>(entity =>
         {
-            entity.HasKey(e => e.EmailId).HasName("PK__CmsEmail__7ED91ACFB30893D6");
+            entity.HasKey(e => e.EmailId).HasName("PK__CmsEmail__7ED91ACF12AA153A");
 
             entity.ToTable("CmsEmail", "WEBCMS");
 
@@ -272,12 +272,12 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Website).WithMany(p => p.CmsEmails)
                 .HasForeignKey(d => d.WebsiteId)
-                .HasConstraintName("FK__CmsEmail__Websit__339FAB6E");
+                .HasConstraintName("FK__CmsEmail__Websit__3C34F16F");
         });
 
         modelBuilder.Entity<CmsemailSent>(entity =>
         {
-            entity.HasKey(e => e.EmailSentId).HasName("PK__CMSEmail__456E5F9B64349B9F");
+            entity.HasKey(e => e.EmailSentId).HasName("PK__CMSEmail__456E5F9B17DB4AF3");
 
             entity.ToTable("CMSEmailSent", "WEBCMS");
 
@@ -297,11 +297,11 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Email).WithMany(p => p.CmsemailSents)
                 .HasForeignKey(d => d.EmailId)
-                .HasConstraintName("FK__CMSEmailS__Email__3493CFA7");
+                .HasConstraintName("FK__CMSEmailS__Email__3D2915A8");
 
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSents)
                 .HasForeignKey(d => d.EmailId)
-                .HasConstraintName("FK__CMSEmailS__Email__3587F3E0");
+                .HasConstraintName("FK__CMSEmailS__Email__3E1D39E1");
         });
 
         modelBuilder.Entity<Color>(entity =>
@@ -317,7 +317,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFCA3C858BE9");
+            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFCAC79F5C92");
 
             entity.ToTable("Comments", "WEBCMS");
 
@@ -333,12 +333,12 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Review).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.ReviewId)
-                .HasConstraintName("FK__Comments__Review__367C1819");
+                .HasConstraintName("FK__Comments__Review__3F115E1A");
         });
 
         modelBuilder.Entity<Content>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Content__3214EC0782619E9B");
+            entity.HasKey(e => e.Id).HasName("PK__Content__3214EC0768F46D1C");
 
             entity.ToTable("Content", "WEBCMS");
 
@@ -364,20 +364,20 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.ContentType).WithMany(p => p.Contents)
                 .HasForeignKey(d => d.ContentTypeId)
-                .HasConstraintName("FK__Content__Content__37703C52");
+                .HasConstraintName("FK__Content__Content__40058253");
 
             entity.HasOne(d => d.LoginUser).WithMany(p => p.Contents)
                 .HasForeignKey(d => d.LoginUserId)
-                .HasConstraintName("FK__Content__LoginUs__3864608B");
+                .HasConstraintName("FK__Content__LoginUs__40F9A68C");
 
             entity.HasOne(d => d.WebSite).WithMany(p => p.Contents)
                 .HasForeignKey(d => d.WebSiteId)
-                .HasConstraintName("FK__Content__WebSite__395884C4");
+                .HasConstraintName("FK__Content__WebSite__41EDCAC5");
         });
 
         modelBuilder.Entity<ContentCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ContentC__3214EC0759B49D2B");
+            entity.HasKey(e => e.Id).HasName("PK__ContentC__3214EC07ACE3C490");
 
             entity.ToTable("ContentCategory", "WEBCMS");
 
@@ -394,7 +394,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ContentType>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ContentT__3214EC070F37F922");
+            entity.HasKey(e => e.Id).HasName("PK__ContentT__3214EC07422DDA5D");
 
             entity.ToTable("ContentType", "WEBCMS");
 
@@ -407,7 +407,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.HasKey(e => e.CountryId).HasName("PK__Countrie__10D1609F325AFB00");
+            entity.HasKey(e => e.CountryId).HasName("PK__Countrie__10D1609FE5FEC5C0");
 
             entity.ToTable("Countries", "HRM");
 
@@ -417,7 +417,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Department>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Departme__3214EC0759C53F2A");
+            entity.HasKey(e => e.Id).HasName("PK__Departme__3214EC07EE22F026");
 
             entity.ToTable("Department", "HRM");
 
@@ -440,7 +440,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Employee>(entity =>
         {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F11BD236721");
+            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F11C218845C");
 
             entity.ToTable("Employee", "HRM");
 
@@ -463,7 +463,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<EmployeeDesignation>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Employee__3214EC07DD9840AB");
+            entity.HasKey(e => e.Id).HasName("PK__Employee__3214EC07D5D46053");
 
             entity.ToTable("EmployeeDesignation", "HRM");
 
@@ -473,7 +473,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ErpPermission>(entity =>
         {
-            entity.HasKey(e => e.PermissionId).HasName("PK__ErpPermi__EFA6FB2FEC9E5A81");
+            entity.HasKey(e => e.PermissionId).HasName("PK__ErpPermi__EFA6FB2FEE76B178");
 
             entity.ToTable("ErpPermissions", "SYSTEM");
 
@@ -481,16 +481,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.UrlMenu).WithMany(p => p.ErpPermissions)
                 .HasForeignKey(d => d.UrlMenuId)
-                .HasConstraintName("FK__ErpPermis__UrlMe__2EDAF651");
+                .HasConstraintName("FK__ErpPermis__UrlMe__37703C52");
 
             entity.HasOne(d => d.User).WithMany(p => p.ErpPermissions)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__ErpPermis__UserI__2FCF1A8A");
+                .HasConstraintName("FK__ErpPermis__UserI__3864608B");
         });
 
         modelBuilder.Entity<FileManager>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__FileMana__3214EC07238A5ACB");
+            entity.HasKey(e => e.Id).HasName("PK__FileMana__3214EC078B0E1999");
 
             entity.ToTable("FileManager", "MEDIA");
 
@@ -503,7 +503,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<LaneAddress>(entity =>
         {
-            entity.HasKey(e => e.AddressId).HasName("PK__LaneAddr__091C2AFB31AC8AF6");
+            entity.HasKey(e => e.AddressId).HasName("PK__LaneAddr__091C2AFB0350FDCB");
 
             entity.ToTable("LaneAddresses", "HRM");
 
@@ -525,7 +525,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<LinkedContentItem>(entity =>
         {
-            entity.HasKey(e => e.LinkedItemId).HasName("PK__LinkedCo__6F9EA4BAEC8E4EB3");
+            entity.HasKey(e => e.LinkedItemId).HasName("PK__LinkedCo__6F9EA4BA4F9AEC90");
 
             entity.ToTable("LinkedContentItems", "WEBCMS");
 
@@ -533,16 +533,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Content).WithMany(p => p.LinkedContentItemContents)
                 .HasForeignKey(d => d.ContentId)
-                .HasConstraintName("FK__LinkedCon__Conte__3B40CD36");
+                .HasConstraintName("FK__LinkedCon__Conte__43D61337");
 
             entity.HasOne(d => d.LinkedContent).WithMany(p => p.LinkedContentItemLinkedContents)
                 .HasForeignKey(d => d.LinkedContentId)
-                .HasConstraintName("FK__LinkedCon__Linke__3C34F16F");
+                .HasConstraintName("FK__LinkedCon__Linke__44CA3770");
         });
 
         modelBuilder.Entity<LoginHistory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LoginHis__3214EC076E2D7173");
+            entity.HasKey(e => e.Id).HasName("PK__LoginHis__3214EC079BF58EC4");
 
             entity.ToTable("LoginHistory", "HRM");
 
@@ -556,7 +556,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<LoginUser>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC07A80AD7A7");
+            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC076C4E1330");
 
             entity.ToTable("LoginUsers", "HRM");
 
@@ -577,7 +577,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<LoginUserDeviceDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC07FACAF15D");
+            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC07E48F7649");
 
             entity.ToTable("LoginUserDeviceDetail", "HRM");
 
@@ -616,7 +616,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Person>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Persons__3214EC07AA70B9B3");
+            entity.HasKey(e => e.Id).HasName("PK__Persons__3214EC0730ACEE27");
 
             entity.ToTable("Persons", "HRM");
 
@@ -633,7 +633,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.SocialSecurity).HasMaxLength(10);
 
-            entity.HasOne(d => d.Branc).WithMany(p => p.People)
+            entity.HasOne(d => d.Branch).WithMany(p => p.People)
                 .HasForeignKey(d => d.BranchId)
                 .HasConstraintName("FK_Persons_Branches");
         });
@@ -751,7 +751,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Review>(entity =>
         {
-            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79CE25B83F27");
+            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79CEDF63D3BA");
 
             entity.ToTable("Reviews", "WEBCMS");
 
@@ -765,16 +765,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Content).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.ContentId)
-                .HasConstraintName("FK__Reviews__Content__3D2915A8");
+                .HasConstraintName("FK__Reviews__Content__45BE5BA9");
 
             entity.HasOne(d => d.LoginUser).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.LoginUserId)
-                .HasConstraintName("FK__Reviews__LoginUs__3E1D39E1");
+                .HasConstraintName("FK__Reviews__LoginUs__46B27FE2");
         });
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC070D90FCBC");
+            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC07BCE7C156");
 
             entity.ToTable("Roles", "SYSTEM");
 
@@ -784,7 +784,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Setting>(entity =>
         {
-            entity.HasKey(e => e.SettingsId).HasName("PK__Settings__991B19FC2B30F11C");
+            entity.HasKey(e => e.SettingsId).HasName("PK__Settings__991B19FC516B0BB6");
 
             entity.ToTable("Settings", "SYSTEM");
 
@@ -804,7 +804,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<StateProvince>(entity =>
         {
-            entity.HasKey(e => e.StateProvinceId).HasName("PK__StatePro__9122A951A98A2E0D");
+            entity.HasKey(e => e.StateProvinceId).HasName("PK__StatePro__9122A951D4833E19");
 
             entity.ToTable("StateProvince", "HRM");
 
@@ -909,7 +909,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<UrlMenu>(entity =>
         {
-            entity.HasKey(e => e.UrlMenuId).HasName("PK__UrlMenu__1E1429F7E962DFDF");
+            entity.HasKey(e => e.UrlMenuId).HasName("PK__UrlMenu__1E1429F7BC8DD63A");
 
             entity.ToTable("UrlMenu", "SYSTEM");
 
@@ -938,7 +938,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Website>(entity =>
         {
-            entity.HasKey(e => e.WebsiteId).HasName("PK__Website__3F146DA9D91D7C06");
+            entity.HasKey(e => e.WebsiteId).HasName("PK__Website__3F146DA9C3C22F69");
 
             entity.ToTable("Website", "SYSTEM");
 
@@ -949,7 +949,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<WebsiteDatum>(entity =>
         {
-            entity.HasKey(e => e.WebsiteDataId).HasName("PK__WebsiteD__E06C88F0BE7C6F72");
+            entity.HasKey(e => e.WebsiteDataId).HasName("PK__WebsiteD__E06C88F0846D487E");
 
             entity.ToTable("WebsiteData", "SYSTEM");
 
@@ -962,7 +962,7 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Website).WithMany(p => p.WebsiteData)
                 .HasForeignKey(d => d.WebsiteId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__WebsiteDa__Websi__30C33EC3");
+                .HasConstraintName("FK__WebsiteDa__Websi__395884C4");
         });
 
         OnModelCreatingPartial(modelBuilder);
