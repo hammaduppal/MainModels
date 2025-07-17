@@ -37,6 +37,8 @@ public partial class Product
 
     public int? OrganizationId { get; set; }
 
+    public Guid? BranchId { get; set; }
+
     public virtual Brand Brand { get; set; }
 
     public virtual Organization Organization { get; set; }

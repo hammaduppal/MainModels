@@ -83,6 +83,10 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<ProductVariant> ProductVariants { get; set; }
 
+    public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
+
+    public virtual DbSet<PurchaseMaster> PurchaseMasters { get; set; }
+
     public virtual DbSet<Review> Reviews { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -747,6 +751,69 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.SubUom).WithMany(p => p.ProductVariants)
                 .HasForeignKey(d => d.SubUomid)
                 .HasConstraintName("FK_ProductVariants_UOMSub1");
+        });
+
+        modelBuilder.Entity<PurchaseDetail>(entity =>
+        {
+            entity.ToTable("PurchaseDetail", "INV");
+
+            entity.Property(e => e.PurchaseDetailId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.DiscountAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.LineTotal)
+                .HasComputedColumnSql("([Qty]*[UnitPrice]-[DiscountAmount])", true)
+                .HasColumnType("decimal(38, 4)");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.Qty).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalPrice)
+                .HasComputedColumnSql("([Qty]*[UnitPrice])", true)
+                .HasColumnType("decimal(37, 4)");
+            entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.PurchaseMaster).WithMany(p => p.PurchaseDetails)
+                .HasForeignKey(d => d.PurchaseMasterId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__PurchaseD__Purch__15DA3E5D");
+
+            entity.HasOne(d => d.Variant).WithMany(p => p.PurchaseDetails)
+                .HasForeignKey(d => d.VariantId)
+                .HasConstraintName("FK__PurchaseD__Varia__16CE6296");
+
+        });
+
+        modelBuilder.Entity<PurchaseMaster>(entity =>
+        {
+            entity.HasKey(e => e.PurchaseMasterId).HasName("PK__Purchase__5450C11901866B34");
+
+            entity.ToTable("PurchaseMaster", "INV");
+
+            entity.HasIndex(e => e.PurchaseNumber, "UQ__Purchase__373B5B6EE9029448").IsUnique();
+            entity.HasOne(d => d.Supplier).WithMany(p => p.PurchaseMaster)
+                .HasForeignKey(d => d.SupplierId)
+                .HasConstraintName("FK__PurchaseD__Varia__16CE6296");
+
+            entity.Property(e => e.PurchaseMasterId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.DiscountAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.GrandTotal)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.PurchaseDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.PurchaseNumber).HasMaxLength(50);
+            entity.Property(e => e.PurchaseType).HasDefaultValue(1);
+            entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.Status).HasDefaultValue(1);
+            entity.Property(e => e.TotalAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Review>(entity =>

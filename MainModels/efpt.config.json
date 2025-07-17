@@ -127,6 +127,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[INV].[PurchaseDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[PurchaseMaster]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[INV].[Sizes]",
          "ObjectType": 0
       },

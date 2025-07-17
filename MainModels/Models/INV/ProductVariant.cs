@@ -57,11 +57,17 @@ public partial class ProductVariant
 
     public int? PriceFormat { get; set; }
 
+    public Guid? BranchId { get; set; }
+
+    public int? OrganizationId { get; set; }
+
     public virtual Color Color { get; set; }
 
     public virtual Material Material { get; set; }
 
     public virtual Product Product { get; set; }
+
+    public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
 
     public virtual Size Size { get; set; }
 

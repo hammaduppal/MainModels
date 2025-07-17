@@ -57,8 +57,8 @@
         public Guid? SubCategoryId { get; set; }
         public string? SubCategoryName { get; set; }
         public string? CategoryName { get; set; }
-        public string ?DepartmentName { get; set; }
-
+        public string? DepartmentName { get; set; }
+        public BrandVM Brand { get; set; }
         public Guid? BusinessStoreId { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? Createdby { get; set; }
@@ -146,10 +146,13 @@
         public Guid? SubUomid { get; set; }
         public string? BrandName { get; set; }
         public decimal? QuantityPerUnit { get; set; }
-
+        public ProductVM Product { get; set; }
+        public ColorVM Color { get; set; }
+        public MaterialVM Material { get; set; }
+        public SizeVM Size { get; set; }
         public bool? IsSerial { get; set; }
 
-       
+
     }
 
     public partial class SizeVM
@@ -221,4 +224,23 @@
 
         public bool? IsDefault { get; set; }
     }
+    public class PurchaseDataDto
+    {
+        public List<BillItems> Items { get; set; }
+        public decimal Discount { get; set; }
+        public decimal GrandTotal { get; set; }
+        public int SupplierId { get; set; }
+        public Guid BranchId { get; set; }
+    }
+
+    public class BillItems
+    {
+        public Guid ProductId { get; set; }
+        public Guid VariantId { get; set; }
+        public string BarCode { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public decimal TotalPrice { get; set; }
+    }
+
 }

@@ -29,5 +29,9 @@ public partial class ProductImage
 
     public bool? IsDefault { get; set; }
 
+    public int? OrganizationId { get; set; }
+
+    public Guid? BranchId { get; set; }
+
     public virtual Product Product { get; set; }
 }

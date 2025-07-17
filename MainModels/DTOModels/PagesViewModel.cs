@@ -10,6 +10,10 @@ namespace MainModels.DTOModels
         public List<CountryVM> Countries { get; set; }
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
+        public AppConstants.PurchaseStatus PurchaseStatus { get; set; }
+        public List<PurchaseMasterVM> PurchaseMasters { get; set; }
+        public PurchaseMasterVM PurchaseMaster { get; set; }
+
         public List<DepartmentVM>? Departments { get; set; }
         public List<CategoryVM>? Categories { get; set; }
         public List<UomVM>? UOMs { get; set; }
