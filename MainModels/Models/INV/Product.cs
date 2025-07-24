@@ -41,6 +41,12 @@ public partial class Product
 
     public virtual Brand Brand { get; set; }
 
+    public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
+
+    public virtual ICollection<CollectionDetail> CollectionDetails { get; set; } = new List<CollectionDetail>();
+
+    public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
+
     public virtual Organization Organization { get; set; }
 
     public virtual ICollection<ProductBranch> ProductBranches { get; set; } = new List<ProductBranch>();

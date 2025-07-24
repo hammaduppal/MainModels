@@ -192,3 +192,54 @@ CREATE TABLE [INV].[CartDetail] (
     FOREIGN KEY (VariantId) REFERENCES [INV].[ProductVariants](VariantId)
 );
 ------------------------------------------------
+
+BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Create CollectionMaster Table
+    CREATE TABLE [INV].[CollectionMaster]
+    (
+        CollectionId UNIQUEIDENTIFIER PRIMARY KEY,
+        CollectionName NVARCHAR(200) NOT NULL,
+        Description NVARCHAR(MAX) NULL,
+        ImageUrl NVARCHAR(500) NULL,
+        StartDate DATETIME NULL,
+        EndDate DATETIME NULL,
+        IsActive BIT NOT NULL DEFAULT 1,
+        CreatedBy UNIQUEIDENTIFIER NULL,
+        CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
+        UpdatedBy UNIQUEIDENTIFIER NULL,
+        UpdatedAt DATETIME NULL
+    );
+
+    -- Create CollectionDetail Table
+    CREATE TABLE [INV].[CollectionDetail]
+(
+    CollectionDetailId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    CollectionId UNIQUEIDENTIFIER NOT NULL,
+    ProductId UNIQUEIDENTIFIER NOT NULL,
+    VariantId UNIQUEIDENTIFIER NULL,
+    SortOrder INT NULL,
+
+    CONSTRAINT FK_CollectionDetail_CollectionMaster FOREIGN KEY (CollectionId)
+        REFERENCES [INV].[CollectionMaster](CollectionId)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_CollectionDetail_Product FOREIGN KEY (ProductId)
+        REFERENCES [INV].[Products](ProductId)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_CollectionDetail_Variant FOREIGN KEY (VariantId)
+        REFERENCES [INV].[ProductVariants](VariantId)
+        ON DELETE CASCADE
+);
+
+
+    COMMIT TRANSACTION;
+    PRINT 'Tables created successfully.';
+END TRY
+BEGIN CATCH
+    ROLLBACK TRANSACTION;
+    PRINT 'Error occurred. Transaction rolled back.';
+    PRINT ERROR_MESSAGE();
+END CATCH;
