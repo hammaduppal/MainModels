@@ -71,6 +71,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Material> Materials { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; }
+
     public virtual DbSet<Organization> Organizations { get; set; }
 
     public virtual DbSet<Person> Persons { get; set; }
@@ -607,6 +609,25 @@ public partial class OneDb : DbContext
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC07C4159632");
+
+            entity.ToTable("Notifications", "SYSTEM");
+
+            entity.HasIndex(e => e.GroupName, "IX_Notifications_GroupName");
+
+            entity.HasIndex(e => new { e.GroupName, e.IsRead }, "IX_Notifications_GroupName_IsRead");
+
+            entity.HasIndex(e => e.UserId, "IX_Notifications_UserId");
+
+            entity.HasIndex(e => new { e.UserId, e.IsRead }, "IX_Notifications_UserId_IsRead");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.GroupName).HasMaxLength(255);
+            entity.Property(e => e.Message).IsRequired();
+        });
+
         modelBuilder.Entity<Organization>(entity =>
         {
             entity.HasKey(e => e.OrganizationId).HasName("PK__Business__A1682FC590D5A421");
@@ -780,7 +801,6 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Variant).WithMany(p => p.PurchaseDetails)
                 .HasForeignKey(d => d.VariantId)
                 .HasConstraintName("FK__PurchaseD__Varia__16CE6296");
-
         });
 
         modelBuilder.Entity<PurchaseMaster>(entity =>
@@ -790,9 +810,6 @@ public partial class OneDb : DbContext
             entity.ToTable("PurchaseMaster", "INV");
 
             entity.HasIndex(e => e.PurchaseNumber, "UQ__Purchase__373B5B6EE9029448").IsUnique();
-            entity.HasOne(d => d.Supplier).WithMany(p => p.PurchaseMaster)
-                .HasForeignKey(d => d.SupplierId)
-                .HasConstraintName("FK__PurchaseD__Varia__16CE6296");
 
             entity.Property(e => e.PurchaseMasterId).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");

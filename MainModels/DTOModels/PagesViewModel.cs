@@ -89,6 +89,7 @@ namespace MainModels.DTOModels
     {
         public int TotalProducts { get; set; }
         public int TotalVariants { get; set; }
+        public int TotalUsers { get; set; }
     }
     public class SecretLock
     {

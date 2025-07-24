@@ -22,6 +22,6 @@ public partial class Supplier
     public bool? IsActive { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-    public virtual ICollection<PurchaseMaster> PurchaseMaster { get; set; } = new List<PurchaseMaster>();
+
     public virtual ICollection<SupplierContact> SupplierContacts { get; set; } = new List<SupplierContact>();
 }
