@@ -192,3 +192,4 @@ CREATE TABLE [INV].[CartDetail] (
     FOREIGN KEY (VariantId) REFERENCES [INV].[ProductVariants](VariantId)
 );
 ------------------------------------------------
+

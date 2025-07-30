@@ -95,7 +95,6 @@
         public Guid? MaterialId { get; set; }
 
         public Guid? ColorId { get; set; }
-
         public Guid? SizeId { get; set; }
 
         public Guid? ProductId { get; set; }
@@ -242,5 +241,8 @@
         public decimal PurchasePrice { get; set; }
         public decimal TotalPrice { get; set; }
     }
-
+    public class ProductSearchVM
+    {
+        public string SearchParams { get; set; }
+    }
 }

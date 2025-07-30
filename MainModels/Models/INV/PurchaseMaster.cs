@@ -42,6 +42,10 @@ public partial class PurchaseMaster
     public Guid? BranchId { get; set; }
 
     public int? OrganizationId { get; set; }
-    public virtual Supplier Supplier { get; set; }
+
+    public Guid? ParentId { get; set; }
+
     public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
+
+    public virtual Supplier Supplier { get; set; }
 }

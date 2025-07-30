@@ -20,4 +20,8 @@ public partial class Notification
     public bool IsRead { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    public int? NotificationTypeId { get; set; }
+
+    public virtual NotificationType NotificationType { get; set; }
 }

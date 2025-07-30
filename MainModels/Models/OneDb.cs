@@ -25,6 +25,10 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<BusinessStoreType> BusinessStoreTypes { get; set; }
 
+    public virtual DbSet<CartDetail> CartDetails { get; set; }
+
+    public virtual DbSet<CartMaster> CartMasters { get; set; }
+
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<City> Cities { get; set; }
@@ -34,6 +38,10 @@ public partial class OneDb : DbContext
     public virtual DbSet<CmsEmail> CmsEmails { get; set; }
 
     public virtual DbSet<CmsemailSent> CmsemailSents { get; set; }
+
+    public virtual DbSet<CollectionDetail> CollectionDetails { get; set; }
+
+    public virtual DbSet<CollectionMaster> CollectionMasters { get; set; }
 
     public virtual DbSet<Color> Colors { get; set; }
 
@@ -59,6 +67,10 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<FileManager> FileManagers { get; set; }
 
+    public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+
+    public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
+
     public virtual DbSet<LaneAddress> LaneAddresses { get; set; }
 
     public virtual DbSet<LinkedContentItem> LinkedContentItems { get; set; }
@@ -72,6 +84,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<Material> Materials { get; set; }
 
     public virtual DbSet<Notification> Notifications { get; set; }
+
+    public virtual DbSet<NotificationType> NotificationTypes { get; set; }
 
     public virtual DbSet<Organization> Organizations { get; set; }
 
@@ -212,6 +226,57 @@ public partial class OneDb : DbContext
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<CartDetail>(entity =>
+        {
+            entity.HasKey(e => e.CartDetailId).HasName("PK__CartDeta__01B6A6B406F29BBA");
+
+            entity.ToTable("CartDetail", "INV");
+
+            entity.Property(e => e.CartDetailId).ValueGeneratedNever();
+            entity.Property(e => e.Discount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Tax)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalAmount)
+                .HasComputedColumnSql("(([Quantity]*[UnitPrice]-[Discount])+[Tax])", true)
+                .HasColumnType("decimal(38, 4)");
+            entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.Cart).WithMany(p => p.CartDetails)
+                .HasForeignKey(d => d.CartId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CartDetai__CartI__02925FBF");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.CartDetails)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CartDetai__Produ__038683F8");
+
+            entity.HasOne(d => d.Variant).WithMany(p => p.CartDetails)
+                .HasForeignKey(d => d.VariantId)
+                .HasConstraintName("FK__CartDetai__Varia__047AA831");
+        });
+
+        modelBuilder.Entity<CartMaster>(entity =>
+        {
+            entity.HasKey(e => e.CartId).HasName("PK__CartMast__51BCD7B7F938D4BF");
+
+            entity.ToTable("CartMaster", "INV");
+
+            entity.Property(e => e.CartId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsCheckedOut).HasDefaultValue(false);
+            entity.Property(e => e.SessionId)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<Category>(entity =>
         {
             entity.ToTable("Categories", "INV");
@@ -308,6 +373,48 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSents)
                 .HasForeignKey(d => d.EmailId)
                 .HasConstraintName("FK__CMSEmailS__Email__3E1D39E1");
+        });
+
+        modelBuilder.Entity<CollectionDetail>(entity =>
+        {
+            entity.HasKey(e => e.CollectionDetailId).HasName("PK__Collecti__944C6E15B085EF5D");
+
+            entity.ToTable("CollectionDetail", "INV");
+
+            entity.Property(e => e.CollectionDetailId).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.Collection).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.CollectionId)
+                .HasConstraintName("FK_CollectionDetail_CollectionMaster");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK_CollectionDetail_Product");
+
+            entity.HasOne(d => d.Variant).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.VariantId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_CollectionDetail_Variant");
+        });
+
+        modelBuilder.Entity<CollectionMaster>(entity =>
+        {
+            entity.HasKey(e => e.CollectionId).HasName("PK__Collecti__7DE6BC048291CABC");
+
+            entity.ToTable("CollectionMaster", "INV");
+
+            entity.Property(e => e.CollectionId).ValueGeneratedNever();
+            entity.Property(e => e.CollectionName)
+                .IsRequired()
+                .HasMaxLength(200);
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.EndDate).HasColumnType("datetime");
+            entity.Property(e => e.ImageUrl).HasMaxLength(500);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.StartDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Color>(entity =>
@@ -507,6 +614,76 @@ public partial class OneDb : DbContext
                 .HasColumnName("URL");
         });
 
+        modelBuilder.Entity<InvoiceDetail>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceDetailId).HasName("PK__InvoiceD__1F1578116FD47E47");
+
+            entity.ToTable("InvoiceDetail", "INV");
+
+            entity.Property(e => e.InvoiceDetailId).ValueGeneratedNever();
+            entity.Property(e => e.Discount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.Tax)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalAmount)
+                .HasComputedColumnSql("(([Quantity]*[UnitPrice]-[Discount])+[Tax])", true)
+                .HasColumnType("decimal(38, 4)");
+            entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.InvoiceMaster).WithMany(p => p.InvoiceDetails)
+                .HasForeignKey(d => d.InvoiceMasterId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__InvoiceDe__Invoi__725BF7F6");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.InvoiceDetails)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__InvoiceDe__Produ__73501C2F");
+
+            entity.HasOne(d => d.Variant).WithMany(p => p.InvoiceDetails)
+                .HasForeignKey(d => d.VariantId)
+                .HasConstraintName("FK__InvoiceDe__Varia__74444068");
+        });
+
+        modelBuilder.Entity<InvoiceMaster>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceMasterId).HasName("PK__InvoiceM__FD3450D12EF631B1");
+
+            entity.ToTable("InvoiceMaster", "INV");
+
+            entity.Property(e => e.InvoiceMasterId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DiscountAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.InvoiceDate).HasColumnType("datetime");
+            entity.Property(e => e.InvoiceNo)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NetAmount)
+                .HasComputedColumnSql("(([TotalAmount]-[DiscountAmount])+[TaxAmount])", true)
+                .HasColumnType("decimal(20, 2)");
+            entity.Property(e => e.PaymentMethod)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.PaymentStatus)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.TaxAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<LaneAddress>(entity =>
         {
             entity.HasKey(e => e.AddressId).HasName("PK__LaneAddr__091C2AFB0350FDCB");
@@ -569,7 +746,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-            entity.Property(e => e.Passwords).HasMaxLength(50);
+            entity.Property(e => e.Passwords).HasMaxLength(1000);
             entity.Property(e => e.UserName).HasMaxLength(50);
 
             entity.HasOne(d => d.Person).WithMany(p => p.LoginUsers)
@@ -626,6 +803,18 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.GroupName).HasMaxLength(255);
             entity.Property(e => e.Message).IsRequired();
+
+            entity.HasOne(d => d.NotificationType).WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.NotificationTypeId)
+                .HasConstraintName("FK_Notifications_NotificationTypes");
+        });
+
+        modelBuilder.Entity<NotificationType>(entity =>
+        {
+            entity.ToTable("NotificationTypes", "SYSTEM");
+
+            entity.Property(e => e.NotificationTypeId).ValueGeneratedNever();
+            entity.Property(e => e.NotificationTypeName).HasMaxLength(500);
         });
 
         modelBuilder.Entity<Organization>(entity =>
@@ -831,6 +1020,10 @@ public partial class OneDb : DbContext
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Supplier).WithMany(p => p.PurchaseMasters)
+                .HasForeignKey(d => d.SupplierId)
+                .HasConstraintName("FK_PurchaseMaster_Supplier");
         });
 
         modelBuilder.Entity<Review>(entity =>

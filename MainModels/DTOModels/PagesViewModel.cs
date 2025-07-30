@@ -11,6 +11,9 @@ namespace MainModels.DTOModels
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
         public AppConstants.PurchaseStatus PurchaseStatus { get; set; }
+        public List<CollectionMasterVM> Collections { get; set; }
+        public CollectionMasterVM Collection { get; set; }
+
         public List<PurchaseMasterVM> PurchaseMasters { get; set; }
         public PurchaseMasterVM PurchaseMaster { get; set; }
 
