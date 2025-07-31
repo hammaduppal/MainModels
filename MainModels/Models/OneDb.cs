@@ -385,10 +385,12 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Collection).WithMany(p => p.CollectionDetails)
                 .HasForeignKey(d => d.CollectionId)
-                .HasConstraintName("FK_CollectionDetail_CollectionMaster");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CollectionDetail_CollectionMaster1");
 
             entity.HasOne(d => d.Product).WithMany(p => p.CollectionDetails)
                 .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_CollectionDetail_Product");
 
             entity.HasOne(d => d.Variant).WithMany(p => p.CollectionDetails)

@@ -193,3 +193,70 @@ CREATE TABLE [INV].[CartDetail] (
 );
 ------------------------------------------------
 
+/****** Object:  Table [INV].[CollectionDetail]    Script Date: 30/07/2025 11:51:48 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [INV].[CollectionDetail](
+	[CollectionDetailId] [uniqueidentifier] NOT NULL,
+	[CollectionId] [uniqueidentifier] NOT NULL,
+	[ProductId] [uniqueidentifier]  NULL,
+	[VariantId] [uniqueidentifier] NULL,
+	[SortOrder] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CollectionDetailId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [INV].[CollectionMaster]    Script Date: 30/07/2025 11:51:48 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [INV].[CollectionMaster](
+	[CollectionId] [uniqueidentifier] NOT NULL,
+	[CollectionName] [nvarchar](200) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[ImageUrl] [nvarchar](500) NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CollectionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [INV].[CollectionDetail] ADD  DEFAULT (newid()) FOR [CollectionDetailId]
+GO
+ALTER TABLE [INV].[CollectionMaster] ADD  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [INV].[CollectionMaster] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [INV].[CollectionDetail]  WITH CHECK ADD  CONSTRAINT [FK_CollectionDetail_CollectionMaster1] FOREIGN KEY([CollectionId])
+REFERENCES [INV].[CollectionMaster] ([CollectionId])
+GO
+ALTER TABLE [INV].[CollectionDetail] CHECK CONSTRAINT [FK_CollectionDetail_CollectionMaster1]
+GO
+ALTER TABLE [INV].[CollectionDetail]  WITH CHECK ADD  CONSTRAINT [FK_CollectionDetail_Product] FOREIGN KEY([ProductId])
+REFERENCES [INV].[Products] ([ProductId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [INV].[CollectionDetail] CHECK CONSTRAINT [FK_CollectionDetail_Product]
+GO
+ALTER TABLE [INV].[CollectionDetail]  WITH CHECK ADD  CONSTRAINT [FK_CollectionDetail_Variant] FOREIGN KEY([VariantId])
+REFERENCES [INV].[ProductVariants] ([VariantId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [INV].[CollectionDetail] CHECK CONSTRAINT [FK_CollectionDetail_Variant]
+GO
+
+
+ALTER TABLE Inv.CollectionDetail
+ALTER COLUMN ProductId UNIQUEIDENTIFIER NULL;
