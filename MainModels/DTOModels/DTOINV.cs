@@ -110,6 +110,8 @@
         public decimal? PromotionPrice { get; set; }
 
         public decimal? RetailPrice { get; set; }
+        public decimal? CurrentPrice { get; set; }
+
         public int? MinQty { get; set; }
         public int? MaxQty { get; set; }
 
