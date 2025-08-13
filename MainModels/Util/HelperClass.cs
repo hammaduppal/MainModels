@@ -1,5 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using System;
+﻿using System;
+using System.Text.RegularExpressions;
+using MainModels.DTOModels;
 
 namespace MainModels.Util
 {
@@ -105,7 +106,22 @@ namespace MainModels.Util
             public int? CreatedBy { get; set; }
             public bool? IsDeleted { get; set; }
         }
-       
+     
     }
+    public static class RandomHelper
+    {
+        private static readonly Random random = new Random(); // stays alive while app runs
+        private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+        public static string GenerateRandomAlphaNumeric(int length = 8)
+        {
+            // Locking for thread-safety if multiple threads may call it
+            lock (random)
+            {
+                return new string(Enumerable.Repeat(chars, length)
+                    .Select(s => s[random.Next(s.Length)])
+                    .ToArray());
+            }
+        }
+    }
 }

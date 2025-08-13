@@ -43,11 +43,15 @@
          "ObjectType": 0
       },
       {
-         "Name": "[HRM].[Department]",
+         "Name": "[HRM].[Customers]",
          "ObjectType": 0
       },
       {
          "Name": "[HRM].[Employee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[EmployeeDepartments]",
          "ObjectType": 0
       },
       {

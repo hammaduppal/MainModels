@@ -55,11 +55,13 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Country> Countries { get; set; }
 
+    public virtual DbSet<Customer> Customers { get; set; }
+
     public virtual DbSet<Department> Departments { get; set; }
 
-    public virtual DbSet<Department1> Departments1 { get; set; }
-
     public virtual DbSet<Employee> Employees { get; set; }
+
+    public virtual DbSet<EmployeeDepartment> EmployeeDepartments { get; set; }
 
     public virtual DbSet<EmployeeDesignation> EmployeeDesignations { get; set; }
 
@@ -530,20 +532,22 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CountryName).HasMaxLength(1000);
         });
 
-        modelBuilder.Entity<Department>(entity =>
+        modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Departme__3214EC07EE22F026");
+            entity.ToTable("Customers", "HRM");
 
-            entity.ToTable("Department", "HRM");
+            entity.Property(e => e.CustomerId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.CustomerCode).HasMaxLength(50);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Title).HasMaxLength(50);
+            entity.HasOne(d => d.Person).WithMany(p => p.Customers)
+                .HasForeignKey(d => d.PersonId)
+                .HasConstraintName("FK_Customers_Persons");
         });
 
-        modelBuilder.Entity<Department1>(entity =>
+        modelBuilder.Entity<Department>(entity =>
         {
-            entity.HasKey(e => e.DepartmentId);
-
             entity.ToTable("Departments", "INV");
 
             entity.Property(e => e.DepartmentId).ValueGeneratedNever();
@@ -565,7 +569,7 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Department).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.DepartmentId)
-                .HasConstraintName("FK_Employee_Department");
+                .HasConstraintName("FK_Employee_EmployeeDepartments");
 
             entity.HasOne(d => d.Designation).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.DesignationId)
@@ -574,6 +578,14 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Person).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.PersonId)
                 .HasConstraintName("FK_Employee_Persons");
+        });
+
+        modelBuilder.Entity<EmployeeDepartment>(entity =>
+        {
+            entity.ToTable("EmployeeDepartments", "HRM");
+
+            entity.Property(e => e.EmployeeDepartmentId).ValueGeneratedNever();
+            entity.Property(e => e.Title).HasMaxLength(500);
         });
 
         modelBuilder.Entity<EmployeeDesignation>(entity =>

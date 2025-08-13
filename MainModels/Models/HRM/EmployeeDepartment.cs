@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace MainModels.Models;
 
-public partial class Department
+public partial class EmployeeDepartment
 {
-    public int Id { get; set; }
+    public int EmployeeDepartmentId { get; set; }
 
     public string Title { get; set; }
 

@@ -43,6 +43,7 @@ public partial class PurchaseMaster
 
     public int? OrganizationId { get; set; }
 
+    public Guid? ParentId { get; set; }
 
     public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
 

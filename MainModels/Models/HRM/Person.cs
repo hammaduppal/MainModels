@@ -37,6 +37,8 @@ public partial class Person
 
     public virtual Branch Branch { get; set; }
 
+    public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
+
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 
     public virtual ICollection<LaneAddress> LaneAddresses { get; set; } = new List<LaneAddress>();

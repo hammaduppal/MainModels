@@ -8,6 +8,7 @@ namespace MainModels.DTOModels
         public LoginUserVM LoginUser { get; set; }
         public List<RolesVM> Roles { get; set; }
         public List<CountryVM> Countries { get; set; }
+        public List<CustomerVM> Customers { get; set; }
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
         public AppConstants.PurchaseStatus PurchaseStatus { get; set; }

@@ -25,7 +25,7 @@ public partial class Category
 
     public string CategorySlug { get; set; }
 
-    public virtual Department1 Department { get; set; }
+    public virtual Department Department { get; set; }
 
     public virtual ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
 }

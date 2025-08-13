@@ -96,7 +96,8 @@ namespace MainModels.DTOModels
         public int? CreatedBy { get; set; }
 
         public bool? IsActive { get; set; }
-
+        public int CityId { get; set; }
+        public string? Address { get; set; }
         public Guid? BranchId { get; set; }
         //public string? BranchName { get; set; }
         //public string? BranchCode { get; set; }
@@ -195,5 +196,29 @@ namespace MainModels.DTOModels
         public bool? IsDeleted { get; set; }
         public PersonVM Person { get; set; }
 
+    }
+    public partial class CustomerVM
+    {
+        public Guid CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
+        public string CustomerCode { get; set; }
+
+        public int? PersonId { get; set; }
+
+        public bool? IsDeleted { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+
+        public int? Createdby { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public Guid? BranchId { get; set; }
+
+        public virtual PersonVM Person { get; set; }
     }
 }
