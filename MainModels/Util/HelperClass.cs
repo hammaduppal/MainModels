@@ -89,10 +89,10 @@ namespace MainModels.Util
                 BranchId= AppDataUtility.SessionUser.PersonVM.BranchId,
                 OrganizationId = AppDataUtility.SessionUser.PersonVM.Branch.Organization.OrganizationId,
                 CreatedBy = AppDataUtility.SessionUser.Id,
-                CreatedOn = DateTime.Now,
+                CreatedOn = DateTime.UtcNow,
                 IsActive = true,
                 IsDeleted = false,
-                ModifiedOn = DateTime.Now
+                ModifiedOn = DateTime.UtcNow
             };
         }
         public class CommonParams
