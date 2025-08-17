@@ -1,4 +1,5 @@
-﻿using MainModels.Util;
+﻿using MainModels.Models;
+using MainModels.Util;
 
 namespace MainModels.DTOModels
 {
@@ -9,6 +10,9 @@ namespace MainModels.DTOModels
         public List<RolesVM> Roles { get; set; }
         public List<CountryVM> Countries { get; set; }
         public List<CustomerVM> Customers { get; set; }
+        public List<EmployeeVM> Employees { get; set; }
+        public List<ServingTableVM> ServingTables { get; set; }
+        public List<PaymentMethodVM> PaymentMethods { get; set; }
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
         public AppConstants.PurchaseStatus PurchaseStatus { get; set; }
@@ -35,8 +39,8 @@ namespace MainModels.DTOModels
         public IEnumerable<OrganizationVM> Organizations { get; set; }
 
         public IEnumerable<BusinessCategoryVM> BusinessCategories { get; set; }
-      
-        public  DTOPermissionModels Permission { get; set; }
+
+        public DTOPermissionModels Permission { get; set; }
     }
     public class ThemeSettings
     {

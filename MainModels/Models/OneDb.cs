@@ -19,6 +19,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Brand> Brands { get; set; }
 
+    public virtual DbSet<Building> Buildings { get; set; }
+
     public virtual DbSet<BusinessCategory> BusinessCategories { get; set; }
 
     public virtual DbSet<BusinessEntityType> BusinessEntityTypes { get; set; }
@@ -69,6 +71,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<FileManager> FileManagers { get; set; }
 
+    public virtual DbSet<Floor> Floors { get; set; }
+
     public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
 
     public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
@@ -91,6 +95,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Organization> Organizations { get; set; }
 
+    public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+
     public virtual DbSet<Person> Persons { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
@@ -108,6 +114,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<Review> Reviews { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<ServingTable> ServingTables { get; set; }
 
     public virtual DbSet<Setting> Settings { get; set; }
 
@@ -190,6 +198,20 @@ public partial class OneDb : DbContext
             entity.Property(e => e.BrandSlug).HasMaxLength(500);
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<Building>(entity =>
+        {
+            entity.ToTable("Buildings", "AST");
+
+            entity.Property(e => e.BuildingId).ValueGeneratedNever();
+            entity.Property(e => e.BuildingName).HasMaxLength(500);
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.Buildings)
+                .HasForeignKey(d => d.BranchId)
+                .HasConstraintName("FK_Buildings_Branches");
         });
 
         modelBuilder.Entity<BusinessCategory>(entity =>
@@ -628,6 +650,20 @@ public partial class OneDb : DbContext
                 .HasColumnName("URL");
         });
 
+        modelBuilder.Entity<Floor>(entity =>
+        {
+            entity.ToTable("Floors", "AST");
+
+            entity.Property(e => e.FloorId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.FloorName).HasMaxLength(500);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Building).WithMany(p => p.Floors)
+                .HasForeignKey(d => d.BuildingId)
+                .HasConstraintName("FK_Floors_Buildings");
+        });
+
         modelBuilder.Entity<InvoiceDetail>(entity =>
         {
             entity.HasKey(e => e.InvoiceDetailId).HasName("PK__InvoiceD__1F1578116FD47E47");
@@ -684,9 +720,6 @@ public partial class OneDb : DbContext
             entity.Property(e => e.NetAmount)
                 .HasComputedColumnSql("(([TotalAmount]-[DiscountAmount])+[TaxAmount])", true)
                 .HasColumnType("decimal(20, 2)");
-            entity.Property(e => e.PaymentMethod)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.PaymentStatus)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -696,6 +729,10 @@ public partial class OneDb : DbContext
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.PaymentMethod).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.PaymentMethodId)
+                .HasConstraintName("FK_InvoiceMaster_PaymentMethods");
         });
 
         modelBuilder.Entity<LaneAddress>(entity =>
@@ -840,6 +877,15 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.OrganizationName).HasMaxLength(500);
+        });
+
+        modelBuilder.Entity<PaymentMethod>(entity =>
+        {
+            entity.ToTable("PaymentMethods", "Setup");
+
+            entity.Property(e => e.PaymentMethodId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("date");
+            entity.Property(e => e.Name).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Person>(entity =>
@@ -1071,6 +1117,18 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<ServingTable>(entity =>
+        {
+            entity.ToTable("ServingTables", "AST");
+
+            entity.Property(e => e.ServingTableId).ValueGeneratedNever();
+            entity.Property(e => e.TableName).HasMaxLength(50);
+
+            entity.HasOne(d => d.Floor).WithMany(p => p.ServingTables)
+                .HasForeignKey(d => d.FloorId)
+                .HasConstraintName("FK_ServingTables_Floors");
         });
 
         modelBuilder.Entity<Setting>(entity =>

@@ -221,4 +221,24 @@ namespace MainModels.DTOModels
 
         public virtual PersonVM Person { get; set; }
     }
+    public partial class EmployeeVM
+    {
+        public int EmployeeId { get; set; }
+
+        public string EmployeeCode { get; set; }
+
+        public int? DepartmentId { get; set; }
+
+        public int? DesignationId { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public int? PersonId { get; set; }
+
+        public bool? IsSalePerson { get; set; }
+
+        public virtual PersonVM Person { get; set; }
+    }
 }

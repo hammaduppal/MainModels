@@ -1,4 +1,5 @@
-﻿namespace MainModels.DTOModels
+﻿
+namespace MainModels.DTOModels
 {
     public class CategoryVM
     {
@@ -232,6 +233,9 @@
         public decimal GrandTotal { get; set; }
         public int SupplierId { get; set; }
         public Guid BranchId { get; set; }
+        public Guid? ServingTableId { get; set; }
+        public Guid? CustomerId { get; set; }
+        public int? PaymentMethodId { get; set; }
     }
 
     public class BillItems
@@ -247,6 +251,84 @@
     {
         public string SearchParams { get; set; }
     }
-   
+
+    public partial class PaymentMethodVM
+    {
+        public int PaymentMethodId { get; set; }
+
+        public string Name { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+    }
+    public partial class InvoiceMasterVM
+    {
+        public Guid InvoiceMasterId { get; set; }
+
+        public string InvoiceNo { get; set; }
+
+        public DateTime InvoiceDate { get; set; }
+
+        public Guid? CustomerId { get; set; }
+
+        public decimal TotalAmount { get; set; }
+
+        public decimal? DiscountAmount { get; set; }
+
+        public decimal? TaxAmount { get; set; }
+
+        public decimal? NetAmount { get; set; }
+
+        public int? PaymentMethodId { get; set; }
+
+        public string PaymentStatus { get; set; }
+
+        public string Remarks { get; set; }
+
+        public int? CreatedBy { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public int? UpdatedBy { get; set; }
+
+        public DateTime? UpdatedDate { get; set; }
+
+        public Guid? ServingTableId { get; set; }
+
+        public int? EmployeeId { get; set; }
+
+        public virtual ICollection<InvoiceDetailVM> InvoiceDetails { get; set; } = new List<InvoiceDetailVM>();
+
+        public virtual PaymentMethodVM PaymentMethod { get; set; }
+    }
+    public partial class InvoiceDetailVM
+    {
+        public Guid InvoiceDetailId { get; set; }
+
+        public Guid InvoiceMasterId { get; set; }
+
+        public Guid ProductId { get; set; }
+
+        public Guid? VariantId { get; set; }
+
+        public decimal Quantity { get; set; }
+
+        public decimal UnitPrice { get; set; }
+
+        public decimal? Discount { get; set; }
+
+        public decimal? Tax { get; set; }
+
+        public decimal? TotalAmount { get; set; }
+
+        public string Remarks { get; set; }
+
+        public virtual InvoiceMasterVM InvoiceMaster { get; set; }
+
+        public virtual ProductVM Product { get; set; }
+
+        public virtual ProductVariantVM Variant { get; set; }
+    }
 
 }

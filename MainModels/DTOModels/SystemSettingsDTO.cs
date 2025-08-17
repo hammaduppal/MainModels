@@ -15,7 +15,9 @@
                 CurrencyCode = "PKR",
                 CurrencySymbol = "₨",
                 DecimalPlaces = 2,
-                IsAffilatedInvoice = false,
+                IsAffilatedInvoice = true,
+                IsRestaurantApplication = true,
+                 
                 // Tax & Financial
                 EnableTax = true,
                 DefaultTaxRate = 17m, // 17% GST standard in Pakistan
@@ -82,6 +84,7 @@
     {
         // General Settings
         public string CompanyName { get; set; }
+        public bool IsRestaurantApplication { get; set; }
         public string CompanyLogoUrl { get; set; }
         public string DefaultLanguage { get; set; }
         public string TimeZone { get; set; }

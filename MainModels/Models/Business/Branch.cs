@@ -21,6 +21,8 @@ public partial class Branch
 
     public string BranchCode { get; set; }
 
+    public virtual ICollection<Building> Buildings { get; set; } = new List<Building>();
+
     public virtual BusinessCategory BusinessCategory { get; set; }
 
     public virtual BusinessStoreType BusinessCategoryNavigation { get; set; }

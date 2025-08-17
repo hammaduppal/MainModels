@@ -21,6 +21,8 @@ public partial class Employee
 
     public int? PersonId { get; set; }
 
+    public bool? IsSalePerson { get; set; }
+
     public virtual EmployeeDepartment Department { get; set; }
 
     public virtual EmployeeDesignation Designation { get; set; }
