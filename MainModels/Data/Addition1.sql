@@ -260,3 +260,113 @@ GO
 
 ALTER TABLE Inv.CollectionDetail
 ALTER COLUMN ProductId UNIQUEIDENTIFIER NULL;
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE Setup.AccountingPreferences
+(
+    FiscalYearStartMonth NVARCHAR(20) NULL,     -- e.g. "July"
+    FiscalYearEndMonth NVARCHAR(20) NULL,       -- e.g. "June"
+    FiscalYearStartDate DATE NULL,
+    FiscalYearEndDate DATE NULL,
+
+    EnableMultiCurrency BIT NOT NULL DEFAULT 0,
+    BaseCurrencyCode NVARCHAR(10) NULL,         -- e.g. "USD"
+    DefaultExchangeRateSource NVARCHAR(50) NULL, -- e.g. "ECB"
+
+    EnableAutomaticYearClosing BIT NOT NULL DEFAULT 0,
+    LockTransactionsAfterPeriodClose BIT NOT NULL DEFAULT 0,
+
+    DefaultSalesAccount NVARCHAR(100) NULL,
+    DefaultPurchaseAccount NVARCHAR(100) NULL,
+    DefaultTaxAccount NVARCHAR(100) NULL,
+
+    AllowBackDatedTransactions BIT NOT NULL DEFAULT 0
+);
+CREATE TABLE Setup.SystemPreferences
+(
+    -- General Settings
+    CompanyName NVARCHAR(200) NULL,
+    IsRestaurantApplication BIT NOT NULL DEFAULT 0,
+    CompanyLogoUrl NVARCHAR(500) NULL,
+    DefaultLanguage NVARCHAR(50) NULL,
+    TimeZone NVARCHAR(100) NULL,
+    DateFormat NVARCHAR(20) NULL,          -- e.g. "dd/MM/yyyy"
+    CurrencyCode NVARCHAR(10) NULL,        -- e.g. "USD"
+    CurrencySymbol NVARCHAR(10) NULL,      -- e.g. "$"
+    DecimalPlaces INT NOT NULL DEFAULT 2,
+    IsAffilatedInvoice BIT NOT NULL DEFAULT 0,
+
+    -- Tax & Financial
+    EnableTax BIT NOT NULL DEFAULT 0,
+    DefaultTaxRate DECIMAL(10,2) NULL,
+    TaxRegistrationNumber NVARCHAR(100) NULL,
+    PricesIncludeTax BIT NOT NULL DEFAULT 0,
+
+    -- Inventory & Sales
+    EnableInventoryTracking BIT NOT NULL DEFAULT 0,
+    DefaultWarehouse NVARCHAR(100) NULL,
+    LowStockThreshold INT NULL,
+    AllowNegativeStock BIT NOT NULL DEFAULT 0,
+
+    -- Invoice & Document Settings
+    InvoicePrefix NVARCHAR(20) NULL,
+    InvoiceStartNumber INT NULL,
+    QuotationPrefix NVARCHAR(20) NULL,
+    ReceiptPrefix NVARCHAR(20) NULL,
+    ShowLogoOnInvoices BIT NOT NULL DEFAULT 0,
+    ShowTaxBreakdown BIT NOT NULL DEFAULT 0,
+
+    -- User & Security
+    EnableTwoFactorAuth BIT NOT NULL DEFAULT 0,
+    SessionTimeoutMinutes INT NULL,
+    AllowMultipleLogins BIT NOT NULL DEFAULT 0,
+
+    -- Email & Communication
+    SmtpServer NVARCHAR(200) NULL,
+    SmtpPort INT NULL,
+    SmtpUserName NVARCHAR(200) NULL,
+    SmtpPassword NVARCHAR(200) NULL,
+    EnableSsl BIT NOT NULL DEFAULT 0,
+    DefaultFromEmail NVARCHAR(200) NULL,
+
+    -- Other Options
+    EnableAutoBackup BIT NOT NULL DEFAULT 0,
+    AutoBackupIntervalDays INT NULL,
+    BackupLocation NVARCHAR(500) NULL
+);
+
+-- Add primary key (GUID) and BranchId (GUID) to SystemPreferences
+ALTER TABLE Setup.SystemPreferences
+ADD SystemPreferenceId UNIQUEIDENTIFIER NOT NULL 
+      CONSTRAINT DF_SystemPreferences_Id DEFAULT NEWID(),
+    BranchId UNIQUEIDENTIFIER NOT NULL;
+
+ALTER TABLE Setup.SystemPreferences
+ADD CONSTRAINT PK_SystemPreferences_Id PRIMARY KEY (SystemPreferenceId);
+
+-- Add foreign key relation to Business.Branches
+ALTER TABLE Setup.SystemPreferences
+ADD CONSTRAINT FK_SystemPreferences_Branch FOREIGN KEY (BranchId) 
+    REFERENCES Business.Branches(BranchId);
+
+    ALTER TABLE Setup.SystemPreferences
+ADD SystemPreferenceId UNIQUEIDENTIFIER NOT NULL 
+      CONSTRAINT DF_SystemPreferences_Id DEFAULT NEWID(),
+    BranchId UNIQUEIDENTIFIER NOT NULL;
+
+ALTER TABLE Setup.SystemPreferences
+ADD CONSTRAINT PK_SystemPreferences_Id PRIMARY KEY (SystemPreferenceId);
+
+-- Add foreign key relation to Business.Branches
+ALTER TABLE Setup.SystemPreferences
+ADD CONSTRAINT FK_SystemPreferences_Branch FOREIGN KEY (BranchId) 
+    REFERENCES Business.Branches(BranchId);
+

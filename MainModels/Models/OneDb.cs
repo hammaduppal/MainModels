@@ -13,6 +13,8 @@ public partial class OneDb : DbContext
     {
     }
 
+    public virtual DbSet<AccountingPreference> AccountingPreferences { get; set; }
+
     public virtual DbSet<AssignedRole> AssignedRoles { get; set; }
 
     public virtual DbSet<Branch> Branches { get; set; }
@@ -129,6 +131,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<SupplierContact> SupplierContacts { get; set; }
 
+    public virtual DbSet<SystemPreference> SystemPreferences { get; set; }
+
     public virtual DbSet<Uom> Uoms { get; set; }
 
     public virtual DbSet<Uomsub> Uomsubs { get; set; }
@@ -143,6 +147,29 @@ public partial class OneDb : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AccountingPreference>(entity =>
+        {
+            entity.HasKey(e => e.AccountingPreferenceId).HasName("PK_AccountingPreferences_Id");
+
+            entity.ToTable("AccountingPreferences", "Setup");
+
+            entity.Property(e => e.AccountingPreferenceId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.BaseCurrencyCode).HasMaxLength(10);
+            entity.Property(e => e.DefaultExchangeRateSource).HasMaxLength(50);
+            entity.Property(e => e.DefaultPurchaseAccount).HasMaxLength(100);
+            entity.Property(e => e.DefaultSalesAccount).HasMaxLength(100);
+            entity.Property(e => e.DefaultTaxAccount).HasMaxLength(100);
+            entity.Property(e => e.FiscalYearEndDate).HasColumnType("date");
+            entity.Property(e => e.FiscalYearEndMonth).HasMaxLength(20);
+            entity.Property(e => e.FiscalYearStartDate).HasColumnType("date");
+            entity.Property(e => e.FiscalYearStartMonth).HasMaxLength(20);
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.AccountingPreferences)
+                .HasForeignKey(d => d.BranchId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AccountingPreferences_Branch");
+        });
+
         modelBuilder.Entity<AssignedRole>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Assigned__3214EC079F2A4CCC");
@@ -1215,6 +1242,39 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Supplier).WithMany(p => p.SupplierContacts)
                 .HasForeignKey(d => d.SupplierId)
                 .HasConstraintName("FK_SupplierContact_Supplier");
+        });
+
+        modelBuilder.Entity<SystemPreference>(entity =>
+        {
+            entity.HasKey(e => e.SystemPreferenceId).HasName("PK_SystemPreferences_Id");
+
+            entity.ToTable("SystemPreferences", "Setup");
+
+            entity.Property(e => e.SystemPreferenceId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.BackupLocation).HasMaxLength(500);
+            entity.Property(e => e.CompanyLogoUrl).HasMaxLength(500);
+            entity.Property(e => e.CompanyName).HasMaxLength(200);
+            entity.Property(e => e.CurrencyCode).HasMaxLength(10);
+            entity.Property(e => e.CurrencySymbol).HasMaxLength(10);
+            entity.Property(e => e.DateFormat).HasMaxLength(20);
+            entity.Property(e => e.DecimalPlaces).HasDefaultValue(2);
+            entity.Property(e => e.DefaultFromEmail).HasMaxLength(200);
+            entity.Property(e => e.DefaultLanguage).HasMaxLength(50);
+            entity.Property(e => e.DefaultTaxRate).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.DefaultWarehouse).HasMaxLength(100);
+            entity.Property(e => e.InvoicePrefix).HasMaxLength(20);
+            entity.Property(e => e.QuotationPrefix).HasMaxLength(20);
+            entity.Property(e => e.ReceiptPrefix).HasMaxLength(20);
+            entity.Property(e => e.SmtpPassword).HasMaxLength(200);
+            entity.Property(e => e.SmtpServer).HasMaxLength(200);
+            entity.Property(e => e.SmtpUserName).HasMaxLength(200);
+            entity.Property(e => e.TaxRegistrationNumber).HasMaxLength(100);
+            entity.Property(e => e.TimeZone).HasMaxLength(100);
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.SystemPreferences)
+                .HasForeignKey(d => d.BranchId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SystemPreferences_Branch");
         });
 
         modelBuilder.Entity<Uom>(entity =>

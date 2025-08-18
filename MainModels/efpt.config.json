@@ -195,7 +195,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Setup].[AccountingPreferences]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Setup].[PaymentMethods]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Setup].[SystemPreferences]",
          "ObjectType": 0
       },
       {

@@ -15,6 +15,8 @@ namespace MainModels.DTOModels
         public List<PaymentMethodVM> PaymentMethods { get; set; }
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
+        public SystemPreferencesVM SystemPreferences { get; set; }
+        public List<BranchVM> Branches { get; set; }
         public AppConstants.PurchaseStatus PurchaseStatus { get; set; }
         public List<CollectionMasterVM> Collections { get; set; }
         public CollectionMasterVM Collection { get; set; }

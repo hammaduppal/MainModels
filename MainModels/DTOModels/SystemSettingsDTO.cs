@@ -2,9 +2,9 @@
 {
     public class SystemSettingsDTO
     {
-        public static SystemPreferences GetSystemPreferences()
+        public static SystemPreferencesVM GetSystemPreferences()
         {
-            var systemPreferences = new SystemPreferences
+            var systemPreferences = new SystemPreferencesVM
             {
                 // General Settings
                 CompanyName = "Tech Solutions Pvt Ltd",
@@ -60,9 +60,9 @@
 
 
         }
-        public static AccountingPreferences GetAccountingPreferences()
+        public static AccountingPreferencesVM GetAccountingPreferences()
         {
-            return new AccountingPreferences
+            return new AccountingPreferencesVM
             {
                 FiscalYearStartMonth = "July",
                 FiscalYearEndMonth = "June",
@@ -80,10 +80,11 @@
             };
         }
     }
-    public class SystemPreferences
+    public class SystemPreferencesVM
     {
         // General Settings
         public string CompanyName { get; set; }
+        public Guid BranchId { get; set; }
         public bool IsRestaurantApplication { get; set; }
         public string CompanyLogoUrl { get; set; }
         public string DefaultLanguage { get; set; }
@@ -95,19 +96,19 @@
         public bool IsAffilatedInvoice { get; set; }
         // Tax & Financial
         public bool EnableTax { get; set; }
-        public decimal DefaultTaxRate { get; set; }
+        public decimal? DefaultTaxRate { get; set; }
         public string TaxRegistrationNumber { get; set; }
         public bool PricesIncludeTax { get; set; }
 
         // Inventory & Sales
         public bool EnableInventoryTracking { get; set; }
         public string DefaultWarehouse { get; set; }
-        public int LowStockThreshold { get; set; }
+        public int? LowStockThreshold { get; set; }
         public bool AllowNegativeStock { get; set; }
 
         // Invoice & Document Settings
         public string InvoicePrefix { get; set; } // e.g., "INV"
-        public int InvoiceStartNumber { get; set; }
+        public int? InvoiceStartNumber { get; set; }
         public string QuotationPrefix { get; set; }
         public string ReceiptPrefix { get; set; }
         public bool ShowLogoOnInvoices { get; set; }
@@ -115,12 +116,12 @@
 
         // User & Security
         public bool EnableTwoFactorAuth { get; set; }
-        public int SessionTimeoutMinutes { get; set; }
+        public int? SessionTimeoutMinutes { get; set; }
         public bool AllowMultipleLogins { get; set; }
 
         // Email & Communication
         public string SmtpServer { get; set; }
-        public int SmtpPort { get; set; }
+        public int? SmtpPort { get; set; }
         public string SmtpUserName { get; set; }
         public string SmtpPassword { get; set; }
         public bool EnableSsl { get; set; }
@@ -128,10 +129,10 @@
 
         // Other Options
         public bool EnableAutoBackup { get; set; }
-        public int AutoBackupIntervalDays { get; set; }
+        public int? AutoBackupIntervalDays { get; set; }
         public string BackupLocation { get; set; }
     }
-    public class AccountingPreferences
+    public class AccountingPreferencesVM
     {
         public string FiscalYearStartMonth { get; set; } // e.g., "July"
         public string FiscalYearEndMonth { get; set; }   // e.g., "June"
