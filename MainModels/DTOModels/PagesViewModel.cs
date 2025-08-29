@@ -16,6 +16,8 @@ namespace MainModels.DTOModels
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
         public SystemPreferencesVM SystemPreferences { get; set; }
+        public AccountingPreferencesVM AccountingPreferences { get; set; }
+
         public List<BranchVM> Branches { get; set; }
         public AppConstants.PurchaseStatus PurchaseStatus { get; set; }
         public List<CollectionMasterVM> Collections { get; set; }
@@ -100,6 +102,8 @@ namespace MainModels.DTOModels
         public int TotalProducts { get; set; }
         public int TotalVariants { get; set; }
         public int TotalUsers { get; set; }
+        public int TotalOrganizations { get; set; }
+        public int TotalBranches { get; set; }
     }
     public class SecretLock
     {

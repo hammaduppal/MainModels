@@ -147,6 +147,36 @@ namespace MainModels
                 throw new Exception($"Error retrieving max ID from {tableName}.", ex);
             }
         }
+        public async Task<int> ExecuteInsertQueryandParam(string query, object param = null)
+        {
+            try
+            {
+                using (var con = _dap.CreateConnection())
+                {
+                    if (con.State != ConnectionState.Open)
+                        con.Open();
+
+                    using (var transaction = con.BeginTransaction())
+                    {
+                        try
+                        {
+                            var rowsAffected = await con.ExecuteAsync(query, param, transaction);
+                            transaction.Commit();
+                            return rowsAffected; // number of rows inserted/updated/deleted
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error executing non-query (INSERT/UPDATE/DELETE).", ex);
+            }
+        }
 
     }
 

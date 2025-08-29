@@ -136,9 +136,9 @@
     {
         public string FiscalYearStartMonth { get; set; } // e.g., "July"
         public string FiscalYearEndMonth { get; set; }   // e.g., "June"
-        public DateTime FiscalYearStartDate { get; set; }
-        public DateTime FiscalYearEndDate { get; set; }
-
+        public DateTime? FiscalYearStartDate { get; set; }
+        public DateTime? FiscalYearEndDate { get; set; }
+        public Guid BranchId { get; set; }
         public bool EnableMultiCurrency { get; set; }
         public string BaseCurrencyCode { get; set; } // e.g., "USD"
         public string DefaultExchangeRateSource { get; set; } // e.g., "ECB"

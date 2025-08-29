@@ -7,6 +7,7 @@ namespace MainModels.Models;
 
 public partial class AccountingPreference
 {
+    
     public string FiscalYearStartMonth { get; set; }
 
     public string FiscalYearEndMonth { get; set; }
