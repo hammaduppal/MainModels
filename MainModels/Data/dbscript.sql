@@ -247,7 +247,7 @@ GO
 CREATE TABLE [HRM].[LoginUsers](
 	[Id] [int] NOT NULL,
 	[UserName] [nvarchar](50) NULL,
-	[Passwords] [nvarchar](50) NULL,
+	[Passwords] [nvarchar](500) NULL,
 	[PersonId] [int] NULL,
 	[SettingsId] [int] NULL,
 	[IsActive] [bit] NULL,

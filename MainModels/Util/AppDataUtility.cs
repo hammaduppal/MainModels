@@ -30,6 +30,9 @@ namespace MainModels.Util
                 }
             }
         }
+        public static SystemPreferencesVM SystemPreferences { get;set; }
+        public static AccountingPreferencesVM SystemSettings { get { return SystemSettingsDTO.GetAccountingPreferences(); } }
+
     }
 
 

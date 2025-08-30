@@ -33,7 +33,7 @@ namespace MainModels.DTOModels
         public Guid BranchId { get; set; }
 
         public string BranchName { get; set; }
-
+        public string OrganizationName { get; set; }
         public int? OrganizationId { get; set; }
 
         public short? BusinessCategoryId { get; set; }

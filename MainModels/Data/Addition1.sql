@@ -193,53 +193,180 @@ CREATE TABLE [INV].[CartDetail] (
 );
 ------------------------------------------------
 
-BEGIN TRY
-    BEGIN TRANSACTION;
-
-    -- Create CollectionMaster Table
-    CREATE TABLE [INV].[CollectionMaster]
-    (
-        CollectionId UNIQUEIDENTIFIER PRIMARY KEY,
-        CollectionName NVARCHAR(200) NOT NULL,
-        Description NVARCHAR(MAX) NULL,
-        ImageUrl NVARCHAR(500) NULL,
-        StartDate DATETIME NULL,
-        EndDate DATETIME NULL,
-        IsActive BIT NOT NULL DEFAULT 1,
-        CreatedBy UNIQUEIDENTIFIER NULL,
-        CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
-        UpdatedBy UNIQUEIDENTIFIER NULL,
-        UpdatedAt DATETIME NULL
-    );
-
-    -- Create CollectionDetail Table
-    CREATE TABLE [INV].[CollectionDetail]
+/****** Object:  Table [INV].[CollectionDetail]    Script Date: 30/07/2025 11:51:48 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [INV].[CollectionDetail](
+	[CollectionDetailId] [uniqueidentifier] NOT NULL,
+	[CollectionId] [uniqueidentifier] NOT NULL,
+	[ProductId] [uniqueidentifier]  NULL,
+	[VariantId] [uniqueidentifier] NULL,
+	[SortOrder] [int] NULL,
+PRIMARY KEY CLUSTERED 
 (
-    CollectionDetailId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    CollectionId UNIQUEIDENTIFIER NOT NULL,
-    ProductId UNIQUEIDENTIFIER NOT NULL,
-    VariantId UNIQUEIDENTIFIER NULL,
-    SortOrder INT NULL,
+	[CollectionDetailId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [INV].[CollectionMaster]    Script Date: 30/07/2025 11:51:48 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [INV].[CollectionMaster](
+	[CollectionId] [uniqueidentifier] NOT NULL,
+	[CollectionName] [nvarchar](200) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[ImageUrl] [nvarchar](500) NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CollectionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [INV].[CollectionDetail] ADD  DEFAULT (newid()) FOR [CollectionDetailId]
+GO
+ALTER TABLE [INV].[CollectionMaster] ADD  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [INV].[CollectionMaster] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [INV].[CollectionDetail]  WITH CHECK ADD  CONSTRAINT [FK_CollectionDetail_CollectionMaster1] FOREIGN KEY([CollectionId])
+REFERENCES [INV].[CollectionMaster] ([CollectionId])
+GO
+ALTER TABLE [INV].[CollectionDetail] CHECK CONSTRAINT [FK_CollectionDetail_CollectionMaster1]
+GO
+ALTER TABLE [INV].[CollectionDetail]  WITH CHECK ADD  CONSTRAINT [FK_CollectionDetail_Product] FOREIGN KEY([ProductId])
+REFERENCES [INV].[Products] ([ProductId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [INV].[CollectionDetail] CHECK CONSTRAINT [FK_CollectionDetail_Product]
+GO
+ALTER TABLE [INV].[CollectionDetail]  WITH CHECK ADD  CONSTRAINT [FK_CollectionDetail_Variant] FOREIGN KEY([VariantId])
+REFERENCES [INV].[ProductVariants] ([VariantId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [INV].[CollectionDetail] CHECK CONSTRAINT [FK_CollectionDetail_Variant]
+GO
 
-    CONSTRAINT FK_CollectionDetail_CollectionMaster FOREIGN KEY (CollectionId)
-        REFERENCES [INV].[CollectionMaster](CollectionId)
-        ON DELETE CASCADE,
 
-    CONSTRAINT FK_CollectionDetail_Product FOREIGN KEY (ProductId)
-        REFERENCES [INV].[Products](ProductId)
-        ON DELETE CASCADE,
+ALTER TABLE Inv.CollectionDetail
+ALTER COLUMN ProductId UNIQUEIDENTIFIER NULL;
 
-    CONSTRAINT FK_CollectionDetail_Variant FOREIGN KEY (VariantId)
-        REFERENCES [INV].[ProductVariants](VariantId)
-        ON DELETE CASCADE
+
+
+
+
+
+
+
+
+
+CREATE TABLE Setup.AccountingPreferences
+(
+    FiscalYearStartMonth NVARCHAR(20) NULL,     -- e.g. "July"
+    FiscalYearEndMonth NVARCHAR(20) NULL,       -- e.g. "June"
+    FiscalYearStartDate DATE NULL,
+    FiscalYearEndDate DATE NULL,
+
+    EnableMultiCurrency BIT NOT NULL DEFAULT 0,
+    BaseCurrencyCode NVARCHAR(10) NULL,         -- e.g. "USD"
+    DefaultExchangeRateSource NVARCHAR(50) NULL, -- e.g. "ECB"
+
+    EnableAutomaticYearClosing BIT NOT NULL DEFAULT 0,
+    LockTransactionsAfterPeriodClose BIT NOT NULL DEFAULT 0,
+
+    DefaultSalesAccount NVARCHAR(100) NULL,
+    DefaultPurchaseAccount NVARCHAR(100) NULL,
+    DefaultTaxAccount NVARCHAR(100) NULL,
+
+    AllowBackDatedTransactions BIT NOT NULL DEFAULT 0
+);
+CREATE TABLE Setup.SystemPreferences
+(
+    -- General Settings
+    CompanyName NVARCHAR(200) NULL,
+    IsRestaurantApplication BIT NOT NULL DEFAULT 0,
+    CompanyLogoUrl NVARCHAR(500) NULL,
+    DefaultLanguage NVARCHAR(50) NULL,
+    TimeZone NVARCHAR(100) NULL,
+    DateFormat NVARCHAR(20) NULL,          -- e.g. "dd/MM/yyyy"
+    CurrencyCode NVARCHAR(10) NULL,        -- e.g. "USD"
+    CurrencySymbol NVARCHAR(10) NULL,      -- e.g. "$"
+    DecimalPlaces INT NOT NULL DEFAULT 2,
+    IsAffilatedInvoice BIT NOT NULL DEFAULT 0,
+
+    -- Tax & Financial
+    EnableTax BIT NOT NULL DEFAULT 0,
+    DefaultTaxRate DECIMAL(10,2) NULL,
+    TaxRegistrationNumber NVARCHAR(100) NULL,
+    PricesIncludeTax BIT NOT NULL DEFAULT 0,
+
+    -- Inventory & Sales
+    EnableInventoryTracking BIT NOT NULL DEFAULT 0,
+    DefaultWarehouse NVARCHAR(100) NULL,
+    LowStockThreshold INT NULL,
+    AllowNegativeStock BIT NOT NULL DEFAULT 0,
+
+    -- Invoice & Document Settings
+    InvoicePrefix NVARCHAR(20) NULL,
+    InvoiceStartNumber INT NULL,
+    QuotationPrefix NVARCHAR(20) NULL,
+    ReceiptPrefix NVARCHAR(20) NULL,
+    ShowLogoOnInvoices BIT NOT NULL DEFAULT 0,
+    ShowTaxBreakdown BIT NOT NULL DEFAULT 0,
+
+    -- User & Security
+    EnableTwoFactorAuth BIT NOT NULL DEFAULT 0,
+    SessionTimeoutMinutes INT NULL,
+    AllowMultipleLogins BIT NOT NULL DEFAULT 0,
+
+    -- Email & Communication
+    SmtpServer NVARCHAR(200) NULL,
+    SmtpPort INT NULL,
+    SmtpUserName NVARCHAR(200) NULL,
+    SmtpPassword NVARCHAR(200) NULL,
+    EnableSsl BIT NOT NULL DEFAULT 0,
+    DefaultFromEmail NVARCHAR(200) NULL,
+
+    -- Other Options
+    EnableAutoBackup BIT NOT NULL DEFAULT 0,
+    AutoBackupIntervalDays INT NULL,
+    BackupLocation NVARCHAR(500) NULL
 );
 
+-- Add primary key (GUID) and BranchId (GUID) to SystemPreferences
+ALTER TABLE Setup.SystemPreferences
+ADD SystemPreferenceId UNIQUEIDENTIFIER NOT NULL 
+      CONSTRAINT DF_SystemPreferences_Id DEFAULT NEWID(),
+    BranchId UNIQUEIDENTIFIER NOT NULL;
 
-    COMMIT TRANSACTION;
-    PRINT 'Tables created successfully.';
-END TRY
-BEGIN CATCH
-    ROLLBACK TRANSACTION;
-    PRINT 'Error occurred. Transaction rolled back.';
-    PRINT ERROR_MESSAGE();
-END CATCH;
+ALTER TABLE Setup.SystemPreferences
+ADD CONSTRAINT PK_SystemPreferences_Id PRIMARY KEY (SystemPreferenceId);
+
+-- Add foreign key relation to Business.Branches
+ALTER TABLE Setup.SystemPreferences
+ADD CONSTRAINT FK_SystemPreferences_Branch FOREIGN KEY (BranchId) 
+    REFERENCES Business.Branches(BranchId);
+
+    ALTER TABLE Setup.SystemPreferences
+ADD SystemPreferenceId UNIQUEIDENTIFIER NOT NULL 
+      CONSTRAINT DF_SystemPreferences_Id DEFAULT NEWID(),
+    BranchId UNIQUEIDENTIFIER NOT NULL;
+
+ALTER TABLE Setup.SystemPreferences
+ADD CONSTRAINT PK_SystemPreferences_Id PRIMARY KEY (SystemPreferenceId);
+
+-- Add foreign key relation to Business.Branches
+ALTER TABLE Setup.SystemPreferences
+ADD CONSTRAINT FK_SystemPreferences_Branch FOREIGN KEY (BranchId) 
+    REFERENCES Business.Branches(BranchId);
+

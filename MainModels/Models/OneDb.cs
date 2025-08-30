@@ -13,11 +13,15 @@ public partial class OneDb : DbContext
     {
     }
 
+    public virtual DbSet<AccountingPreference> AccountingPreferences { get; set; }
+
     public virtual DbSet<AssignedRole> AssignedRoles { get; set; }
 
     public virtual DbSet<Branch> Branches { get; set; }
 
     public virtual DbSet<Brand> Brands { get; set; }
+
+    public virtual DbSet<Building> Buildings { get; set; }
 
     public virtual DbSet<BusinessCategory> BusinessCategories { get; set; }
 
@@ -55,17 +59,21 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Country> Countries { get; set; }
 
+    public virtual DbSet<Customer> Customers { get; set; }
+
     public virtual DbSet<Department> Departments { get; set; }
 
-    public virtual DbSet<Department1> Departments1 { get; set; }
-
     public virtual DbSet<Employee> Employees { get; set; }
+
+    public virtual DbSet<EmployeeDepartment> EmployeeDepartments { get; set; }
 
     public virtual DbSet<EmployeeDesignation> EmployeeDesignations { get; set; }
 
     public virtual DbSet<ErpPermission> ErpPermissions { get; set; }
 
     public virtual DbSet<FileManager> FileManagers { get; set; }
+
+    public virtual DbSet<Floor> Floors { get; set; }
 
     public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
 
@@ -89,6 +97,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Organization> Organizations { get; set; }
 
+    public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+
     public virtual DbSet<Person> Persons { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
@@ -107,6 +117,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
+    public virtual DbSet<ServingTable> ServingTables { get; set; }
+
     public virtual DbSet<Setting> Settings { get; set; }
 
     public virtual DbSet<Size> Sizes { get; set; }
@@ -118,6 +130,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
     public virtual DbSet<SupplierContact> SupplierContacts { get; set; }
+
+    public virtual DbSet<SystemPreference> SystemPreferences { get; set; }
 
     public virtual DbSet<Uom> Uoms { get; set; }
 
@@ -133,6 +147,29 @@ public partial class OneDb : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AccountingPreference>(entity =>
+        {
+            entity.HasKey(e => e.AccountingPreferenceId).HasName("PK_AccountingPreferences_Id");
+
+            entity.ToTable("AccountingPreferences", "Setup");
+
+            entity.Property(e => e.AccountingPreferenceId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.BaseCurrencyCode).HasMaxLength(10);
+            entity.Property(e => e.DefaultExchangeRateSource).HasMaxLength(50);
+            entity.Property(e => e.DefaultPurchaseAccount).HasMaxLength(100);
+            entity.Property(e => e.DefaultSalesAccount).HasMaxLength(100);
+            entity.Property(e => e.DefaultTaxAccount).HasMaxLength(100);
+            entity.Property(e => e.FiscalYearEndDate).HasColumnType("date");
+            entity.Property(e => e.FiscalYearEndMonth).HasMaxLength(20);
+            entity.Property(e => e.FiscalYearStartDate).HasColumnType("date");
+            entity.Property(e => e.FiscalYearStartMonth).HasMaxLength(20);
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.AccountingPreferences)
+                .HasForeignKey(d => d.BranchId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AccountingPreferences_Branch");
+        });
+
         modelBuilder.Entity<AssignedRole>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Assigned__3214EC079F2A4CCC");
@@ -188,6 +225,20 @@ public partial class OneDb : DbContext
             entity.Property(e => e.BrandSlug).HasMaxLength(500);
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<Building>(entity =>
+        {
+            entity.ToTable("Buildings", "AST");
+
+            entity.Property(e => e.BuildingId).ValueGeneratedNever();
+            entity.Property(e => e.BuildingName).HasMaxLength(500);
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.Buildings)
+                .HasForeignKey(d => d.BranchId)
+                .HasConstraintName("FK_Buildings_Branches");
         });
 
         modelBuilder.Entity<BusinessCategory>(entity =>
@@ -397,6 +448,30 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK_CollectionDetail_Variant");
         });
 
+        modelBuilder.Entity<CollectionDetail>(entity =>
+        {
+            entity.HasKey(e => e.CollectionDetailId).HasName("PK__Collecti__944C6E15B085EF5D");
+
+            entity.ToTable("CollectionDetail", "INV");
+
+            entity.Property(e => e.CollectionDetailId).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.Collection).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.CollectionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CollectionDetail_CollectionMaster1");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_CollectionDetail_Product");
+
+            entity.HasOne(d => d.Variant).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.VariantId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_CollectionDetail_Variant");
+        });
+
         modelBuilder.Entity<CollectionMaster>(entity =>
         {
             entity.HasKey(e => e.CollectionId).HasName("PK__Collecti__7DE6BC048291CABC");
@@ -528,20 +603,22 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CountryName).HasMaxLength(1000);
         });
 
-        modelBuilder.Entity<Department>(entity =>
+        modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Departme__3214EC07EE22F026");
+            entity.ToTable("Customers", "HRM");
 
-            entity.ToTable("Department", "HRM");
+            entity.Property(e => e.CustomerId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.CustomerCode).HasMaxLength(50);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Title).HasMaxLength(50);
+            entity.HasOne(d => d.Person).WithMany(p => p.Customers)
+                .HasForeignKey(d => d.PersonId)
+                .HasConstraintName("FK_Customers_Persons");
         });
 
-        modelBuilder.Entity<Department1>(entity =>
+        modelBuilder.Entity<Department>(entity =>
         {
-            entity.HasKey(e => e.DepartmentId);
-
             entity.ToTable("Departments", "INV");
 
             entity.Property(e => e.DepartmentId).ValueGeneratedNever();
@@ -563,7 +640,7 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Department).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.DepartmentId)
-                .HasConstraintName("FK_Employee_Department");
+                .HasConstraintName("FK_Employee_EmployeeDepartments");
 
             entity.HasOne(d => d.Designation).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.DesignationId)
@@ -572,6 +649,14 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Person).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.PersonId)
                 .HasConstraintName("FK_Employee_Persons");
+        });
+
+        modelBuilder.Entity<EmployeeDepartment>(entity =>
+        {
+            entity.ToTable("EmployeeDepartments", "HRM");
+
+            entity.Property(e => e.EmployeeDepartmentId).ValueGeneratedNever();
+            entity.Property(e => e.Title).HasMaxLength(500);
         });
 
         modelBuilder.Entity<EmployeeDesignation>(entity =>
@@ -612,6 +697,20 @@ public partial class OneDb : DbContext
             entity.Property(e => e.Url)
                 .HasMaxLength(1000)
                 .HasColumnName("URL");
+        });
+
+        modelBuilder.Entity<Floor>(entity =>
+        {
+            entity.ToTable("Floors", "AST");
+
+            entity.Property(e => e.FloorId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.FloorName).HasMaxLength(500);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Building).WithMany(p => p.Floors)
+                .HasForeignKey(d => d.BuildingId)
+                .HasConstraintName("FK_Floors_Buildings");
         });
 
         modelBuilder.Entity<InvoiceDetail>(entity =>
@@ -670,9 +769,6 @@ public partial class OneDb : DbContext
             entity.Property(e => e.NetAmount)
                 .HasComputedColumnSql("(([TotalAmount]-[DiscountAmount])+[TaxAmount])", true)
                 .HasColumnType("decimal(20, 2)");
-            entity.Property(e => e.PaymentMethod)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.PaymentStatus)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -682,6 +778,10 @@ public partial class OneDb : DbContext
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.PaymentMethod).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.PaymentMethodId)
+                .HasConstraintName("FK_InvoiceMaster_PaymentMethods");
         });
 
         modelBuilder.Entity<LaneAddress>(entity =>
@@ -746,7 +846,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-            entity.Property(e => e.Passwords).HasMaxLength(50);
+            entity.Property(e => e.Passwords).HasMaxLength(1000);
             entity.Property(e => e.UserName).HasMaxLength(50);
 
             entity.HasOne(d => d.Person).WithMany(p => p.LoginUsers)
@@ -826,6 +926,15 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.OrganizationName).HasMaxLength(500);
+        });
+
+        modelBuilder.Entity<PaymentMethod>(entity =>
+        {
+            entity.ToTable("PaymentMethods", "Setup");
+
+            entity.Property(e => e.PaymentMethodId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("date");
+            entity.Property(e => e.Name).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Person>(entity =>
@@ -1059,6 +1168,18 @@ public partial class OneDb : DbContext
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<ServingTable>(entity =>
+        {
+            entity.ToTable("ServingTables", "AST");
+
+            entity.Property(e => e.ServingTableId).ValueGeneratedNever();
+            entity.Property(e => e.TableName).HasMaxLength(50);
+
+            entity.HasOne(d => d.Floor).WithMany(p => p.ServingTables)
+                .HasForeignKey(d => d.FloorId)
+                .HasConstraintName("FK_ServingTables_Floors");
+        });
+
         modelBuilder.Entity<Setting>(entity =>
         {
             entity.HasKey(e => e.SettingsId).HasName("PK__Settings__991B19FC516B0BB6");
@@ -1143,6 +1264,39 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Supplier).WithMany(p => p.SupplierContacts)
                 .HasForeignKey(d => d.SupplierId)
                 .HasConstraintName("FK_SupplierContact_Supplier");
+        });
+
+        modelBuilder.Entity<SystemPreference>(entity =>
+        {
+            entity.HasKey(e => e.SystemPreferenceId).HasName("PK_SystemPreferences_Id");
+
+            entity.ToTable("SystemPreferences", "Setup");
+
+            entity.Property(e => e.SystemPreferenceId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.BackupLocation).HasMaxLength(500);
+            entity.Property(e => e.CompanyLogoUrl).HasMaxLength(500);
+            entity.Property(e => e.CompanyName).HasMaxLength(200);
+            entity.Property(e => e.CurrencyCode).HasMaxLength(10);
+            entity.Property(e => e.CurrencySymbol).HasMaxLength(10);
+            entity.Property(e => e.DateFormat).HasMaxLength(20);
+            entity.Property(e => e.DecimalPlaces).HasDefaultValue(2);
+            entity.Property(e => e.DefaultFromEmail).HasMaxLength(200);
+            entity.Property(e => e.DefaultLanguage).HasMaxLength(50);
+            entity.Property(e => e.DefaultTaxRate).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.DefaultWarehouse).HasMaxLength(100);
+            entity.Property(e => e.InvoicePrefix).HasMaxLength(20);
+            entity.Property(e => e.QuotationPrefix).HasMaxLength(20);
+            entity.Property(e => e.ReceiptPrefix).HasMaxLength(20);
+            entity.Property(e => e.SmtpPassword).HasMaxLength(200);
+            entity.Property(e => e.SmtpServer).HasMaxLength(200);
+            entity.Property(e => e.SmtpUserName).HasMaxLength(200);
+            entity.Property(e => e.TaxRegistrationNumber).HasMaxLength(100);
+            entity.Property(e => e.TimeZone).HasMaxLength(100);
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.SystemPreferences)
+                .HasForeignKey(d => d.BranchId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SystemPreferences_Branch");
         });
 
         modelBuilder.Entity<Uom>(entity =>

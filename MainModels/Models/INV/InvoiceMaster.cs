@@ -24,6 +24,7 @@ public partial class InvoiceMaster
     public decimal? NetAmount { get; set; }
 
     public string PaymentMethod { get; set; }
+    public int? PaymentMethodId { get; set; }
 
     public string PaymentStatus { get; set; }
 
@@ -37,5 +38,11 @@ public partial class InvoiceMaster
 
     public DateTime? UpdatedDate { get; set; }
 
+    public Guid? ServingTableId { get; set; }
+
+    public int? EmployeeId { get; set; }
+
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
+
+    public virtual PaymentMethod PaymentMethod { get; set; }
 }
