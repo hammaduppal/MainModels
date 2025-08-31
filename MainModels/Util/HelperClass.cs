@@ -86,8 +86,8 @@ namespace MainModels.Util
         {
             return new CommonParams
             {
-                BranchId= AppDataUtility.SessionUser.PersonVM.BranchId,
-                OrganizationId = AppDataUtility.SessionUser.PersonVM.Branch.Organization.OrganizationId,
+                BranchId= AppDataUtility.SessionUser.Person.BranchId,
+                OrganizationId = AppDataUtility.SessionUser.Person.Branch.Organization.OrganizationId,
                 CreatedBy = AppDataUtility.SessionUser.Id,
                 CreatedOn = DateTime.UtcNow,
                 IsActive = true,

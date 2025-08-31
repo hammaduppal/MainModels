@@ -15,7 +15,7 @@ public partial class Branch
 
     public short? BusinessCategoryId { get; set; }
 
-    public int? BusinessStoreTypeId { get; set; }
+    public short? BusinessStoreTypeId { get; set; }
 
     public short? BusinessEntityTypeId { get; set; }
 
@@ -27,9 +27,9 @@ public partial class Branch
 
     public virtual BusinessCategory BusinessCategory { get; set; }
 
-    public virtual BusinessStoreType BusinessCategoryNavigation { get; set; }
-
     public virtual BusinessEntityType BusinessEntityType { get; set; }
+
+    public virtual BusinessStoreType BusinessStoreType { get; set; }
 
     public virtual Organization Organization { get; set; }
 

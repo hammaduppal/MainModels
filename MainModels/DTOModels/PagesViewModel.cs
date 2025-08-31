@@ -37,6 +37,8 @@ namespace MainModels.DTOModels
         public List<ProductImageVM> ProductImages { get; set; }
         public List<BrandVM> Brands { get; set; }
         public ProductVM Product { get; set; }
+        public static List<SettingVM> Settings{ get; set; }
+
         public static DashBoardSettings DashBoardSetting { get; set; }
         public static SystemSettings SystemSettings { get; set; }
         public static ThemeSettings? ThemeSettings { get; set; }

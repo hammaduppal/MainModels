@@ -7,7 +7,7 @@ namespace MainModels.DTOModels
         public int Id { get; set; }
         public string UserName { get; set; }
 
-        public string Passwords { get; set; }
+        public string Password { get; set; }
         public string Profile { get; set; }
         public int? PersonId { get; set; }
 
@@ -25,7 +25,7 @@ namespace MainModels.DTOModels
         public ICollection<AssignedRoleVM>? AssignedRoles { get; set; }
     
         public List<RolesVM>? Roles { get; set; }
-        public PersonVM? PersonVM { get; set; }
+        public PersonVM? Person { get; set; }
         public Guid BusinessStoreId { get; set; }
     }
 
@@ -105,6 +105,7 @@ namespace MainModels.DTOModels
         public  BranchVM Branch{ get; set; }
         public List<LaneAddressVM> LaneAddress{ get; set; }
     }
+    
     public partial class LaneAddressVM
     {
         public int AddressId { get; set; }

@@ -370,3 +370,13 @@ ALTER TABLE Setup.SystemPreferences
 ADD CONSTRAINT FK_SystemPreferences_Branch FOREIGN KEY (BranchId) 
     REFERENCES Business.Branches(BranchId);
 
+    select * from SYSTEM.Settings
+	ALTER TABLE System.Settings
+Add  ApplicationURL NVARCHAR(1000);
+
+	ALTER TABLE System.Settings
+ALTER COLUMN ApplicationURL NVARCHAR(1000) NULL;
+	ALTER TABLE System.Settings
+ALTER COLUMN IsActive bit NULL;
+	ALTER TABLE System.Settings
+Add BranchId uniqueidentifier NULL;

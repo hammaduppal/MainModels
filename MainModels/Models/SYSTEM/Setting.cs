@@ -11,5 +11,13 @@ public partial class Setting
 
     public int? ApplicationId { get; set; }
 
+    public string ApplicationUrl { get; set; }
+
+    public bool? IsActive { get; set; }
+
+    public Guid? BranchId { get; set; }
+
+    public string ApplicationName { get; set; }
+
     public virtual ICollection<LoginUser> LoginUsers { get; set; } = new List<LoginUser>();
 }

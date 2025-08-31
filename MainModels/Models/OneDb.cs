@@ -203,13 +203,13 @@ public partial class OneDb : DbContext
                 .HasForeignKey(d => d.BusinessCategoryId)
                 .HasConstraintName("FK_Branches_BusinessCategory");
 
-            entity.HasOne(d => d.BusinessCategoryNavigation).WithMany(p => p.Branches)
-                .HasForeignKey(d => d.BusinessCategoryId)
-                .HasConstraintName("FK_Branches_BusinessStoreType");
-
             entity.HasOne(d => d.BusinessEntityType).WithMany(p => p.Branches)
                 .HasForeignKey(d => d.BusinessEntityTypeId)
                 .HasConstraintName("FK_Branches_BusinessEntityType");
+
+            entity.HasOne(d => d.BusinessStoreType).WithMany(p => p.Branches)
+                .HasForeignKey(d => d.BusinessStoreTypeId)
+                .HasConstraintName("FK_Branches_BusinessStoreType");
 
             entity.HasOne(d => d.Organization).WithMany(p => p.Branches)
                 .HasForeignKey(d => d.OrganizationId)
@@ -1165,6 +1165,10 @@ public partial class OneDb : DbContext
             entity.ToTable("Settings", "SYSTEM");
 
             entity.Property(e => e.SettingsId).ValueGeneratedNever();
+            entity.Property(e => e.ApplicationName).HasMaxLength(1000);
+            entity.Property(e => e.ApplicationUrl)
+                .HasMaxLength(1000)
+                .HasColumnName("ApplicationURL");
         });
 
         modelBuilder.Entity<Size>(entity =>
