@@ -824,7 +824,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-            entity.Property(e => e.Passwords).HasMaxLength(1000);
+            entity.Property(e => e.Password).HasMaxLength(1000);
             entity.Property(e => e.UserName).HasMaxLength(50);
 
             entity.HasOne(d => d.Person).WithMany(p => p.LoginUsers)
