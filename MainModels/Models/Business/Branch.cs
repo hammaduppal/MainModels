@@ -23,6 +23,8 @@ public partial class Branch
 
     public virtual ICollection<AccountingPreference> AccountingPreferences { get; set; } = new List<AccountingPreference>();
 
+    public virtual ICollection<BranchStock> BranchStocks { get; set; } = new List<BranchStock>();
+
     public virtual ICollection<Building> Buildings { get; set; } = new List<Building>();
 
     public virtual BusinessCategory BusinessCategory { get; set; }

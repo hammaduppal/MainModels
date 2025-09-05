@@ -19,6 +19,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Branch> Branches { get; set; }
 
+    public virtual DbSet<BranchStock> BranchStocks { get; set; }
+
     public virtual DbSet<Brand> Brands { get; set; }
 
     public virtual DbSet<Building> Buildings { get; set; }
@@ -214,6 +216,37 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Organization).WithMany(p => p.Branches)
                 .HasForeignKey(d => d.OrganizationId)
                 .HasConstraintName("FK_Branches_Organizations");
+        });
+
+        modelBuilder.Entity<BranchStock>(entity =>
+        {
+            entity.HasKey(e => e.BranchStockId).HasName("PK__BranchSt__13C9002F0FFED5A1");
+
+            entity.ToTable("BranchStock", "INV");
+
+            entity.HasIndex(e => e.BranchId, "IX_BranchStock_Branch");
+
+            entity.HasIndex(e => e.ProductVariantId, "IX_BranchStock_ProductVariant");
+
+            entity.Property(e => e.BranchStockId).ValueGeneratedNever();
+            entity.Property(e => e.Cost).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.PromotionPrice).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Qty).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.RetailPrice).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.SalePrice).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.StaffPrice).HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.BranchStocks)
+                .HasForeignKey(d => d.BranchId)
+                .HasConstraintName("FK_BranchStock_Branch");
+
+            entity.HasOne(d => d.ProductVariant).WithMany(p => p.BranchStocks)
+                .HasForeignKey(d => d.ProductVariantId)
+                .HasConstraintName("FK_BranchStock_ProductVariant");
         });
 
         modelBuilder.Entity<Brand>(entity =>
@@ -675,6 +708,10 @@ public partial class OneDb : DbContext
             entity.Property(e => e.Url)
                 .HasMaxLength(1000)
                 .HasColumnName("URL");
+
+            entity.HasOne(d => d.Content).WithMany(p => p.FileManagers)
+                .HasForeignKey(d => d.ContentId)
+                .HasConstraintName("FK_FileManager_Content");
         });
 
         modelBuilder.Entity<Floor>(entity =>

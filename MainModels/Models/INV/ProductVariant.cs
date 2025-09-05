@@ -61,6 +61,8 @@ public partial class ProductVariant
 
     public int? OrganizationId { get; set; }
 
+    public virtual ICollection<BranchStock> BranchStocks { get; set; } = new List<BranchStock>();
+
     public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
 
     public virtual ICollection<CollectionDetail> CollectionDetails { get; set; } = new List<CollectionDetail>();
