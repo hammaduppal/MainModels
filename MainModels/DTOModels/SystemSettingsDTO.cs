@@ -2,64 +2,6 @@
 {
     public class SystemSettingsDTO
     {
-        public static SystemPreferencesVM GetSystemPreferences()
-        {
-            var systemPreferences = new SystemPreferencesVM
-            {
-                // General Settings
-                CompanyName = "Tech Solutions Pvt Ltd",
-                CompanyLogoUrl = "/images/logo.png",
-                DefaultLanguage = "en",
-                TimeZone = "Asia/Karachi",
-                DateFormat = "dd/MM/yyyy",
-                CurrencyCode = "PKR",
-                CurrencySymbol = "₨",
-                DecimalPlaces = 2,
-                IsAffilatedInvoice = true,
-                IsRestaurantApplication = true,
-                 
-                // Tax & Financial
-                EnableTax = true,
-                DefaultTaxRate = 17m, // 17% GST standard in Pakistan
-                TaxRegistrationNumber = "1234567-8",
-                PricesIncludeTax = false,
-
-                // Inventory & Sales
-                EnableInventoryTracking = true,
-                DefaultWarehouse = "Main Warehouse - Islamabad",
-                LowStockThreshold = 10,
-                AllowNegativeStock = false,
-
-                // Invoice & Document Settings
-                InvoicePrefix = "INV",
-                InvoiceStartNumber = 1001,
-                QuotationPrefix = "QTN",
-                ReceiptPrefix = "RCT",
-                ShowLogoOnInvoices = true,
-                ShowTaxBreakdown = true,
-
-                // User & Security
-                EnableTwoFactorAuth = false,
-                SessionTimeoutMinutes = 30,
-                AllowMultipleLogins = true,
-
-                // Email & Communication
-                SmtpServer = "smtp.gmail.com",
-                SmtpPort = 587,
-                SmtpUserName = "noreply@techsolutions.com",
-                SmtpPassword = "password123", // dummy password
-                EnableSsl = true,
-                DefaultFromEmail = "noreply@techsolutions.com",
-
-                // Other Options
-                EnableAutoBackup = true,
-                AutoBackupIntervalDays = 7,
-                BackupLocation = "D:\\ERP_Backups"
-            };
-            return systemPreferences;
-
-
-        }
         public static AccountingPreferencesVM GetAccountingPreferences()
         {
             return new AccountingPreferencesVM
@@ -152,5 +94,18 @@
 
         public bool AllowBackDatedTransactions { get; set; }
     }
+    public partial class SettingVM
+    {
+        public int SettingsId { get; set; }
 
+        public int? ApplicationId { get; set; }
+
+        public string ApplicationUrl { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public Guid? BranchId { get; set; }
+        public string ApplicationName { get; set; }
+
+    }
 }

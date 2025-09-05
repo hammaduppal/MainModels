@@ -16,4 +16,6 @@ public partial class FileManager
     public int? Priority { get; set; }
 
     public int? ContentId { get; set; }
+
+    public virtual Content Content { get; set; }
 }

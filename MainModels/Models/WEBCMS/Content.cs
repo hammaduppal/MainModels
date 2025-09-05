@@ -71,6 +71,8 @@ public partial class Content
 
     public virtual ContentType ContentType { get; set; }
 
+    public virtual ICollection<FileManager> FileManagers { get; set; } = new List<FileManager>();
+
     public virtual ICollection<LinkedContentItem> LinkedContentItemContents { get; set; } = new List<LinkedContentItem>();
 
     public virtual ICollection<LinkedContentItem> LinkedContentItemLinkedContents { get; set; } = new List<LinkedContentItem>();

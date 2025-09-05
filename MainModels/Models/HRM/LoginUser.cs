@@ -11,7 +11,7 @@ public partial class LoginUser
 
     public string UserName { get; set; }
 
-    public string Passwords { get; set; }
+    public string Password { get; set; }
 
     public int? PersonId { get; set; }
 

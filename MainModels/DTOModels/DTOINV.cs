@@ -330,5 +330,33 @@ namespace MainModels.DTOModels
 
         public virtual ProductVariantVM Variant { get; set; }
     }
+    public partial class BranchStock
+    {
+        public Guid BranchStockId { get; set; }
+
+        public Guid? ProductVariantId { get; set; }
+
+        public Guid? BranchId { get; set; }
+
+        public decimal? SalePrice { get; set; }
+
+        public decimal? RetailPrice { get; set; }
+
+        public decimal? PromotionPrice { get; set; }
+
+        public decimal? StaffPrice { get; set; }
+
+        public decimal? Cost { get; set; }
+
+        public decimal Qty { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public int? CreatedBy { get; set; }
+    }
 
 }

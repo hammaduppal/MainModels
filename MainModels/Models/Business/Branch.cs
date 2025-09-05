@@ -15,7 +15,7 @@ public partial class Branch
 
     public short? BusinessCategoryId { get; set; }
 
-    public int? BusinessStoreTypeId { get; set; }
+    public short? BusinessStoreTypeId { get; set; }
 
     public short? BusinessEntityTypeId { get; set; }
 
@@ -23,13 +23,15 @@ public partial class Branch
 
     public virtual ICollection<AccountingPreference> AccountingPreferences { get; set; } = new List<AccountingPreference>();
 
+    public virtual ICollection<BranchStock> BranchStocks { get; set; } = new List<BranchStock>();
+
     public virtual ICollection<Building> Buildings { get; set; } = new List<Building>();
 
     public virtual BusinessCategory BusinessCategory { get; set; }
 
-    public virtual BusinessStoreType BusinessCategoryNavigation { get; set; }
-
     public virtual BusinessEntityType BusinessEntityType { get; set; }
+
+    public virtual BusinessStoreType BusinessStoreType { get; set; }
 
     public virtual Organization Organization { get; set; }
 
