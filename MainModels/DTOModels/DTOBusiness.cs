@@ -31,6 +31,7 @@ namespace MainModels.DTOModels
     public partial class BranchVM
     {
         public Guid BranchId { get; set; }
+        public bool? IsMasterBranch { get; set; }
 
         public string BranchName { get; set; }
         public string OrganizationName { get; set; }

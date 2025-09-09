@@ -33,6 +33,8 @@ public partial class BranchStock
 
     public int? CreatedBy { get; set; }
 
+    public DateTime? LastSold { get; set; }
+
     public virtual Branch Branch { get; set; }
 
     public virtual ProductVariant ProductVariant { get; set; }

@@ -153,7 +153,8 @@ namespace MainModels.DTOModels
         public MaterialVM Material { get; set; }
         public SizeVM Size { get; set; }
         public bool? IsSerial { get; set; }
-
+        public List<BranchStockVM> BranchStock { get; set; }
+        public List<BranchVM> AllowedBranches { get; set; }
 
     }
 
@@ -330,7 +331,7 @@ namespace MainModels.DTOModels
 
         public virtual ProductVariantVM Variant { get; set; }
     }
-    public partial class BranchStock
+    public partial class BranchStockVM
     {
         public Guid BranchStockId { get; set; }
 

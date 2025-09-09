@@ -200,6 +200,7 @@ public partial class OneDb : DbContext
                 .HasMaxLength(500)
                 .IsUnicode(false);
             entity.Property(e => e.BranchName).HasMaxLength(500);
+            entity.Property(e => e.IsMasterBranch).HasDefaultValue(false);
 
             entity.HasOne(d => d.BusinessCategory).WithMany(p => p.Branches)
                 .HasForeignKey(d => d.BusinessCategoryId)
@@ -234,6 +235,7 @@ public partial class OneDb : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.LastSold).HasColumnType("datetime");
             entity.Property(e => e.PromotionPrice).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Qty).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.RetailPrice).HasColumnType("decimal(18, 2)");
@@ -1054,16 +1056,10 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.VariantId).ValueGeneratedNever();
             entity.Property(e => e.BarCode).HasMaxLength(500);
-            entity.Property(e => e.Cost).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.LastPurchase).HasColumnType("datetime");
-            entity.Property(e => e.LastSold).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-            entity.Property(e => e.PromotionPrice).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.QoH).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.QuantityPerUnit).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.RetailPrice).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.SalesPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.SubUomid).HasColumnName("SubUOMId");
 
             entity.HasOne(d => d.Color).WithMany(p => p.ProductVariants)

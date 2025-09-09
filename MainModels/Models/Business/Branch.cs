@@ -21,6 +21,8 @@ public partial class Branch
 
     public string BranchCode { get; set; }
 
+    public bool? IsMasterBranch { get; set; }
+
     public virtual ICollection<AccountingPreference> AccountingPreferences { get; set; } = new List<AccountingPreference>();
 
     public virtual ICollection<BranchStock> BranchStocks { get; set; } = new List<BranchStock>();
