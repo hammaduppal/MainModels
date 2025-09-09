@@ -1,4 +1,6 @@
 ﻿
+using MainModels.Models;
+
 namespace MainModels.DTOModels
 {
     public class CategoryVM
@@ -92,7 +94,9 @@ namespace MainModels.DTOModels
     public partial class ProductVariantVM
     {
         public Guid VariantId { get; set; }
-
+        public Guid? TaxSlabId { get; set; }
+        public decimal TaxRate { get; set; }
+        
         public Guid? MaterialId { get; set; }
 
         public Guid? ColorId { get; set; }
@@ -270,7 +274,7 @@ namespace MainModels.DTOModels
         public string InvoiceNo { get; set; }
 
         public DateTime InvoiceDate { get; set; }
-
+        public int InvoiceSourceId { get; set; }
         public Guid? CustomerId { get; set; }
 
         public decimal TotalAmount { get; set; }
@@ -358,6 +362,21 @@ namespace MainModels.DTOModels
         public DateTime CreatedOn { get; set; }
 
         public int? CreatedBy { get; set; }
+    }
+    public partial class InvoiceSourceVM
+    {
+        public int InvoiceSourceId { get; set; }
+
+        public string SourceName { get; set; }
+
+        public string Description { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
     }
 
 }

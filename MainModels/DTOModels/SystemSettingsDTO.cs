@@ -108,4 +108,18 @@
         public string ApplicationName { get; set; }
 
     }
+    public partial class TaxSlabVM
+    {
+        public Guid TaxSlabId { get; set; }
+
+        public string SlabName { get; set; }
+
+        public decimal Rate { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+    }
 }

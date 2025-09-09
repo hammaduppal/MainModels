@@ -151,6 +151,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[INV].[InvoiceSources]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[INV].[Material]",
          "ObjectType": 0
       },
@@ -232,6 +236,10 @@
       },
       {
          "Name": "[SYSTEM].[Settings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[TaxSlabs]",
          "ObjectType": 0
       },
       {

@@ -974,3 +974,22 @@ update inv.brands set ModifiedOn=getdate()
 update inv.brands set createdon=getdate()
 update inv.brands set isdeleted = 0
 update inv.brands set isactive =1
+
+
+
+
+INSERT INTO INV.InvoiceSources (SourceName, Description)
+VALUES 
+(N'POS', N'Point of Sale'),
+(N'Online', N'Online Order'),
+(N'WebOrder', N'Website Order'),
+(N'CallOrder', N'Call-based Order');
+
+
+INSERT INTO System.TaxSlabs (SlabName, Rate) VALUES
+(N'Standard GST 18%', 18.00),
+(N'Service Tax 15%', 15.00),
+(N'Luxury Tax 20%', 20.00),
+(N'Engine <1500cc', 12.00),
+(N'Engine 1500-1800cc', 18.00),
+(N'Engine >2000cc', 25.00);

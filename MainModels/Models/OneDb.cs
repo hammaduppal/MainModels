@@ -81,6 +81,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
 
+    public virtual DbSet<InvoiceSource> InvoiceSources { get; set; }
+
     public virtual DbSet<LaneAddress> LaneAddresses { get; set; }
 
     public virtual DbSet<LinkedContentItem> LinkedContentItems { get; set; }
@@ -134,6 +136,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<SupplierContact> SupplierContacts { get; set; }
 
     public virtual DbSet<SystemPreference> SystemPreferences { get; set; }
+
+    public virtual DbSet<TaxSlab> TaxSlabs { get; set; }
 
     public virtual DbSet<Uom> Uoms { get; set; }
 
@@ -796,9 +800,30 @@ public partial class OneDb : DbContext
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
+            entity.HasOne(d => d.InvoiceSource).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.InvoiceSourceId)
+                .HasConstraintName("FK_Invoices_InvoiceSources");
+
             entity.HasOne(d => d.PaymentMethod).WithMany(p => p.InvoiceMasters)
                 .HasForeignKey(d => d.PaymentMethodId)
                 .HasConstraintName("FK_InvoiceMaster_PaymentMethods");
+        });
+
+        modelBuilder.Entity<InvoiceSource>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceSourceId).HasName("PK__InvoiceS__F401E9D338EDE6C9");
+
+            entity.ToTable("InvoiceSources", "INV");
+
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.SourceName)
+                .IsRequired()
+                .HasMaxLength(100);
         });
 
         modelBuilder.Entity<LaneAddress>(entity =>
@@ -1081,6 +1106,10 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.SubUom).WithMany(p => p.ProductVariants)
                 .HasForeignKey(d => d.SubUomid)
                 .HasConstraintName("FK_ProductVariants_UOMSub1");
+
+            entity.HasOne(d => d.TaxSlab).WithMany(p => p.ProductVariants)
+                .HasForeignKey(d => d.TaxSlabId)
+                .HasConstraintName("FK_ProductVariants_TaxSlabs");
         });
 
         modelBuilder.Entity<PurchaseDetail>(entity =>
@@ -1312,6 +1341,24 @@ public partial class OneDb : DbContext
                 .HasForeignKey(d => d.BranchId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SystemPreferences_Branch");
+        });
+
+        modelBuilder.Entity<TaxSlab>(entity =>
+        {
+            entity.HasKey(e => e.TaxSlabId).HasName("PK__TaxSlabs__4DA9C7B314BCC7A6");
+
+            entity.ToTable("TaxSlabs", "SYSTEM");
+
+            entity.Property(e => e.TaxSlabId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.Rate).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.SlabName)
+                .IsRequired()
+                .HasMaxLength(200);
         });
 
         modelBuilder.Entity<Uom>(entity =>

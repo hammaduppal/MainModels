@@ -41,7 +41,11 @@ public partial class InvoiceMaster
 
     public int? EmployeeId { get; set; }
 
+    public int? InvoiceSourceId { get; set; }
+
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
+
+    public virtual InvoiceSource InvoiceSource { get; set; }
 
     public virtual PaymentMethod PaymentMethod { get; set; }
 }
