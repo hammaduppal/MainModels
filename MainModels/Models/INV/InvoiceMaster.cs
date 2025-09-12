@@ -36,8 +36,6 @@ public partial class InvoiceMaster
     public decimal GrandTotal { get; set; }
 
     public string CustomerRemarks { get; set; }
-    public string PaymentMethod { get; set; }
-    public int? PaymentMethodId { get; set; }
 
     public string OfficeRemarks { get; set; }
 
