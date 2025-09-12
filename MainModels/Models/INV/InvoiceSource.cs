@@ -18,6 +18,4 @@ public partial class InvoiceSource
     public DateTime CreatedOn { get; set; }
 
     public DateTime? ModifiedOn { get; set; }
-
-    public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; } = new List<InvoiceMaster>();
 }

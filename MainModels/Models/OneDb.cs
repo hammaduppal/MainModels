@@ -103,6 +103,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
 
+    public virtual DbSet<PaymentStatus> PaymentStatuses { get; set; }
+
     public virtual DbSet<Person> Persons { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
@@ -124,6 +126,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<ServingTable> ServingTables { get; set; }
 
     public virtual DbSet<Setting> Settings { get; set; }
+
+    public virtual DbSet<ShippingType> ShippingTypes { get; set; }
 
     public virtual DbSet<Size> Sizes { get; set; }
 
@@ -736,77 +740,97 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<InvoiceDetail>(entity =>
         {
-            entity.HasKey(e => e.InvoiceDetailId).HasName("PK__InvoiceD__1F1578116FD47E47");
+            entity.HasKey(e => e.InvoiceDetailId).HasName("PK__InvoiceD__1F15781148657E0E");
 
             entity.ToTable("InvoiceDetail", "INV");
 
+            entity.HasIndex(e => e.ProductId, "IX_InvoiceDetail_ProductId");
+
+            entity.HasIndex(e => e.VariantId, "IX_InvoiceDetail_VariantId");
+
             entity.Property(e => e.InvoiceDetailId).ValueGeneratedNever();
-            entity.Property(e => e.Discount)
-                .HasDefaultValue(0m)
-                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Discount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.LineTotal).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.LineTotalWithTax).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Remarks).HasMaxLength(500);
-            entity.Property(e => e.Tax)
-                .HasDefaultValue(0m)
-                .HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.TotalAmount)
-                .HasComputedColumnSql("(([Quantity]*[UnitPrice]-[Discount])+[Tax])", true)
-                .HasColumnType("decimal(38, 4)");
+            entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TaxRate).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
 
             entity.HasOne(d => d.InvoiceMaster).WithMany(p => p.InvoiceDetails)
                 .HasForeignKey(d => d.InvoiceMasterId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__InvoiceDe__Invoi__725BF7F6");
+                .HasConstraintName("FK_InvoiceDetail_InvoiceMaster");
 
             entity.HasOne(d => d.Product).WithMany(p => p.InvoiceDetails)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__InvoiceDe__Produ__73501C2F");
+                .HasConstraintName("FK_InvoiceDetail_Product");
 
             entity.HasOne(d => d.Variant).WithMany(p => p.InvoiceDetails)
                 .HasForeignKey(d => d.VariantId)
-                .HasConstraintName("FK__InvoiceDe__Varia__74444068");
+                .HasConstraintName("FK_InvoiceDetail_Variant");
         });
 
         modelBuilder.Entity<InvoiceMaster>(entity =>
         {
-            entity.HasKey(e => e.InvoiceMasterId).HasName("PK__InvoiceM__FD3450D12EF631B1");
+            entity.HasKey(e => e.InvoiceMasterId).HasName("PK__InvoiceM__FD3450D199F346FC");
 
             entity.ToTable("InvoiceMaster", "INV");
+
+            entity.HasIndex(e => e.CustomerId, "IX_InvoiceMaster_CustomerId");
+
+            entity.HasIndex(e => e.InvoiceDate, "IX_InvoiceMaster_Date");
+
+            entity.HasIndex(e => e.EmployeeId, "IX_InvoiceMaster_EmployeeId");
+
+            entity.HasIndex(e => e.InvoiceNo, "UQ__InvoiceM__D796B2274B25F659").IsUnique();
 
             entity.Property(e => e.InvoiceMasterId).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.DiscountAmount)
-                .HasDefaultValue(0m)
-                .HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.InvoiceDate).HasColumnType("datetime");
+            entity.Property(e => e.CustomerRemarks).HasMaxLength(500);
+            entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.GrandTotal).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.InvoiceDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.InvoiceNo)
                 .IsRequired()
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.NetAmount)
-                .HasComputedColumnSql("(([TotalAmount]-[DiscountAmount])+[TaxAmount])", true)
-                .HasColumnType("decimal(20, 2)");
-            entity.Property(e => e.PaymentStatus)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Remarks).HasMaxLength(500);
-            entity.Property(e => e.TaxAmount)
-                .HasDefaultValue(0m)
-                .HasColumnType("decimal(18, 2)");
+                .HasMaxLength(50);
+            entity.Property(e => e.OfficeRemarks).HasMaxLength(500);
+            entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
-            entity.HasOne(d => d.InvoiceSource).WithMany(p => p.InvoiceMasters)
-                .HasForeignKey(d => d.InvoiceSourceId)
-                .HasConstraintName("FK_Invoices_InvoiceSources");
+            entity.HasOne(d => d.Customer).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("FK_InvoiceMaster_Customer");
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK_InvoiceMaster_Employee");
 
             entity.HasOne(d => d.PaymentMethod).WithMany(p => p.InvoiceMasters)
                 .HasForeignKey(d => d.PaymentMethodId)
-                .HasConstraintName("FK_InvoiceMaster_PaymentMethods");
+                .HasConstraintName("FK_InvoiceMaster_PaymentMethod");
+
+            entity.HasOne(d => d.PaymentStatus).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.PaymentStatusId)
+                .HasConstraintName("FK_InvoiceMaster_PaymentStatus");
+
+            entity.HasOne(d => d.ServingTable).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.ServingTableId)
+                .HasConstraintName("FK_InvoiceMaster_ServingTable");
+
+            entity.HasOne(d => d.ShippingType).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.ShippingTypeId)
+                .HasConstraintName("FK_InvoiceMaster_ShippingType");
         });
 
         modelBuilder.Entity<InvoiceSource>(entity =>
@@ -977,6 +1001,21 @@ public partial class OneDb : DbContext
             entity.Property(e => e.PaymentMethodId).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("date");
             entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<PaymentStatus>(entity =>
+        {
+            entity.HasKey(e => e.PaymentStatusId).HasName("PK__PaymentS__34F8AC3FD3FD306B");
+
+            entity.ToTable("PaymentStatus", "Setup");
+
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
         });
 
         modelBuilder.Entity<Person>(entity =>
@@ -1231,6 +1270,21 @@ public partial class OneDb : DbContext
             entity.Property(e => e.ApplicationUrl)
                 .HasMaxLength(1000)
                 .HasColumnName("ApplicationURL");
+        });
+
+        modelBuilder.Entity<ShippingType>(entity =>
+        {
+            entity.HasKey(e => e.ShippingTypeId).HasName("PK__Shipping__46789510DDA272C3");
+
+            entity.ToTable("ShippingType", "Setup");
+
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
         });
 
         modelBuilder.Entity<Size>(entity =>

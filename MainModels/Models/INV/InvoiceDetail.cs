@@ -19,13 +19,19 @@ public partial class InvoiceDetail
 
     public decimal UnitPrice { get; set; }
 
+    public decimal? TaxRate { get; set; }
+
+    public decimal? TaxAmount { get; set; }
+
+    public decimal LineTotal { get; set; }
+
+    public decimal LineTotalWithTax { get; set; }
+
     public decimal? Discount { get; set; }
 
-    public decimal? Tax { get; set; }
-
-    public decimal? TotalAmount { get; set; }
-
     public string Remarks { get; set; }
+
+    public DateTime CreatedDate { get; set; }
 
     public virtual InvoiceMaster InvoiceMaster { get; set; }
 

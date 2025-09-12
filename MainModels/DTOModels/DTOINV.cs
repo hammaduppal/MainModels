@@ -269,40 +269,45 @@ namespace MainModels.DTOModels
     }
     public partial class InvoiceMasterVM
     {
+
         public Guid InvoiceMasterId { get; set; }
-
         public string InvoiceNo { get; set; }
-
         public DateTime InvoiceDate { get; set; }
+
         public int InvoiceSourceId { get; set; }
+        public int ShippingTypeId { get; set; }
         public Guid? CustomerId { get; set; }
-
-        public decimal TotalAmount { get; set; }
-
-        public decimal? DiscountAmount { get; set; }
-
-        public decimal? TaxAmount { get; set; }
-
-        public decimal? NetAmount { get; set; }
-
-        public int? PaymentMethodId { get; set; }
-
-        public string PaymentStatus { get; set; }
-
-        public string Remarks { get; set; }
-
-        public int? CreatedBy { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        public int? UpdatedBy { get; set; }
-
-        public DateTime? UpdatedDate { get; set; }
-
         public Guid? ServingTableId { get; set; }
-
         public int? EmployeeId { get; set; }
 
+        public decimal SubTotal { get; set; }
+        public decimal? DiscountAmount { get; set; }
+        public decimal? TotalTax { get; set; }
+        public decimal? TaxAmount { get; set; }
+        public decimal? ShippingCharges { get; set; }
+        public decimal? ServiceCharges { get; set; }
+        public decimal GrandTotal { get; set; }
+        public decimal AmountPaid { get; set; }
+        public decimal BalanceDue { get; set; }
+
+        public int PaymentMethodId { get; set; }
+        public int PaymentStatusId { get; set; }
+        public string TransactionReference { get; set; }
+
+        public string CurrencyCode { get; set; }
+        public decimal ExchangeRate { get; set; }
+
+        public string CustomerRemarks { get; set; }
+        public string OfficeRemarks { get; set; }
+
+        public int InvoiceStatusId { get; set; }
+        public bool IsReturn { get; set; }
+        public Guid? ReturnInvoiceId { get; set; }
+
+        public int? CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? UpdatedBy { get; set; }
+        public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<InvoiceDetailVM> InvoiceDetails { get; set; } = new List<InvoiceDetailVM>();
 
         public virtual PaymentMethodVM PaymentMethod { get; set; }
@@ -310,31 +315,28 @@ namespace MainModels.DTOModels
     public partial class InvoiceDetailVM
     {
         public Guid InvoiceDetailId { get; set; }
-
         public Guid InvoiceMasterId { get; set; }
 
         public Guid ProductId { get; set; }
-
         public Guid? VariantId { get; set; }
 
         public decimal Quantity { get; set; }
-
         public decimal UnitPrice { get; set; }
 
+        public decimal TaxRate { get; set; }
+        public decimal TaxAmount { get; set; }
+
+        public decimal LineTotal { get; set; }            
+        public decimal LineTotalWithTax { get; set; }   
+
         public decimal? Discount { get; set; }
-
-        public decimal? Tax { get; set; }
-
-        public decimal? TotalAmount { get; set; }
-
         public string Remarks { get; set; }
 
         public virtual InvoiceMasterVM InvoiceMaster { get; set; }
-
         public virtual ProductVM Product { get; set; }
-
         public virtual ProductVariantVM Variant { get; set; }
     }
+
     public partial class BranchStockVM
     {
         public Guid BranchStockId { get; set; }

@@ -993,3 +993,65 @@ INSERT INTO System.TaxSlabs (SlabName, Rate) VALUES
 (N'Engine <1500cc', 12.00),
 (N'Engine 1500-1800cc', 18.00),
 (N'Engine >2000cc', 25.00);
+
+INSERT INTO HRM.Persons (Id,FirstName,LastName,IsActive,IsDeleted,CreatedOn)
+Values (5,'Walkin','Customer',1,0,GETDATE())
+
+
+
+INSERT INTO Setup.PaymentMethods (PaymentMethodId, Name, IsActive, CreatedOn)
+VALUES
+-- Traditional
+(1, 'Cash', 1, GETDATE()),
+(2, 'Credit Card', 1, GETDATE()),
+(3, 'Debit Card', 1, GETDATE()),
+(4, 'Bank Transfer', 1, GETDATE()),
+(5, 'Cheque', 1, GETDATE()),
+(6, 'Gift Card / Voucher', 1, GETDATE()),
+
+-- Online Payment Gateways
+(7, 'PayPal', 1, GETDATE()),
+(8, 'Stripe', 1, GETDATE()),
+(9, 'Square', 1, GETDATE()),
+(10, 'Apple Pay', 1, GETDATE()),
+(11, 'Google Pay', 1, GETDATE()),
+(12, 'Amazon Pay', 1, GETDATE()),
+
+-- Mobile Wallets
+(13, 'Venmo', 1, GETDATE()),
+(14, 'Cash App', 1, GETDATE()),
+(15, 'WeChat Pay', 1, GETDATE()),
+(16, 'Alipay', 1, GETDATE()),
+
+-- Pakistani Wallets
+(20, 'Easypaisa', 1, GETDATE()),
+(21, 'JazzCash', 1, GETDATE()),
+(22, 'UPaisa', 1, GETDATE()),
+(23, 'HBL Konnect', 1, GETDATE()),
+
+-- Cryptocurrency
+(30, 'Bitcoin', 1, GETDATE()),
+(31, 'Ethereum', 1, GETDATE()),
+(32, 'USDT (Tether)', 1, GETDATE());
+
+
+
+INSERT INTO setup.PaymentStatus (Name, IsActive, CreatedOn)
+VALUES
+('Pending', 1, GETDATE()),
+('Paid', 1, GETDATE()),
+('Partially Paid', 1, GETDATE()),
+('Refunded', 1, GETDATE()),
+('Cancelled', 1, GETDATE()),
+('Chargeback', 1, GETDATE()),
+('Failed', 1, GETDATE());
+
+INSERT INTO Setup.ShippingType (Name, IsActive, CreatedOn)
+VALUES
+('Pickup (In-Store)', 1, GETDATE()),
+('Home Delivery', 1, GETDATE()),
+('Courier Service', 1, GETDATE()),
+('Express Delivery', 1, GETDATE()),
+('Standard Delivery', 1, GETDATE()),
+('No Shipping (Digital/Service)', 1, GETDATE());
+

@@ -27,5 +27,7 @@ public partial class Employee
 
     public virtual EmployeeDesignation Designation { get; set; }
 
+    public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; } = new List<InvoiceMaster>();
+
     public virtual Person Person { get; set; }
 }

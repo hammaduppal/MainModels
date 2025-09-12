@@ -211,6 +211,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Setup].[PaymentStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Setup].[ShippingType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Setup].[SystemPreferences]",
          "ObjectType": 0
       },
