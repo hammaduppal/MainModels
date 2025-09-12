@@ -25,5 +25,7 @@ public partial class Customer
 
     public Guid? BranchId { get; set; }
 
+    public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; } = new List<InvoiceMaster>();
+
     public virtual Person Person { get; set; }
 }

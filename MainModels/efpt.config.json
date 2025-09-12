@@ -151,6 +151,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[INV].[InvoiceSources]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[INV].[Material]",
          "ObjectType": 0
       },
@@ -207,6 +211,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Setup].[PaymentStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Setup].[ShippingType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Setup].[SystemPreferences]",
          "ObjectType": 0
       },
@@ -232,6 +244,10 @@
       },
       {
          "Name": "[SYSTEM].[Settings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[TaxSlabs]",
          "ObjectType": 0
       },
       {

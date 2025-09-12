@@ -13,7 +13,19 @@ public partial class InvoiceMaster
 
     public DateTime InvoiceDate { get; set; }
 
+    public int InvoiceSourceId { get; set; }
+
+    public int? PaymentMethodId { get; set; }
+
+    public int? PaymentStatusId { get; set; }
+
+    public int? ShippingTypeId { get; set; }
+
     public Guid? CustomerId { get; set; }
+
+    public int? EmployeeId { get; set; }
+
+    public Guid? ServingTableId { get; set; }
 
     public decimal TotalAmount { get; set; }
 
@@ -21,28 +33,33 @@ public partial class InvoiceMaster
 
     public decimal? TaxAmount { get; set; }
 
-    public decimal? NetAmount { get; set; }
+    public decimal GrandTotal { get; set; }
 
+    public string CustomerRemarks { get; set; }
     public string PaymentMethod { get; set; }
     public int? PaymentMethodId { get; set; }
 
-    public string PaymentStatus { get; set; }
-
-    public string Remarks { get; set; }
+    public string OfficeRemarks { get; set; }
 
     public int? CreatedBy { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
+    public DateTime CreatedDate { get; set; }
 
     public int? UpdatedBy { get; set; }
 
     public DateTime? UpdatedDate { get; set; }
 
-    public Guid? ServingTableId { get; set; }
+    public virtual Customer Customer { get; set; }
 
-    public int? EmployeeId { get; set; }
+    public virtual Employee Employee { get; set; }
 
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
 
     public virtual PaymentMethod PaymentMethod { get; set; }
+
+    public virtual PaymentStatus PaymentStatus { get; set; }
+
+    public virtual ServingTable ServingTable { get; set; }
+
+    public virtual ShippingType ShippingType { get; set; }
 }

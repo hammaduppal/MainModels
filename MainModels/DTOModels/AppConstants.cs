@@ -45,7 +45,14 @@ namespace MainModels.DTOModels
             Rejected = 3,
             Completed = 4
         }
-      
+        public enum InvoiceSource
+        {
+            POS = 1,
+            Online = 2,
+            WebOrder = 3,
+            CallOrder = 4
+        }
+
 
     }
 }

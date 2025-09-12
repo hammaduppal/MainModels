@@ -5,19 +5,15 @@ using System.Collections.Generic;
 
 namespace MainModels.Models;
 
-public partial class ServingTable
+public partial class ShippingType
 {
-    public Guid ServingTableId { get; set; }
+    public int ShippingTypeId { get; set; }
 
-    public string TableName { get; set; }
+    public string Name { get; set; }
 
-    public int? TableNumber { get; set; }
+    public bool IsActive { get; set; }
 
-    public int? SittingCapacity { get; set; }
-
-    public Guid? FloorId { get; set; }
-
-    public virtual Floor Floor { get; set; }
+    public DateTime CreatedOn { get; set; }
 
     public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; } = new List<InvoiceMaster>();
 }

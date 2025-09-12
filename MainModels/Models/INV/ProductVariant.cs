@@ -17,21 +17,9 @@ public partial class ProductVariant
 
     public Guid? ProductId { get; set; }
 
-    public decimal? QoH { get; set; }
-
-    public decimal? Cost { get; set; }
-
     public string BarCode { get; set; }
 
-    public decimal? SalesPrice { get; set; }
-
-    public decimal? PromotionPrice { get; set; }
-
-    public decimal? RetailPrice { get; set; }
-
     public DateTime? LastPurchase { get; set; }
-
-    public DateTime? LastSold { get; set; }
 
     public DateTime? CreatedOn { get; set; }
 
@@ -61,6 +49,8 @@ public partial class ProductVariant
 
     public int? OrganizationId { get; set; }
 
+    public Guid? TaxSlabId { get; set; }
+
     public virtual ICollection<BranchStock> BranchStocks { get; set; } = new List<BranchStock>();
 
     public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
@@ -80,4 +70,6 @@ public partial class ProductVariant
     public virtual Size Size { get; set; }
 
     public virtual Uomsub SubUom { get; set; }
+
+    public virtual TaxSlab TaxSlab { get; set; }
 }
