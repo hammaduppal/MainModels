@@ -20,4 +20,6 @@ public partial class ServingTable
     public virtual Floor Floor { get; set; }
 
     public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; } = new List<InvoiceMaster>();
+
+    public virtual ICollection<OrderMaster> OrderMasters { get; set; } = new List<OrderMaster>();
 }

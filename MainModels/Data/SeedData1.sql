@@ -364,3 +364,12 @@ INSERT INTO System.Settings
 VALUES
     (1,1001, 'https://democms.inspirenation.us', 1, '46FA7C94-8CC9-4DD5-BC76-A8DE35736986', 'WebCms'),
     (2,1002, 'https://staging.ecommerce.inspirenation.us', 1, '46FA7C94-8CC9-4DD5-BC76-A8DE35736986', 'Store Admin');
+
+    INSERT INTO AST.Buildings (buildingId,BuildingName,IsActive,CreatedOn,IsDeleted,BranchId)
+Values('E6455803-CB61-40BE-A6F5-4B25A8743A03','Dinning Building',1,GETDATE(),0,'2BCEEF9E-89D5-4D07-8A9E-0453162DE316')
+
+INSERT INTO Ast.Floors(FloorId,FloorName,Isactive,CreatedOn,IsDeleted,BuildingId)
+Values('A35C8E66-DC7E-4033-AFAF-2F30F56F077C','Ground Main Dining Hall',1,Getdate(),0,'E6455803-CB61-40BE-A6F5-4B25A8743A03')
+
+insert into Ast.ServingTables(ServingTableId,TableName,TableNumber,SittingCapacity,FloorId)
+Values(NEWID(),'Round-1',1,6,'A35C8E66-DC7E-4033-AFAF-2F30F56F077C')

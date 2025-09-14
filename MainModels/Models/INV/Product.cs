@@ -47,6 +47,8 @@ public partial class Product
 
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
 
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
     public virtual Organization Organization { get; set; }
 
     public virtual ICollection<ProductBranch> ProductBranches { get; set; } = new List<ProductBranch>();
