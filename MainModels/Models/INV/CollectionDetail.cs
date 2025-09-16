@@ -11,7 +11,7 @@ public partial class CollectionDetail
 
     public Guid CollectionId { get; set; }
 
-    public Guid? ProductId { get; set; }
+    public Guid ProductId { get; set; }
 
     public Guid? VariantId { get; set; }
 

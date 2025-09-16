@@ -479,6 +479,28 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Collection).WithMany(p => p.CollectionDetails)
                 .HasForeignKey(d => d.CollectionId)
+                .HasConstraintName("FK_CollectionDetail_CollectionMaster");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK_CollectionDetail_Product");
+
+            entity.HasOne(d => d.Variant).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.VariantId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_CollectionDetail_Variant");
+        });
+
+        modelBuilder.Entity<CollectionDetail>(entity =>
+        {
+            entity.HasKey(e => e.CollectionDetailId).HasName("PK__Collecti__944C6E15B085EF5D");
+
+            entity.ToTable("CollectionDetail", "INV");
+
+            entity.Property(e => e.CollectionDetailId).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.Collection).WithMany(p => p.CollectionDetails)
+                .HasForeignKey(d => d.CollectionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_CollectionDetail_CollectionMaster1");
 
