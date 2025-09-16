@@ -229,6 +229,8 @@ namespace MainModels.DTOModels
         public string EmployeeCode { get; set; }
 
         public int? DepartmentId { get; set; }
+        public EmployeeDepartmentVM EmployeeDepartment { get; set; }
+        public EmployeeDesignationVM EmployeeDesignation{ get; set; }
 
         public int? DesignationId { get; set; }
 
@@ -241,5 +243,21 @@ namespace MainModels.DTOModels
         public bool? IsSalePerson { get; set; }
 
         public virtual PersonVM Person { get; set; }
+    }
+    public partial class EmployeeDepartmentVM
+    {
+        public int EmployeeDepartmentId { get; set; }
+
+        public string Title { get; set; }
+
+        public virtual ICollection<EmployeeVM> Employees { get; set; } = new List<EmployeeVM>();
+    }
+    public partial class EmployeeDesignationVM
+    {
+        public int Id { get; set; }
+
+        public string Title { get; set; }
+
+        public virtual ICollection<EmployeeVM> Employees { get; set; } = new List<EmployeeVM>();
     }
 }

@@ -11,6 +11,9 @@ namespace MainModels.DTOModels
         public List<CountryVM> Countries { get; set; }
         public List<CustomerVM> Customers { get; set; }
         public List<EmployeeVM> Employees { get; set; }
+        public List<EmployeeDepartmentVM> EmployeeDepartments { get; set; }
+        public List<EmployeeDesignationVM> EmployeeDesignations { get; set; }
+
         public List<ServingTableVM> ServingTables { get; set; }
         public List<PaymentMethodVM> PaymentMethods { get; set; }
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
