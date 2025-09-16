@@ -159,6 +159,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[INV].[OrderDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[OrderMaster]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[INV].[ProductBranches]",
          "ObjectType": 0
       },

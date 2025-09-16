@@ -1038,8 +1038,8 @@ VALUES
 
 INSERT INTO setup.PaymentStatus (Name, IsActive, CreatedOn)
 VALUES
-('Pending', 1, GETDATE()),
 ('Paid', 1, GETDATE()),
+('Pending', 1, GETDATE()),
 ('Partially Paid', 1, GETDATE()),
 ('Refunded', 1, GETDATE()),
 ('Cancelled', 1, GETDATE()),

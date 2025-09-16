@@ -20,6 +20,8 @@ namespace MainModels.DTOModels
         public List<SupplierVM> Suppliers { get; set; }
         public SystemPreferencesVM SystemPreferences { get; set; }
         public AccountingPreferencesVM AccountingPreferences { get; set; }
+        public List<EmployeeDepartmentVM> EmployeeDepartments { get; set; }
+        public List<EmployeeDesignationVM> EmployeeDesignations{ get; set; }
 
         public List<BranchVM> Branches { get; set; }
         public AppConstants.PurchaseStatus PurchaseStatus { get; set; }

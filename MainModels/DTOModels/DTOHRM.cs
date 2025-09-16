@@ -1,5 +1,4 @@
-﻿using MainModels.Models;
-
+﻿
 namespace MainModels.DTOModels
 {
     public partial class LoginUserVM
@@ -244,6 +243,7 @@ namespace MainModels.DTOModels
 
         public virtual PersonVM Person { get; set; }
     }
+
     public partial class EmployeeDepartmentVM
     {
         public int EmployeeDepartmentId { get; set; }

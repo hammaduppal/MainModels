@@ -99,6 +99,10 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<NotificationType> NotificationTypes { get; set; }
 
+    public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+
+    public virtual DbSet<OrderMaster> OrderMasters { get; set; }
+
     public virtual DbSet<Organization> Organizations { get; set; }
 
     public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
@@ -467,28 +471,6 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSents)
                 .HasForeignKey(d => d.EmailId)
                 .HasConstraintName("FK__CMSEmailS__Email__3E1D39E1");
-        });
-
-        modelBuilder.Entity<CollectionDetail>(entity =>
-        {
-            entity.HasKey(e => e.CollectionDetailId).HasName("PK__Collecti__944C6E15B085EF5D");
-
-            entity.ToTable("CollectionDetail", "INV");
-
-            entity.Property(e => e.CollectionDetailId).HasDefaultValueSql("(newid())");
-
-            entity.HasOne(d => d.Collection).WithMany(p => p.CollectionDetails)
-                .HasForeignKey(d => d.CollectionId)
-                .HasConstraintName("FK_CollectionDetail_CollectionMaster");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.CollectionDetails)
-                .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK_CollectionDetail_Product");
-
-            entity.HasOne(d => d.Variant).WithMany(p => p.CollectionDetails)
-                .HasForeignKey(d => d.VariantId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_CollectionDetail_Variant");
         });
 
         modelBuilder.Entity<CollectionDetail>(entity =>
@@ -1003,6 +985,74 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.NotificationTypeId).ValueGeneratedNever();
             entity.Property(e => e.NotificationTypeName).HasMaxLength(500);
+        });
+
+        modelBuilder.Entity<OrderDetail>(entity =>
+        {
+            entity.ToTable("OrderDetail", "INV");
+
+            entity.Property(e => e.OrderDetailId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Discount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.LineTotal).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.LineTotalWithTax).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TaxRate).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.OrderMaster).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.OrderMasterId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrderDetail_OrderMaster");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrderDetail_Product");
+
+            entity.HasOne(d => d.Variant).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.VariantId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrderDetail_ProductVariant");
+        });
+
+        modelBuilder.Entity<OrderMaster>(entity =>
+        {
+            entity.HasKey(e => e.OrderMasterId).HasName("PK__OrderMas__4DCAA5B2A297F67C");
+
+            entity.ToTable("OrderMaster", "INV");
+
+            entity.Property(e => e.OrderMasterId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.CustomerRemarks).HasMaxLength(500);
+            entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.GrandTotal)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.OfficeRemarks).HasMaxLength(500);
+            entity.Property(e => e.OrderDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.OrderNo).HasMaxLength(50);
+            entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.ParentOrder).WithMany(p => p.InverseParentOrder)
+                .HasForeignKey(d => d.ParentOrderId)
+                .HasConstraintName("FK_OrderMaster_Parent");
+
+            entity.HasOne(d => d.ServingTable).WithMany(p => p.OrderMasters)
+                .HasForeignKey(d => d.ServingTableId)
+                .HasConstraintName("FK_OrderMaster_ServingTable");
         });
 
         modelBuilder.Entity<Organization>(entity =>
