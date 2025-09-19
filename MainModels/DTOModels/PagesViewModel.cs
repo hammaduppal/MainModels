@@ -32,6 +32,8 @@ namespace MainModels.DTOModels
         public List<DepartmentVM>? Departments { get; set; }
         public List<CategoryVM>? Categories { get; set; }
         public List<UomVM>? UOMs { get; set; }
+        public List<OrderMasterVM>? OrderMaster{ get; set; }
+
         public List<TaxSlabVM>? TaxSlabs{ get; set; }
 
         public List<UomsubVM>? SubUOMs { get; set; }

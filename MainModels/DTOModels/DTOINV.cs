@@ -1,5 +1,5 @@
 ﻿
-
+using MainModels.Models;
 
 namespace MainModels.DTOModels
 {
@@ -96,7 +96,7 @@ namespace MainModels.DTOModels
         public Guid VariantId { get; set; }
         public Guid? TaxSlabId { get; set; }
         public decimal TaxRate { get; set; }
-        
+
         public Guid? MaterialId { get; set; }
 
         public Guid? ColorId { get; set; }
@@ -326,8 +326,8 @@ namespace MainModels.DTOModels
         public decimal TaxRate { get; set; }
         public decimal TaxAmount { get; set; }
 
-        public decimal LineTotal { get; set; }            
-        public decimal LineTotalWithTax { get; set; }   
+        public decimal LineTotal { get; set; }
+        public decimal LineTotalWithTax { get; set; }
 
         public decimal? Discount { get; set; }
         public string Remarks { get; set; }
@@ -426,15 +426,28 @@ namespace MainModels.DTOModels
 
         public DateTime? UpdatedDate { get; set; }
 
-        public virtual ICollection<OrderMasterVM> InverseParentOrder { get; set; } = new List<OrderMasterVM>();
+        public int OrderStatusId { get; set; }
 
-        public virtual ICollection<OrderDetailVM> OrderDetails { get; set; } = new List<OrderDetailVM>();
+        public  ICollection<OrderMasterVM> InverseParentOrder { get; set; } = new List<OrderMasterVM>();
 
-        public virtual OrderMasterVM ParentOrder { get; set; }
+        public  ICollection<OrderDetailVM> OrderDetails { get; set; } = new List<OrderDetailVM>();
 
-        public virtual ServingTableVM ServingTable { get; set; }
+        public  InvoiceSourceVM OrderSource { get; set; }
+
+        public  OrderStatusVM OrderStatus { get; set; }
+
+        public  OrderMasterVM ParentOrder { get; set; }
+
+        public  PaymentStatusVM PaymentStatus { get; set; }
+
+        public  ServingTableVM ServingTable { get; set; }
+
+        public  ShippingTypeVM ShippingType { get; set; }
+        public  EmployeeVM Employee { get; set; }
+        public  CustomerVM Customer { get; set; }
+        public  PaymentMethodVM PaymentMethod { get; set; }
+
     }
-
     public partial class OrderDetailVM
     {
         public Guid OrderDetailId { get; set; }
@@ -470,4 +483,40 @@ namespace MainModels.DTOModels
         public virtual ProductVariantVM Variant { get; set; }
     }
 
+    public partial class OrderStatusVM
+    {
+        public int OrderStatusId { get; set; }
+
+        public string OrderStatusName { get; set; }
+    }
+    public partial class ShippingTypeVM
+    {
+        public int ShippingTypeId { get; set; }
+
+        public string Name { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public virtual ICollection<InvoiceMasterVM> InvoiceMasters { get; set; } = new List<InvoiceMasterVM>();
+
+        public virtual ICollection<OrderMasterVM> OrderMasters { get; set; } = new List<OrderMasterVM>();
+    }
+    public partial class PaymentStatusVM
+    {
+        public int PaymentStatusId { get; set; }
+
+        public string Name { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public virtual ICollection<InvoiceMasterVM> InvoiceMasters { get; set; } = new List<InvoiceMasterVM>();
+
+        public virtual ICollection<OrderMasterVM> OrderMasters { get; set; } = new List<OrderMasterVM>();
+
+
+    }
 }

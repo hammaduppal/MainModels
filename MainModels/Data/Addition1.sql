@@ -53,3 +53,28 @@ CREATE TABLE INV.OrderDetail (
     CONSTRAINT FK_OrderDetail_Product FOREIGN KEY (ProductId) REFERENCES INV.Products(ProductId),
     CONSTRAINT FK_OrderDetail_ProductVariant FOREIGN KEY (VariantId) REFERENCES INV.ProductVariants(VariantId)
 );
+
+CREATE TABLE [INV].[OrderStatus]
+(
+    OrderStatusId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    OrderStatusName NVARCHAR(500) NOT NULL
+);
+
+
+INSERT INTO [INV].[OrderStatus] (OrderStatusName)
+VALUES 
+    (N'Pending'),
+    (N'Confirmed'),
+    (N'Processing'),
+    (N'Shipped'),
+    (N'Delivered'),
+    (N'Cancelled');
+
+	-- Add the column to OrderMaster
+ALTER TABLE [INV].[OrderMaster]
+ADD OrderStatusId INT NOT NULL CONSTRAINT DF_OrderMaster_OrderStatusId DEFAULT(1);
+
+-- Create the foreign key relation
+ALTER TABLE [INV].[OrderMaster]
+ADD CONSTRAINT FK_OrderMaster_OrderStatus
+FOREIGN KEY (OrderStatusId) REFERENCES [INV].[OrderStatus](OrderStatusId);

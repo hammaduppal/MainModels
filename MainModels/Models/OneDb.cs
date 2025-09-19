@@ -103,6 +103,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<OrderMaster> OrderMasters { get; set; }
 
+    public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
+
     public virtual DbSet<Organization> Organizations { get; set; }
 
     public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
@@ -1040,19 +1042,60 @@ public partial class OneDb : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.OrderNo).HasMaxLength(50);
+            entity.Property(e => e.OrderStatusId).HasDefaultValue(1);
             entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
+            entity.HasOne(d => d.Customer).WithMany(p => p.OrderMasters)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("FK_OrderMaster_Customers");
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.OrderMasters)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK_OrderMaster_Employee");
+
+            entity.HasOne(d => d.OrderSource).WithMany(p => p.OrderMasters)
+                .HasForeignKey(d => d.OrderSourceId)
+                .HasConstraintName("FK_OrderMaster_InvoiceSources");
+
+            entity.HasOne(d => d.OrderStatus).WithMany(p => p.OrderMasters)
+                .HasForeignKey(d => d.OrderStatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrderMaster_OrderStatus");
+
             entity.HasOne(d => d.ParentOrder).WithMany(p => p.InverseParentOrder)
                 .HasForeignKey(d => d.ParentOrderId)
                 .HasConstraintName("FK_OrderMaster_Parent");
 
+            entity.HasOne(d => d.PaymentMethod).WithMany(p => p.OrderMasters)
+                .HasForeignKey(d => d.PaymentMethodId)
+                .HasConstraintName("FK_OrderMaster_PaymentMethods");
+
+            entity.HasOne(d => d.PaymentStatus).WithMany(p => p.OrderMasters)
+                .HasForeignKey(d => d.PaymentStatusId)
+                .HasConstraintName("FK_OrderMaster_PaymentStatus");
+
             entity.HasOne(d => d.ServingTable).WithMany(p => p.OrderMasters)
                 .HasForeignKey(d => d.ServingTableId)
                 .HasConstraintName("FK_OrderMaster_ServingTable");
+
+            entity.HasOne(d => d.ShippingType).WithMany(p => p.OrderMasters)
+                .HasForeignKey(d => d.ShippingTypeId)
+                .HasConstraintName("FK_OrderMaster_ShippingType");
+        });
+
+        modelBuilder.Entity<OrderStatus>(entity =>
+        {
+            entity.HasKey(e => e.OrderStatusId).HasName("PK__OrderSta__BC674CA1280924C9");
+
+            entity.ToTable("OrderStatus", "INV");
+
+            entity.Property(e => e.OrderStatusName)
+                .IsRequired()
+                .HasMaxLength(500);
         });
 
         modelBuilder.Entity<Organization>(entity =>

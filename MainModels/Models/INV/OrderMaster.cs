@@ -49,11 +49,27 @@ public partial class OrderMaster
 
     public DateTime? UpdatedDate { get; set; }
 
+    public int OrderStatusId { get; set; }
+
+    public virtual Customer Customer { get; set; }
+
+    public virtual Employee Employee { get; set; }
+
     public virtual ICollection<OrderMaster> InverseParentOrder { get; set; } = new List<OrderMaster>();
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
+    public virtual InvoiceSource OrderSource { get; set; }
+
+    public virtual OrderStatus OrderStatus { get; set; }
+
     public virtual OrderMaster ParentOrder { get; set; }
 
+    public virtual PaymentMethod PaymentMethod { get; set; }
+
+    public virtual PaymentStatus PaymentStatus { get; set; }
+
     public virtual ServingTable ServingTable { get; set; }
+
+    public virtual ShippingType ShippingType { get; set; }
 }

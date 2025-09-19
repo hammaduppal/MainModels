@@ -167,6 +167,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[INV].[OrderStatus]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[INV].[ProductBranches]",
          "ObjectType": 0
       },

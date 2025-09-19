@@ -27,5 +27,7 @@ public partial class Customer
 
     public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; } = new List<InvoiceMaster>();
 
+    public virtual ICollection<OrderMaster> OrderMasters { get; set; } = new List<OrderMaster>();
+
     public virtual Person Person { get; set; }
 }

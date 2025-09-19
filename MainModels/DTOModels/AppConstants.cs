@@ -4,6 +4,15 @@ namespace MainModels.DTOModels
 {
     public class AppConstants
     {
+        public enum OrderStatusEnum
+        {
+            Pending = 1,
+            Confirmed = 2,
+            Processing = 3,
+            Shipped = 4,
+            Delivered = 5,
+            Cancelled = 6
+        }
         public enum EnumPriceFormat
         {
             RetailPrice = 0,

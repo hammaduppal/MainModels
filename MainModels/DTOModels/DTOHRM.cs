@@ -202,6 +202,8 @@ namespace MainModels.DTOModels
         public Guid CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string Mobile { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
         public string CustomerCode { get; set; }
 
@@ -226,7 +228,8 @@ namespace MainModels.DTOModels
         public int EmployeeId { get; set; }
 
         public string EmployeeCode { get; set; }
-
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public int? DepartmentId { get; set; }
         public EmployeeDepartmentVM EmployeeDepartment { get; set; }
         public EmployeeDesignationVM EmployeeDesignation{ get; set; }
