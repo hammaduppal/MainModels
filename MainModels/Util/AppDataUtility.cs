@@ -1,5 +1,4 @@
 ﻿using MainModels.DTOModels;
-using Microsoft.EntityFrameworkCore.Storage.Json;
 using Newtonsoft.Json;
 
 namespace MainModels.Util
@@ -7,6 +6,8 @@ namespace MainModels.Util
     public class AppDataUtility
     {
         private const string SessionKey = "SessionManager";
+        private const string notificationKey = "NotificationKey";
+
         private static IHttpContextAccessor _contextAccessor;
 
         public static void Configure(IHttpContextAccessor contextAccessor)
@@ -30,8 +31,38 @@ namespace MainModels.Util
                 }
             }
         }
+        public static List<NotificationsDTO> UserNotifications
+        {
+            get
+            {
+                var session = _contextAccessor?.HttpContext?.Session;
+                var result = session?.GetString(notificationKey);
+                return result == null ? null : JsonConvert.DeserializeObject<List<NotificationsDTO>>(result);
+            }
+            set
+            {
+                var session = _contextAccessor?.HttpContext?.Session;
+                if (session != null)
+                {
+                    session.SetString(notificationKey, JsonConvert.SerializeObject(value));
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         public static SystemPreferencesVM SystemPreferences { get;set; }
-        public static AccountingPreferencesVM SystemSettings { get { return SystemSettingsDTO.GetAccountingPreferences(); } }
+        public static AccountingPreferencesVM AccountingPrefrences { get { return SystemSettingsDTO.GetAccountingPreferences(); } }
 
     }
 

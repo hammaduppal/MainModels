@@ -1055,3 +1055,6 @@ VALUES
 ('Standard Delivery', 1, GETDATE()),
 ('No Shipping (Digital/Service)', 1, GETDATE());
 
+INSERT INTO System.NotificationTypes(NotificationTypeId,NotificationTypeName)
+Values(1,'New Order'),
+(2,'Customer Registration');
