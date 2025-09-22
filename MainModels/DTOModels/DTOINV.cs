@@ -432,20 +432,20 @@ namespace MainModels.DTOModels
 
         public  ICollection<OrderDetailVM> OrderDetails { get; set; } = new List<OrderDetailVM>();
 
-        public  InvoiceSourceVM OrderSource { get; set; }
+        public  InvoiceSourceVM? OrderSource { get; set; }
 
-        public  OrderStatusVM OrderStatus { get; set; }
+        public  OrderStatusVM? OrderStatus { get; set; }
 
-        public  OrderMasterVM ParentOrder { get; set; }
+        public  OrderMasterVM? ParentOrder { get; set; }
 
-        public  PaymentStatusVM PaymentStatus { get; set; }
+        public  PaymentStatusVM? PaymentStatus { get; set; }
 
-        public  ServingTableVM ServingTable { get; set; }
+        public  ServingTableVM? ServingTable { get; set; }
 
-        public  ShippingTypeVM ShippingType { get; set; }
-        public  EmployeeVM Employee { get; set; }
-        public  CustomerVM Customer { get; set; }
-        public  PaymentMethodVM PaymentMethod { get; set; }
+        public  ShippingTypeVM? ShippingType { get; set; }
+        public  EmployeeVM? Employee { get; set; }
+        public  CustomerVM? Customer { get; set; }
+        public  PaymentMethodVM? PaymentMethod { get; set; }
 
     }
     public partial class OrderDetailVM
