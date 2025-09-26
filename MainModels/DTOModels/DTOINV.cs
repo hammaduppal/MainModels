@@ -105,6 +105,8 @@ namespace MainModels.DTOModels
         public Guid? ProductId { get; set; }
 
         public decimal? QoH { get; set; }
+        public decimal? Qty { get; set; }
+
 
         public decimal? Cost { get; set; }
 
@@ -280,7 +282,7 @@ namespace MainModels.DTOModels
         public Guid? ServingTableId { get; set; }
         public int? EmployeeId { get; set; }
 
-        public decimal SubTotal { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal? DiscountAmount { get; set; }
         public decimal? TotalTax { get; set; }
         public decimal? TaxAmount { get; set; }
