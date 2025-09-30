@@ -276,7 +276,6 @@ namespace MainModels.DTOModels
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
 
-        public int InvoiceSourceId { get; set; }
         public int ShippingTypeId { get; set; }
         public Guid? CustomerId { get; set; }
         public Guid? ServingTableId { get; set; }
@@ -313,6 +312,20 @@ namespace MainModels.DTOModels
         public virtual ICollection<InvoiceDetailVM> InvoiceDetails { get; set; } = new List<InvoiceDetailVM>();
 
         public virtual PaymentMethodVM PaymentMethod { get; set; }
+
+
+        public InvoiceSourceVM? InvoiceSource { get; set; }
+
+        public OrderStatusVM? OrderStatus { get; set; }
+
+
+        public PaymentStatusVM? PaymentStatus { get; set; }
+
+        public ServingTableVM? ServingTable { get; set; }
+
+        public ShippingTypeVM? ShippingType { get; set; }
+        public EmployeeVM? Employee { get; set; }
+        public CustomerVM? Customer { get; set; }
     }
     public partial class InvoiceDetailVM
     {

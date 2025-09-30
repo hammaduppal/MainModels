@@ -16,6 +16,7 @@ namespace MainModels.DTOModels
 
         public List<ServingTableVM> ServingTables { get; set; }
         public List<PaymentMethodVM> PaymentMethods { get; set; }
+        public List<PaymentStatusVM> PaymentStatuses { get; set; }
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
         public SystemPreferencesVM SystemPreferences { get; set; }
@@ -33,6 +34,8 @@ namespace MainModels.DTOModels
         public List<CategoryVM>? Categories { get; set; }
         public List<UomVM>? UOMs { get; set; }
         public List<OrderMasterVM>? OrderMaster{ get; set; }
+        public List<InvoiceMasterVM>? Invoices{ get; set; }
+
         public OrderMasterVM Order{ get; set; }
 
 

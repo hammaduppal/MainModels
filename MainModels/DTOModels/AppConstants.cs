@@ -61,6 +61,16 @@ namespace MainModels.DTOModels
             WebOrder = 3,
             CallOrder = 4
         }
+        public enum PaymentStatus
+        {
+            Paid = 1,
+            Pending = 2,
+            PartiallyPaid = 3,
+            Refunded = 4,
+            Cancelled = 5,
+            Chargeback = 6,
+            Failed = 7
+        }
 
 
     }

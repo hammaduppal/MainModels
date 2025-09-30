@@ -56,6 +56,8 @@ public partial class InvoiceMaster
     public virtual PaymentMethod PaymentMethod { get; set; }
 
     public virtual PaymentStatus PaymentStatus { get; set; }
+    public virtual InvoiceSource InvoiceSource { get; set; }
+
 
     public virtual ServingTable ServingTable { get; set; }
 
