@@ -123,5 +123,9 @@ namespace MainModels.DTOModels
     {
         public string UnlockKey { get; set; }
     }
-
+    public class SaveStatusVM
+    {
+        public int StatusId { get; set; }
+        public Guid NewItemId { get; set; }
+    }
 }
