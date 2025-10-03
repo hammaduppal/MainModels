@@ -802,7 +802,9 @@ public partial class OneDb : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.CustomerRemarks).HasMaxLength(500);
             entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.GrandTotal).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.GrandTotal)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.InvoiceDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -811,7 +813,9 @@ public partial class OneDb : DbContext
                 .HasMaxLength(50);
             entity.Property(e => e.OfficeRemarks).HasMaxLength(500);
             entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.Customer).WithMany(p => p.InvoiceMasters)
@@ -821,6 +825,18 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Employee).WithMany(p => p.InvoiceMasters)
                 .HasForeignKey(d => d.EmployeeId)
                 .HasConstraintName("FK_InvoiceMaster_Employee");
+
+            entity.HasOne(d => d.InvoiceSource).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.InvoiceSourceId)
+                .HasConstraintName("FK_InvoiceMaster_InvoiceSources");
+
+            entity.HasOne(d => d.OrderStatus).WithMany(p => p.InvoiceMasters)
+                .HasForeignKey(d => d.OrderStatusId)
+                .HasConstraintName("FK_InvoiceMaster_OrderStatus");
+
+            entity.HasOne(d => d.ParentInvoice).WithMany(p => p.InverseParentInvoice)
+                .HasForeignKey(d => d.ParentInvoiceId)
+                .HasConstraintName("FK_InvoiceMaster_InvoiceMaster");
 
             entity.HasOne(d => d.PaymentMethod).WithMany(p => p.InvoiceMasters)
                 .HasForeignKey(d => d.PaymentMethodId)

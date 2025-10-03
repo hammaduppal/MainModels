@@ -11,9 +11,11 @@ public partial class InvoiceMaster
 
     public string InvoiceNo { get; set; }
 
-    public DateTime InvoiceDate { get; set; }
+    public Guid? ParentInvoiceId { get; set; }
 
-    public int InvoiceSourceId { get; set; }
+    public DateTime? InvoiceDate { get; set; }
+
+    public int? InvoiceSourceId { get; set; }
 
     public int? PaymentMethodId { get; set; }
 
@@ -27,13 +29,13 @@ public partial class InvoiceMaster
 
     public Guid? ServingTableId { get; set; }
 
-    public decimal TotalAmount { get; set; }
+    public decimal? TotalAmount { get; set; }
 
     public decimal? DiscountAmount { get; set; }
 
     public decimal? TaxAmount { get; set; }
 
-    public decimal GrandTotal { get; set; }
+    public decimal? GrandTotal { get; set; }
 
     public string CustomerRemarks { get; set; }
 
@@ -41,23 +43,31 @@ public partial class InvoiceMaster
 
     public int? CreatedBy { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; }
 
     public int? UpdatedBy { get; set; }
 
     public DateTime? UpdatedDate { get; set; }
 
+    public int? OrderStatusId { get; set; }
+
     public virtual Customer Customer { get; set; }
 
     public virtual Employee Employee { get; set; }
 
+    public virtual ICollection<InvoiceMaster> InverseParentInvoice { get; set; } = new List<InvoiceMaster>();
+
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
+
+    public virtual InvoiceSource InvoiceSource { get; set; }
+
+    public virtual OrderStatus OrderStatus { get; set; }
+
+    public virtual InvoiceMaster ParentInvoice { get; set; }
 
     public virtual PaymentMethod PaymentMethod { get; set; }
 
     public virtual PaymentStatus PaymentStatus { get; set; }
-    public virtual InvoiceSource InvoiceSource { get; set; }
-
 
     public virtual ServingTable ServingTable { get; set; }
 

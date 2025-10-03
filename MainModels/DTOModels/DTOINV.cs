@@ -275,6 +275,7 @@ namespace MainModels.DTOModels
         public Guid InvoiceMasterId { get; set; }
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
+        public Guid? ParentInvoiceId { get; set; }
 
         public int ShippingTypeId { get; set; }
         public Guid? CustomerId { get; set; }
