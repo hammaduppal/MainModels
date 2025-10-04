@@ -1606,7 +1606,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.PurchaseType).HasDefaultValue(1);
             entity.Property(e => e.Remarks).HasMaxLength(500);
             entity.Property(e => e.Status).HasDefaultValue(1);
-            entity.Property(e => e.TaxAmoount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(18, 2)");

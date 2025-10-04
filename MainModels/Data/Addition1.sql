@@ -187,4 +187,4 @@ CREATE TABLE Accounting.Payments (
 );
 --M Hammad Ali
 --04/10/2025
-Alter Table INV.PurchaseMaster ADD TaxAmoount Decimal(18,2) null
+Alter Table INV.PurchaseMaster ADD TaxAmount Decimal(18,2) null
