@@ -45,6 +45,8 @@ public partial class PurchaseMaster
 
     public Guid? ParentId { get; set; }
 
+    public decimal? TaxAmoount { get; set; }
+
     public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
 
     public virtual Supplier Supplier { get; set; }

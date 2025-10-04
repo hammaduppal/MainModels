@@ -15,6 +15,46 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[Accounting].[AccountBalances]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[AccountPayables]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[AccountReceivables]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[ChartOfAccounts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[FiscalPeriods]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[JournalEntries]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[JournalLines]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[Payments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[ReconciliationLogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Accounting].[TaxTransactions]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[AST].[Buildings]",
          "ObjectType": 0
       },

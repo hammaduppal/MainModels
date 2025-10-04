@@ -13,6 +13,12 @@ public partial class OneDb : DbContext
     {
     }
 
+    public virtual DbSet<AccountBalance> AccountBalances { get; set; }
+
+    public virtual DbSet<AccountPayable> AccountPayables { get; set; }
+
+    public virtual DbSet<AccountReceivable> AccountReceivables { get; set; }
+
     public virtual DbSet<AccountingPreference> AccountingPreferences { get; set; }
 
     public virtual DbSet<AssignedRole> AssignedRoles { get; set; }
@@ -36,6 +42,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<CartMaster> CartMasters { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
+
+    public virtual DbSet<ChartOfAccount> ChartOfAccounts { get; set; }
 
     public virtual DbSet<City> Cities { get; set; }
 
@@ -75,6 +83,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<FileManager> FileManagers { get; set; }
 
+    public virtual DbSet<FiscalPeriod> FiscalPeriods { get; set; }
+
     public virtual DbSet<Floor> Floors { get; set; }
 
     public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
@@ -82,6 +92,10 @@ public partial class OneDb : DbContext
     public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
 
     public virtual DbSet<InvoiceSource> InvoiceSources { get; set; }
+
+    public virtual DbSet<JournalEntry> JournalEntries { get; set; }
+
+    public virtual DbSet<JournalLine> JournalLines { get; set; }
 
     public virtual DbSet<LaneAddress> LaneAddresses { get; set; }
 
@@ -107,6 +121,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Organization> Organizations { get; set; }
 
+    public virtual DbSet<Payment> Payments { get; set; }
+
     public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
 
     public virtual DbSet<PaymentStatus> PaymentStatuses { get; set; }
@@ -124,6 +140,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
 
     public virtual DbSet<PurchaseMaster> PurchaseMasters { get; set; }
+
+    public virtual DbSet<ReconciliationLog> ReconciliationLogs { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
 
@@ -149,6 +167,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<TaxSlab> TaxSlabs { get; set; }
 
+    public virtual DbSet<TaxTransaction> TaxTransactions { get; set; }
+
     public virtual DbSet<Uom> Uoms { get; set; }
 
     public virtual DbSet<Uomsub> Uomsubs { get; set; }
@@ -163,6 +183,95 @@ public partial class OneDb : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AccountBalance>(entity =>
+        {
+            entity.HasKey(e => e.BalanceId).HasName("PK__AccountB__A760D5BEFF817707");
+
+            entity.ToTable("AccountBalances", "Accounting");
+
+            entity.Property(e => e.BalanceId).ValueGeneratedNever();
+            entity.Property(e => e.ClosingBalance)
+                .HasComputedColumnSql("(([OpeningBalance]+[DebitTotal])-[CreditTotal])", true)
+                .HasColumnType("decimal(20, 2)");
+            entity.Property(e => e.CreditTotal)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.DebitTotal)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.LastUpdated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.OpeningBalance)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.Coa).WithMany(p => p.AccountBalances)
+                .HasForeignKey(d => d.CoaId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__AccountBa__CoaId__3572E547");
+        });
+
+        modelBuilder.Entity<AccountPayable>(entity =>
+        {
+            entity.HasKey(e => e.Apid).HasName("PK__AccountP__4C29F34F4F4C8EDA");
+
+            entity.ToTable("AccountPayables", "Accounting");
+
+            entity.Property(e => e.Apid)
+                .ValueGeneratedNever()
+                .HasColumnName("APId");
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Balance)
+                .HasComputedColumnSql("([Amount]-[PaidAmount])", true)
+                .HasColumnType("decimal(19, 2)");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DueDate).HasColumnType("date");
+            entity.Property(e => e.PaidAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValue("Pending");
+
+            entity.HasOne(d => d.JournalEntry).WithMany(p => p.AccountPayables)
+                .HasForeignKey(d => d.JournalEntryId)
+                .HasConstraintName("FK__AccountPa__Journ__40E497F3");
+        });
+
+        modelBuilder.Entity<AccountReceivable>(entity =>
+        {
+            entity.HasKey(e => e.Arid).HasName("PK__AccountR__4CB5C49B0C6AD96B");
+
+            entity.ToTable("AccountReceivables", "Accounting");
+
+            entity.Property(e => e.Arid)
+                .ValueGeneratedNever()
+                .HasColumnName("ARId");
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Balance)
+                .HasComputedColumnSql("([Amount]-[ReceivedAmount])", true)
+                .HasColumnType("decimal(19, 2)");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DueDate).HasColumnType("date");
+            entity.Property(e => e.ReceivedAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValue("Pending");
+
+            entity.HasOne(d => d.JournalEntry).WithMany(p => p.AccountReceivables)
+                .HasForeignKey(d => d.JournalEntryId)
+                .HasConstraintName("FK__AccountRe__Journ__3B2BBE9D");
+        });
+
         modelBuilder.Entity<AccountingPreference>(entity =>
         {
             entity.HasKey(e => e.AccountingPreferenceId).HasName("PK_AccountingPreferences_Id");
@@ -390,6 +499,32 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Department).WithMany(p => p.Categories)
                 .HasForeignKey(d => d.DepartmentId)
                 .HasConstraintName("FK_Categories_Departments");
+        });
+
+        modelBuilder.Entity<ChartOfAccount>(entity =>
+        {
+            entity.HasKey(e => e.CoaId).HasName("PK__ChartOfA__FA4C03A7DA9218BC");
+
+            entity.ToTable("ChartOfAccounts", "Accounting");
+
+            entity.HasIndex(e => e.AccountCode, "UQ__ChartOfA__38D0C56ACB837515").IsUnique();
+
+            entity.Property(e => e.AccountCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.AccountName)
+                .IsRequired()
+                .HasMaxLength(200);
+            entity.Property(e => e.AccountType)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<City>(entity =>
@@ -730,6 +865,29 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK_FileManager_Content");
         });
 
+        modelBuilder.Entity<FiscalPeriod>(entity =>
+        {
+            entity.HasKey(e => e.FiscalPeriodId).HasName("PK__FiscalPe__9E68FFEBBF5B3FA0");
+
+            entity.ToTable("FiscalPeriods", "Accounting");
+
+            entity.Property(e => e.FiscalPeriodId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.EndDate).HasColumnType("date");
+            entity.Property(e => e.IsClosed).HasDefaultValue(false);
+            entity.Property(e => e.PeriodName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.StartDate).HasColumnType("date");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FiscalPeriods)
+                .HasForeignKey(d => d.CreatedBy)
+                .HasConstraintName("FK__FiscalPer__Creat__4A6E022D");
+        });
+
         modelBuilder.Entity<Floor>(entity =>
         {
             entity.ToTable("Floors", "AST");
@@ -870,6 +1028,87 @@ public partial class OneDb : DbContext
             entity.Property(e => e.SourceName)
                 .IsRequired()
                 .HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<JournalEntry>(entity =>
+        {
+            entity.HasKey(e => e.JournalEntryId).HasName("PK__JournalE__575A70DBB8A729C3");
+
+            entity.ToTable("JournalEntries", "Accounting");
+
+            entity.HasIndex(e => e.BranchId, "IX_JournalEntries_BranchId");
+
+            entity.HasIndex(e => e.EntryDate, "IX_JournalEntries_EntryDate");
+
+            entity.HasIndex(e => e.EntryNumber, "UQ__JournalE__488B566FA9420781").IsUnique();
+
+            entity.Property(e => e.JournalEntryId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Description).HasMaxLength(500);
+            entity.Property(e => e.EntryDate).HasColumnType("date");
+            entity.Property(e => e.EntryNumber)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ReferenceNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.SourceModule)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValue("Posted");
+            entity.Property(e => e.TotalCredit)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalDebit)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.JournalEntryCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .HasConstraintName("FK__JournalEn__Creat__2630A1B7");
+
+            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.JournalEntryUpdatedByNavigations)
+                .HasForeignKey(d => d.UpdatedBy)
+                .HasConstraintName("FK__JournalEn__Updat__2724C5F0");
+        });
+
+        modelBuilder.Entity<JournalLine>(entity =>
+        {
+            entity.HasKey(e => e.JournalLineId).HasName("PK__JournalL__C4D84425A24B4A1A");
+
+            entity.ToTable("JournalLines", "Accounting");
+
+            entity.Property(e => e.JournalLineId).HasDefaultValueSql("(newsequentialid())");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Credit)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Debit)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Description).HasMaxLength(500);
+            entity.Property(e => e.ReferenceType)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Coa).WithMany(p => p.JournalLines)
+                .HasForeignKey(d => d.CoaId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__JournalLi__CoaId__2EC5E7B8");
+
+            entity.HasOne(d => d.JournalEntry).WithMany(p => p.JournalLines)
+                .HasForeignKey(d => d.JournalEntryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__JournalLi__Journ__2DD1C37F");
         });
 
         modelBuilder.Entity<LaneAddress>(entity =>
@@ -1125,6 +1364,38 @@ public partial class OneDb : DbContext
             entity.Property(e => e.OrganizationName).HasMaxLength(500);
         });
 
+        modelBuilder.Entity<Payment>(entity =>
+        {
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A38A491B0AD");
+
+            entity.ToTable("Payments", "Accounting");
+
+            entity.Property(e => e.PaymentId).ValueGeneratedNever();
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.PaymentDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("date");
+            entity.Property(e => e.PaymentMode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.PaymentType)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.SourceType)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.JournalEntry).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.JournalEntryId)
+                .HasConstraintName("FK__Payments__Journa__45A94D10");
+        });
+
         modelBuilder.Entity<PaymentMethod>(entity =>
         {
             entity.ToTable("PaymentMethods", "Setup");
@@ -1335,6 +1606,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.PurchaseType).HasDefaultValue(1);
             entity.Property(e => e.Remarks).HasMaxLength(500);
             entity.Property(e => e.Status).HasDefaultValue(1);
+            entity.Property(e => e.TaxAmoount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(18, 2)");
@@ -1343,6 +1615,26 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Supplier).WithMany(p => p.PurchaseMasters)
                 .HasForeignKey(d => d.SupplierId)
                 .HasConstraintName("FK_PurchaseMaster_Supplier");
+        });
+
+        modelBuilder.Entity<ReconciliationLog>(entity =>
+        {
+            entity.HasKey(e => e.ReconciliationId).HasName("PK__Reconcil__096DC80051808EBD");
+
+            entity.ToTable("ReconciliationLogs", "Accounting");
+
+            entity.Property(e => e.ReconciliationId).ValueGeneratedNever();
+            entity.Property(e => e.AdjustmentAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Description).HasMaxLength(500);
+            entity.Property(e => e.SourceType)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Review>(entity =>
@@ -1544,6 +1836,37 @@ public partial class OneDb : DbContext
             entity.Property(e => e.SlabName)
                 .IsRequired()
                 .HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<TaxTransaction>(entity =>
+        {
+            entity.HasKey(e => e.TaxTransactionId).HasName("PK__TaxTrans__D3DE177AC392AC1A");
+
+            entity.ToTable("TaxTransactions", "Accounting");
+
+            entity.Property(e => e.TaxTransactionId).HasDefaultValueSql("(newsequentialid())");
+            entity.Property(e => e.BaseAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.SourceType)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TaxRate).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.TaxType)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.JournalEntry).WithMany(p => p.TaxTransactions)
+                .HasForeignKey(d => d.JournalEntryId)
+                .HasConstraintName("FK__TaxTransa__Journ__5026DB83");
+
+            entity.HasOne(d => d.TaxAccount).WithMany(p => p.TaxTransactions)
+                .HasForeignKey(d => d.TaxAccountId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TaxTransa__TaxAc__4F32B74A");
         });
 
         modelBuilder.Entity<Uom>(entity =>

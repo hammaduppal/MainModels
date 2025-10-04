@@ -35,6 +35,12 @@ public partial class LoginUser
 
     public virtual ICollection<ErpPermission> ErpPermissions { get; set; } = new List<ErpPermission>();
 
+    public virtual ICollection<FiscalPeriod> FiscalPeriods { get; set; } = new List<FiscalPeriod>();
+
+    public virtual ICollection<JournalEntry> JournalEntryCreatedByNavigations { get; set; } = new List<JournalEntry>();
+
+    public virtual ICollection<JournalEntry> JournalEntryUpdatedByNavigations { get; set; } = new List<JournalEntry>();
+
     public virtual ICollection<LoginHistory> LoginHistories { get; set; } = new List<LoginHistory>();
 
     public virtual ICollection<LoginUserDeviceDetail> LoginUserDeviceDetails { get; set; } = new List<LoginUserDeviceDetail>();
