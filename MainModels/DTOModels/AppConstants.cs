@@ -4,6 +4,16 @@ namespace MainModels.DTOModels
 {
     public class AppConstants
     {
+        public static class CoaAccounts
+        {
+            public const int Cash = 1;                  // replace with your actual COA ID
+            public const int AccountsReceivable = 6;
+            public const int SalesRevenue = 15;
+            public const int OutputTaxPayable = 20;
+            public const int COGS = 25;
+            public const int Inventory = 30;
+        }
+
         public enum OrderStatusEnum
         {
             Pending = 1,
