@@ -71,10 +71,10 @@ CREATE TABLE Accounting.AccountBalances (
 
 
 CREATE TABLE Accounting.AccountReceivables (
-    ARId UNIQUEIDENTIFIER PRIMARY KEY,
-    CustomerId INT NOT NULL,
-    InvoiceId INT NULL,                   -- link to your existing invoice table
-    JournalEntryId UNIQUEIDENTIFIER NULL, -- for accounting linkage
+    ARId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    CustomerId UNIQUEIDENTIFIER NOT NULL,
+    InvoiceId UNIQUEIDENTIFIER NULL,
+    JournalEntryId UNIQUEIDENTIFIER NULL,
     Amount DECIMAL(18,2) NOT NULL,
     ReceivedAmount DECIMAL(18,2) DEFAULT 0,
     Balance AS (Amount - ReceivedAmount) PERSISTED,
@@ -83,8 +83,12 @@ CREATE TABLE Accounting.AccountReceivables (
     BranchId UNIQUEIDENTIFIER NOT NULL,
     CreatedBy INT NULL,
     CreatedAt DATETIME DEFAULT GETDATE(),
+    
+    FOREIGN KEY (CustomerId) REFERENCES HRM.Customers(CustomerId),
+    FOREIGN KEY (InvoiceId) REFERENCES INV.InvoiceMaster(InvoiceMasterId),
     FOREIGN KEY (JournalEntryId) REFERENCES Accounting.JournalEntries(JournalEntryId)
 );
+
 
 CREATE TABLE Accounting.AccountPayables (
     APId UNIQUEIDENTIFIER PRIMARY KEY,
@@ -188,3 +192,6 @@ CREATE TABLE Accounting.Payments (
 --M Hammad Ali
 --04/10/2025
 Alter Table INV.PurchaseMaster ADD TaxAmount Decimal(18,2) null
+
+ALTER TABLE INV.InvoiceMaster
+ADD DueDate DATE NULL;

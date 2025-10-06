@@ -25,6 +25,8 @@ public partial class Customer
 
     public Guid? BranchId { get; set; }
 
+    public virtual ICollection<AccountReceivable> AccountReceivables { get; set; } = new List<AccountReceivable>();
+
     public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; } = new List<InvoiceMaster>();
 
     public virtual ICollection<OrderMaster> OrderMasters { get; set; } = new List<OrderMaster>();

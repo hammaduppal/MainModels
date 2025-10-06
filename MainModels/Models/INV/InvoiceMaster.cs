@@ -51,6 +51,10 @@ public partial class InvoiceMaster
 
     public int? OrderStatusId { get; set; }
 
+    public DateTime? DueDate { get; set; }
+
+    public virtual ICollection<AccountReceivable> AccountReceivables { get; set; } = new List<AccountReceivable>();
+
     public virtual Customer Customer { get; set; }
 
     public virtual Employee Employee { get; set; }

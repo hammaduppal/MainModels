@@ -244,12 +244,12 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<AccountReceivable>(entity =>
         {
-            entity.HasKey(e => e.Arid).HasName("PK__AccountR__4CB5C49B0C6AD96B");
+            entity.HasKey(e => e.Arid).HasName("PK__AccountR__4CB5C49BB3B78494");
 
             entity.ToTable("AccountReceivables", "Accounting");
 
             entity.Property(e => e.Arid)
-                .ValueGeneratedNever()
+                .HasDefaultValueSql("(newid())")
                 .HasColumnName("ARId");
             entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Balance)
@@ -267,9 +267,18 @@ public partial class OneDb : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("Pending");
 
+            entity.HasOne(d => d.Customer).WithMany(p => p.AccountReceivables)
+                .HasForeignKey(d => d.CustomerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__AccountRe__Custo__61516785");
+
+            entity.HasOne(d => d.Invoice).WithMany(p => p.AccountReceivables)
+                .HasForeignKey(d => d.InvoiceId)
+                .HasConstraintName("FK__AccountRe__Invoi__62458BBE");
+
             entity.HasOne(d => d.JournalEntry).WithMany(p => p.AccountReceivables)
                 .HasForeignKey(d => d.JournalEntryId)
-                .HasConstraintName("FK__AccountRe__Journ__3B2BBE9D");
+                .HasConstraintName("FK__AccountRe__Journ__6339AFF7");
         });
 
         modelBuilder.Entity<AccountingPreference>(entity =>
@@ -960,6 +969,7 @@ public partial class OneDb : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.CustomerRemarks).HasMaxLength(500);
             entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.DueDate).HasColumnType("date");
             entity.Property(e => e.GrandTotal)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(18, 2)");

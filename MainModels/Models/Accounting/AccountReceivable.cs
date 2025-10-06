@@ -9,9 +9,9 @@ public partial class AccountReceivable
 {
     public Guid Arid { get; set; }
 
-    public int CustomerId { get; set; }
+    public Guid CustomerId { get; set; }
 
-    public int? InvoiceId { get; set; }
+    public Guid? InvoiceId { get; set; }
 
     public Guid? JournalEntryId { get; set; }
 
@@ -30,6 +30,10 @@ public partial class AccountReceivable
     public int? CreatedBy { get; set; }
 
     public DateTime? CreatedAt { get; set; }
+
+    public virtual Customer Customer { get; set; }
+
+    public virtual InvoiceMaster Invoice { get; set; }
 
     public virtual JournalEntry JournalEntry { get; set; }
 }

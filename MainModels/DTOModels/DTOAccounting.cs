@@ -58,9 +58,9 @@ namespace MainModels.DTOModels
     {
         public Guid Arid { get; set; }
 
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
-        public int? InvoiceId { get; set; }
+        public Guid? InvoiceId { get; set; }
 
         public Guid? JournalEntryId { get; set; }
 
@@ -74,7 +74,7 @@ namespace MainModels.DTOModels
 
         public string Status { get; set; }
 
-        public int BranchId { get; set; }
+        public Guid BranchId { get; set; }
 
         public int? CreatedBy { get; set; }
 

@@ -291,6 +291,7 @@ namespace MainModels.DTOModels
         public decimal GrandTotal { get; set; }
         public decimal AmountPaid { get; set; }
         public decimal BalanceDue { get; set; }
+        public DateTime? DueDate { get; set; }
 
         public int PaymentMethodId { get; set; }
         public int PaymentStatusId { get; set; }
