@@ -59,6 +59,7 @@ namespace MainModels.DTOModels
         public IEnumerable<BusinessCategoryVM> BusinessCategories { get; set; }
 
         public DTOPermissionModels Permission { get; set; }
+        public List<ChartOfAccountVM> ChartofAccounts { get; set; }
     }
     public class ThemeSettings
     {

@@ -82,30 +82,19 @@ namespace MainModels.DTOModels
 
         public virtual JournalEntryVM JournalEntry { get; set; }
     }
-    public partial class ChartOfAccountVM
+    public class ChartOfAccountVM
     {
         public int CoaId { get; set; }
-
         public string AccountCode { get; set; }
-
         public string AccountName { get; set; }
-
         public string AccountType { get; set; }
-
         public int? ParentCoaId { get; set; }
-
         public bool IsActive { get; set; }
-
         public DateTime CreatedAt { get; set; }
 
-        public DateTime? UpdatedAt { get; set; }
-
-        public virtual ICollection<AccountBalanceVM> AccountBalances { get; set; } = new List<AccountBalanceVM>();
-
-        public virtual ICollection<JournalLineVM> JournalLines { get; set; } = new List<JournalLineVM>();
-
-        public virtual ICollection<TaxTransactionVM> TaxTransactions { get; set; } = new List<TaxTransactionVM>();
+        public List<ChartOfAccountVM> Children { get; set; } = new List<ChartOfAccountVM>();
     }
+
     public partial class FiscalPeriodVM
     {
         public Guid FiscalPeriodId { get; set; }
