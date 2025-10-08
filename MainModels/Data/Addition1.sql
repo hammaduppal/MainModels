@@ -195,3 +195,9 @@ Alter Table INV.PurchaseMaster ADD TaxAmount Decimal(18,2) null
 
 ALTER TABLE INV.InvoiceMaster
 ADD DueDate DATE NULL;
+
+Alter Table Accounting.AccountPayables
+Drop Column PurchaseId
+
+Alter Table Accounting.AccountPayables
+Add  PurchaseId uniqueIdentifier

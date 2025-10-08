@@ -13,7 +13,7 @@ namespace MainModels.DTOModels
             public const int COGS = 25;
             public const int Inventory = 30;
         }
-
+      
         public enum OrderStatusEnum
         {
             Pending = 1,
@@ -40,15 +40,15 @@ namespace MainModels.DTOModels
             [Description("Receiving")]
             Receiving = 3
         }
-        public enum RequisitionTypes
-        {
-            [Description("Requisition")]
-            Requisition = 1,
+        //public enum RequisitionTypes
+        //{
+        //    [Description("Requisition")]
+        //    Requisition = 1,
 
-            [Description("Purchase Order")]
-            PurchaseOrder = 2,
+        //    [Description("Purchase Order")]
+        //    PurchaseOrder = 2,
 
-        }
+        //}
         public enum PurchaseOrderTypes
         {
             [Description("Purchase Order")]

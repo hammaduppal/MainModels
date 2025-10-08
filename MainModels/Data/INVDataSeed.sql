@@ -1111,4 +1111,7 @@ VALUES
 ('6050', 'Insurance Expense', 'Expense', 28),
 ('6060', 'Office Supplies', 'Expense', 28),
 ('6070', 'Depreciation Expense', 'Expense', 28),
-('6080', 'Bank Charges', 'Expense', 28);
+('6080', 'Bank Charges', 'Expense', 28),
+('1070', 'Input Tax (Purchase Tax)', 'Assets', 1),
+('2041', 'Output Tax (Sales Tax)', 'Liability', 12);
+

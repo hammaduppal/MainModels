@@ -21,7 +21,7 @@ namespace MainModels.DTOModels
         public List<SupplierVM> Suppliers { get; set; }
         public SystemPreferencesVM SystemPreferences { get; set; }
         public AccountingPreferencesVM AccountingPreferences { get; set; }
-
+        public List<AccountReceivableVM> AccountReceiables { get; set; }
         public List<BranchVM> Branches { get; set; }
         public AppConstants.PurchaseStatus PurchaseStatus { get; set; }
         public List<CollectionMasterVM> Collections { get; set; }

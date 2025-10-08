@@ -57,7 +57,8 @@ namespace MainModels.DTOModels
     public partial class AccountReceivableVM
     {
         public Guid Arid { get; set; }
-
+        public string CustomerName { get; set; }
+        public string CustomerCode { get; set; }
         public Guid CustomerId { get; set; }
 
         public Guid? InvoiceId { get; set; }

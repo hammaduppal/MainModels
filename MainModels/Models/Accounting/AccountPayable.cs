@@ -11,7 +11,7 @@ public partial class AccountPayable
 
     public int SupplierId { get; set; }
 
-    public int? PurchaseId { get; set; }
+    public Guid? PurchaseId { get; set; }
 
     public Guid? JournalEntryId { get; set; }
 
