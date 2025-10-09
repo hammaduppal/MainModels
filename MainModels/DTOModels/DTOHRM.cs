@@ -159,7 +159,7 @@ namespace MainModels.DTOModels
 
     }
 
-    public partial class SupplierVM
+    public class SupplierVM
     {
         public int SupplierId { get; set; }
 

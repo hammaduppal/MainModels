@@ -6,14 +6,60 @@ namespace MainModels.DTOModels
     {
         public static class CoaAccounts
         {
-            public const int Cash = 1;                  // replace with your actual COA ID
-            public const int AccountsReceivable = 6;
-            public const int SalesRevenue = 15;
-            public const int OutputTaxPayable = 20;
-            public const int COGS = 25;
-            public const int Inventory = 30;
+            // ==== ASSETS ====
+            public const int Assets = 1;
+            public const int CashOnHand = 2;                 // 1010
+            public const int BankAccounts = 3;               // 1020
+            public const int CheckingAccount = 4;            // 1021
+            public const int SavingsAccount = 5;             // 1022
+            public const int AccountsReceivable = 6;         // 1030
+            public const int Inventory = 7;                  // 1040
+            public const int PrepaidExpenses = 8;            // 1050
+            public const int FixedAssets = 9;                // 1060
+            public const int Equipment = 10;                 // 1061
+            public const int FurnitureFixtures = 11;         // 1062
+            public const int InputTax = 39;                  // Input Tax (Purchase Tax)
+
+            // ==== LIABILITIES ====
+            public const int Liabilities = 12;
+            public const int AccountsPayable = 13;           // 2010
+            public const int AccruedExpenses = 14;           // 2020
+            public const int TaxesPayable = 15;              // 2030
+            public const int LoansPayable = 16;              // 2040
+            public const int OutputTax = 40;                 // Output Tax (Sales Tax)
+
+            // ==== EQUITY ====
+            public const int Equity = 17;
+            public const int OwnersCapital = 18;             // 3010
+            public const int OwnersDrawings = 19;            // 3020
+            public const int RetainedEarnings = 20;          // 3030
+
+            // ==== REVENUE ====
+            public const int Revenue = 21;
+            public const int SalesIncome = 22;               // 4010
+            public const int ServiceIncome = 23;             // 4020
+            public const int OtherIncome = 24;               // 4030
+
+            // ==== COST OF GOODS SOLD ====
+            public const int COGS = 25;                      // 5000
+            public const int Purchases = 26;                 // 5010
+            public const int DirectMaterials = 27;           // 5020
+            public const int DirectLabor = 28;               // 5030
+            public const int FreightIn = 29;                 // 5040
+
+            // ==== OPERATING EXPENSES ====
+            public const int OperatingExpenses = 30;         // 6000
+            public const int RentExpense = 31;               // 6010
+            public const int UtilitiesExpense = 32;          // 6020
+            public const int SalariesExpense = 33;           // 6030
+            public const int MarketingExpense = 34;          // 6040
+            public const int InsuranceExpense = 35;          // 6050
+            public const int OfficeSupplies = 36;            // 6060
+            public const int DepreciationExpense = 37;       // 6070
+            public const int BankCharges = 38;               // 6080
         }
-      
+
+
         public enum OrderStatusEnum
         {
             Pending = 1,

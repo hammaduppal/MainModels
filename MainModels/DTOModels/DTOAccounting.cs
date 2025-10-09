@@ -25,13 +25,13 @@ namespace MainModels.DTOModels
 
         public virtual ChartOfAccountVM ChartOfAccounts { get; set; }
     }
-    public partial class AccountPayableVM
+    public  class AccountPayableVM
     {
         public Guid Apid { get; set; }
-
+        public string SupplierBusinessName { get; set; }
         public int SupplierId { get; set; }
 
-        public int? PurchaseId { get; set; }
+        public Guid? PurchaseId { get; set; }
 
         public Guid? JournalEntryId { get; set; }
 
@@ -45,13 +45,14 @@ namespace MainModels.DTOModels
 
         public string Status { get; set; }
 
-        public int BranchId { get; set; }
+        public Guid BranchId { get; set; }
 
         public int? CreatedBy { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 
-        public virtual JournalEntryVM JournalEntry { get; set; }
+        public  JournalEntryVM JournalEntry { get; set; }
+        public SupplierVM Supplier { get; set; }
     }
 
     public partial class AccountReceivableVM
@@ -169,7 +170,8 @@ namespace MainModels.DTOModels
         public Guid JournalLineId { get; set; }
 
         public Guid JournalEntryId { get; set; }
-
+        public string AccountName { get; set; }
+        public string AccountCode { get; set; }
         public int CoaId { get; set; }
 
         public string Description { get; set; }
@@ -190,6 +192,7 @@ namespace MainModels.DTOModels
 
         public virtual JournalEntryVM JournalEntry { get; set; }
     }
+   
     public partial class PaymentVM
     {
         public Guid PaymentId { get; set; }

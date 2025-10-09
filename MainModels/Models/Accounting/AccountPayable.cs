@@ -11,8 +11,6 @@ public partial class AccountPayable
 
     public int SupplierId { get; set; }
 
-    public Guid? PurchaseId { get; set; }
-
     public Guid? JournalEntryId { get; set; }
 
     public decimal Amount { get; set; }
@@ -31,5 +29,9 @@ public partial class AccountPayable
 
     public DateTime? CreatedAt { get; set; }
 
+    public Guid? PurchaseId { get; set; }
+
     public virtual JournalEntry JournalEntry { get; set; }
+
+    public virtual Supplier Supplier { get; set; }
 }

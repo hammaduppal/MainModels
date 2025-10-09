@@ -240,6 +240,11 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.JournalEntry).WithMany(p => p.AccountPayables)
                 .HasForeignKey(d => d.JournalEntryId)
                 .HasConstraintName("FK__AccountPa__Journ__40E497F3");
+
+            entity.HasOne(d => d.Supplier).WithMany(p => p.AccountPayables)
+                .HasForeignKey(d => d.SupplierId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AccountPayables_Supplier");
         });
 
         modelBuilder.Entity<AccountReceivable>(entity =>

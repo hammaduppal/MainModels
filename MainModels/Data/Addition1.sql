@@ -201,3 +201,9 @@ Drop Column PurchaseId
 
 Alter Table Accounting.AccountPayables
 Add  PurchaseId uniqueIdentifier
+
+--M Hammad Ali 09/10/2025
+ALTER TABLE Accounting.AccountPayables
+ADD CONSTRAINT FK_AccountPayables_Supplier
+FOREIGN KEY (SupplierId)
+REFERENCES Hrm.Supplier(SupplierId);
