@@ -19,6 +19,8 @@ namespace MainModels.DTOModels
         public List<PaymentStatusVM> PaymentStatuses { get; set; }
         public List<JournalEntryVM> JournalEnteries { get; set; }
         public List<AccountPayableVM> AccountPayables { get; set; }
+        public List<TrialBalanceVM> TrialBalances { get; set; }
+        public List<LedgerVM> Ledgers { get; set; }
 
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }

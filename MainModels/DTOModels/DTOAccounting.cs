@@ -269,5 +269,24 @@ namespace MainModels.DTOModels
 
         public virtual ChartOfAccountVM TaxAccount { get; set; }
     }
+    public class TrialBalanceVM
+    {
+        public int CoaId { get; set; }
+        public string AccountCode { get; set; }
+        public string AccountName { get; set; }
+        public string AccountType { get; set; }
+        public decimal TotalDebit { get; set; }
+        public decimal TotalCredit { get; set; }
+        public decimal Balance => TotalDebit - TotalCredit;
+    }
+    public class LedgerVM
+    {
+        public DateTime EntryDate { get; set; }
+        public string Description { get; set; }
+        public string ReferenceNumber { get; set; }
+        public decimal Debit { get; set; }
+        public decimal Credit { get; set; }
+        public decimal RunningBalance { get; set; }
+    }
 
 }
