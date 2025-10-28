@@ -14,6 +14,7 @@ namespace MainModels.DTOModels
         public DateTime? ModifiedOn { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
+        public List<SubCategoryVM>? SubCategories { get; set; }
     }
     public class ColorVM
     {
@@ -37,6 +38,7 @@ namespace MainModels.DTOModels
         public DateTime? ModifiedOn { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
+        public List<CategoryVM>? Categories{ get; set; }
     }
 
     public partial class MaterialVM

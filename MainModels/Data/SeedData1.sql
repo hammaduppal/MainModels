@@ -48,6 +48,8 @@ VALUES
 insert into Business.Organizations (OrganizationName,IsActive,CreatedOn,ModifiedOn,IsDeleted)
 Values('Inspire Nation',1,GetDate(),GetDate(),0)
 
+insert into Business.Branches (BranchId,BranchName,OrganizationId,BusinessCategoryId,BusinessEntityTYpeId,BranchCode,IsMasterBranch)
+Values(NEWID(),'HeadOffice',1,1,1,'',1)
 INSERT INTO System.Roles (Id, Name, IsActive)
 VALUES(1, 'SuperAdmin', 1),
 (2, 'Admin', 1),
@@ -69,6 +71,26 @@ Values(1,'superadmin@inspirenation.us','Xz/ian5HsLvMBVVePSw3pg==',1,GETDATE(),0,
 
 insert into system.AssignedRoles (Id,RoleId,LoginId,CreatedOn)
 Values(1,1,1,GetDate())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 INSERT INTO HRM.Countries(CountryId,CountryName) VALUES
 (1,'AFGHANISTAN'),
@@ -373,3 +395,18 @@ Values('A35C8E66-DC7E-4033-AFAF-2F30F56F077C','Ground Main Dining Hall',1,Getdat
 
 insert into Ast.ServingTables(ServingTableId,TableName,TableNumber,SittingCapacity,FloorId)
 Values(NEWID(),'Round-1',1,6,'A35C8E66-DC7E-4033-AFAF-2F30F56F077C')
+
+
+--INSERT INTO HRM.PERSONS (ID,FIRSTNAME,LASTNAME,MOBILENUMBER,CNIC,SOCIALSECURITY,EMAIL)
+--VALUES(1,'Admin','Manager','0000','0000','0000','admin@inspirenation.us')
+
+--insert into Hrm.LoginUsers (Id,UserName,Password,PersonId)
+--Values(2,'admin@inspirenation.us','Xz/ian5HsLvMBVVePSw3pg==',1)
+--insert into system.AssignedRoles (Id,RoleId,LoginId,CreatedOn)
+--VALUES (2,2,2,GetDate());
+
+
+--insert into HRM.LaneAddresses(AddressId,LaneAddressOne,LaneAddressTwo,PersonId,CityId,AddressType)
+--Values(1,'HeadOffice Inspire Nation 119-A Wakeel Colony Chaklala Cantt',' HeadOffice Inspire Nation 119-A Wakeel Colony Chaklala Cantt',1,1,'Shipping')
+--insert into HRM.LaneAddresses(AddressId,LaneAddressOne,LaneAddressTwo,PersonId,CityId,AddressType)
+--Values(2,'HeadOffice Inspire Nation Tahli Mohri Rawalpindi',' HeadOffice Inspire Nation Tahli Mohri Rawalpindi',1,1,'Billing')

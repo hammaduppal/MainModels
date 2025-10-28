@@ -1,4 +1,5 @@
-﻿CREATE TABLE Accounting.ChartOfAccounts (
+﻿
+CREATE TABLE Accounting.ChartOfAccounts (
     CoaId INT IDENTITY(1,1) PRIMARY KEY,
     AccountCode VARCHAR(20) NOT NULL UNIQUE,
     AccountName NVARCHAR(200) NOT NULL,

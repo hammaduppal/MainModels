@@ -1,4 +1,4 @@
-﻿USE [InspireErp_Dev]
+﻿USE [inspirenation_marketdb]
 GO
 /****** Object:  Schema [AST]    Script Date: 03/10/2025 8:15:41 pm ******/
 CREATE SCHEMA [AST]
