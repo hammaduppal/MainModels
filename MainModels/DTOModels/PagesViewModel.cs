@@ -38,13 +38,13 @@ namespace MainModels.DTOModels
         public List<DepartmentVM>? Departments { get; set; }
         public List<CategoryVM>? Categories { get; set; }
         public List<UomVM>? UOMs { get; set; }
-        public List<OrderMasterVM>? OrderMaster{ get; set; }
-        public List<InvoiceMasterVM>? Invoices{ get; set; }
+        public List<OrderMasterVM>? OrderMaster { get; set; }
+        public List<InvoiceMasterVM>? Invoices { get; set; }
 
-        public OrderMasterVM Order{ get; set; }
+        public OrderMasterVM Order { get; set; }
 
 
-        public List<TaxSlabVM>? TaxSlabs{ get; set; }
+        public List<TaxSlabVM>? TaxSlabs { get; set; }
 
         public List<UomsubVM>? SubUOMs { get; set; }
         public List<SizeVM> Sizes { get; set; }
@@ -53,8 +53,11 @@ namespace MainModels.DTOModels
         public List<ProductVariantVM> ProductVariants { get; set; }
         public List<ProductImageVM> ProductImages { get; set; }
         public List<BrandVM> Brands { get; set; }
+        public List<BrandModelVM> BrandModels { get; set; }
+        public BrandModelVM BrandModel { get; set; }
+
         public ProductVM Product { get; set; }
-        public static List<SettingVM> Settings{ get; set; }
+        public static List<SettingVM> Settings { get; set; }
 
         public static DashBoardSettings DashBoardSetting { get; set; }
         public static SystemSettings SystemSettings { get; set; }

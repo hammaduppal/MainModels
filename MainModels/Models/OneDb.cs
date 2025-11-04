@@ -29,6 +29,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Brand> Brands { get; set; }
 
+    public virtual DbSet<BrandModel> BrandModels { get; set; }
+
     public virtual DbSet<Building> Buildings { get; set; }
 
     public virtual DbSet<BusinessCategory> BusinessCategories { get; set; }
@@ -397,6 +399,28 @@ public partial class OneDb : DbContext
             entity.Property(e => e.BrandSlug).HasMaxLength(500);
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<BrandModel>(entity =>
+        {
+            entity.HasKey(e => e.BrandModelId).HasName("PK__BrandMod__6981FE0A6582C4BF");
+
+            entity.ToTable("BrandModels", "INV");
+
+            entity.Property(e => e.BrandModelId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.ModelName)
+                .IsRequired()
+                .HasMaxLength(200);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Brand).WithMany(p => p.BrandModels)
+                .HasForeignKey(d => d.BrandId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_BrandModels_Brands");
         });
 
         modelBuilder.Entity<Building>(entity =>
@@ -1477,6 +1501,10 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Brand).WithMany(p => p.Products)
                 .HasForeignKey(d => d.BrandId)
                 .HasConstraintName("FK_Products_Brands");
+
+            entity.HasOne(d => d.BrandModel).WithMany(p => p.Products)
+                .HasForeignKey(d => d.BrandModelId)
+                .HasConstraintName("FK_Products_BrandModels");
 
             entity.HasOne(d => d.Organization).WithMany(p => p.Products)
                 .HasForeignKey(d => d.OrganizationId)

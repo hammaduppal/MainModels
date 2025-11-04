@@ -208,3 +208,28 @@ ALTER TABLE Accounting.AccountPayables
 ADD CONSTRAINT FK_AccountPayables_Supplier
 FOREIGN KEY (SupplierId)
 REFERENCES Hrm.Supplier(SupplierId);
+
+CREATE TABLE INV.BrandModels (
+    BrandModelId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    ModelName NVARCHAR(200) NOT NULL,
+    IsActive BIT NOT NULL DEFAULT 1,
+    CreatedOn DATETIME NOT NULL DEFAULT GETDATE(),
+    ModifiedOn DATETIME NULL,
+    BrandId UNIQUEIDENTIFIER NOT NULL,
+    CONSTRAINT FK_BrandModels_Brands FOREIGN KEY (BrandId)
+        REFERENCES INV.Brands(BrandId)
+);
+
+ALTER TABLE INV.Products
+ADD BrandModelId UNIQUEIDENTIFIER NULL;
+
+ALTER TABLE INV.Products
+ADD CONSTRAINT FK_Products_BrandModels FOREIGN KEY (BrandModelId)
+    REFERENCES INV.BrandModels(BrandModelId);
+
+    --This task is pending until change the flow
+--    ALTER TABLE INV.Products
+--DROP CONSTRAINT FK_Products_Brands;
+
+--ALTER TABLE INV.Products
+--DROP COLUMN BrandId;

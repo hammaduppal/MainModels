@@ -1,5 +1,4 @@
 ﻿
-using MainModels.Models;
 
 namespace MainModels.DTOModels
 {
@@ -38,7 +37,7 @@ namespace MainModels.DTOModels
         public DateTime? ModifiedOn { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
-        public List<CategoryVM>? Categories{ get; set; }
+        public List<CategoryVM>? Categories { get; set; }
     }
 
     public partial class MaterialVM
@@ -75,6 +74,9 @@ namespace MainModels.DTOModels
         public string? UOMName { get; set; }
         public Guid BrandId { get; set; }
         public string BrandName { get; set; }
+        public Guid? BrandModelId { get; set; }
+        public string? ModelName { get; set; }
+
     }
 
     public partial class ProductImageVM
@@ -447,24 +449,24 @@ namespace MainModels.DTOModels
 
         public int OrderStatusId { get; set; }
 
-        public  ICollection<OrderMasterVM> InverseParentOrder { get; set; } = new List<OrderMasterVM>();
+        public ICollection<OrderMasterVM> InverseParentOrder { get; set; } = new List<OrderMasterVM>();
 
-        public  ICollection<OrderDetailVM> OrderDetails { get; set; } = new List<OrderDetailVM>();
+        public ICollection<OrderDetailVM> OrderDetails { get; set; } = new List<OrderDetailVM>();
 
-        public  InvoiceSourceVM? OrderSource { get; set; }
+        public InvoiceSourceVM? OrderSource { get; set; }
 
-        public  OrderStatusVM? OrderStatus { get; set; }
+        public OrderStatusVM? OrderStatus { get; set; }
 
-        public  OrderMasterVM? ParentOrder { get; set; }
+        public OrderMasterVM? ParentOrder { get; set; }
 
-        public  PaymentStatusVM? PaymentStatus { get; set; }
+        public PaymentStatusVM? PaymentStatus { get; set; }
 
-        public  ServingTableVM? ServingTable { get; set; }
+        public ServingTableVM? ServingTable { get; set; }
 
-        public  ShippingTypeVM? ShippingType { get; set; }
-        public  EmployeeVM? Employee { get; set; }
-        public  CustomerVM? Customer { get; set; }
-        public  PaymentMethodVM? PaymentMethod { get; set; }
+        public ShippingTypeVM? ShippingType { get; set; }
+        public EmployeeVM? Employee { get; set; }
+        public CustomerVM? Customer { get; set; }
+        public PaymentMethodVM? PaymentMethod { get; set; }
 
     }
     public partial class OrderDetailVM
@@ -537,5 +539,21 @@ namespace MainModels.DTOModels
         public virtual ICollection<OrderMasterVM> OrderMasters { get; set; } = new List<OrderMasterVM>();
 
 
+    }
+    public class BrandModelVM
+    {
+        public Guid BrandModelId { get; set; }
+
+        public string ModelName { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public Guid BrandId { get; set; }
+
+        public BrandVM Brand { get; set; }
     }
 }

@@ -151,6 +151,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[INV].[BrandModels]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[INV].[Brands]",
          "ObjectType": 0
       },

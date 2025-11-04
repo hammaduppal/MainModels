@@ -39,7 +39,11 @@ public partial class Product
 
     public Guid? BranchId { get; set; }
 
+    public Guid? BrandModelId { get; set; }
+
     public virtual Brand Brand { get; set; }
+
+    public virtual BrandModel BrandModel { get; set; }
 
     public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
 

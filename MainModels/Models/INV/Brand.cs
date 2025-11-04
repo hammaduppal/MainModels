@@ -25,5 +25,7 @@ public partial class Brand
 
     public string BrandSlug { get; set; }
 
+    public virtual ICollection<BrandModel> BrandModels { get; set; } = new List<BrandModel>();
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }
