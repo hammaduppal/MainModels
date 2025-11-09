@@ -165,6 +165,7 @@ namespace MainModels.DTOModels
         public bool? IsSerial { get; set; }
         public List<BranchStockVM> BranchStock { get; set; }
         public List<BranchVM> AllowedBranches { get; set; }
+        public string ImageUrl { get; set; }
 
     }
 
