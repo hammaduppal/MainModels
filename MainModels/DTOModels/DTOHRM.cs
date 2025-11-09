@@ -26,6 +26,8 @@ namespace MainModels.DTOModels
         public List<RolesVM>? Roles { get; set; }
         public PersonVM? Person { get; set; }
         public Guid BusinessStoreId { get; set; }
+
+        public string WelcomeMessage { get; set; }
     }
 
     public partial class AssignedRoleVM
