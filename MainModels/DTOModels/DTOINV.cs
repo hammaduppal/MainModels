@@ -76,6 +76,8 @@ namespace MainModels.DTOModels
         public string BrandName { get; set; }
         public Guid? BrandModelId { get; set; }
         public string? ModelName { get; set; }
+        public List<ProductVariantVM> ProductVariants { get; set; }
+        public virtual ICollection<ProductImageVM> ProductImages { get; set; } = new List<ProductImageVM>();
 
     }
 
@@ -105,7 +107,7 @@ namespace MainModels.DTOModels
 
         public Guid? ColorId { get; set; }
         public Guid? SizeId { get; set; }
-
+        public Guid? SubCategoryId { get; set; }
         public Guid? ProductId { get; set; }
 
         public decimal? QoH { get; set; }
@@ -116,7 +118,7 @@ namespace MainModels.DTOModels
 
         public string BarCode { get; set; }
 
-        public decimal? SalesPrice { get; set; }
+        public decimal? SalePrice { get; set; }
 
         public decimal? PromotionPrice { get; set; }
 
@@ -166,7 +168,14 @@ namespace MainModels.DTOModels
         public List<BranchStockVM> BranchStock { get; set; }
         public List<BranchVM> AllowedBranches { get; set; }
         public string ImageUrl { get; set; }
+        public string SubCategoryName { get; set; }
 
+    }
+    public class SubCategoryProductsVM
+    {
+        public Guid? SubCategoryId { get; set; }
+        public string? SubCategoryName { get; set; }
+        public List<ProductVariantVM>? Products { get; set; }
     }
 
     public partial class SizeVM
@@ -557,4 +566,16 @@ namespace MainModels.DTOModels
 
         public BrandVM Brand { get; set; }
     }
+
+
+
+
+    #region RequestVMs
+    public class ProductRequestVM
+    {
+        public Guid ProductId { get; set; }
+        public string ProductSlug { get; set; }
+
+    }
+    #endregion
 }

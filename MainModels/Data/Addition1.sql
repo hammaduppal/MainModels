@@ -233,3 +233,7 @@ ADD CONSTRAINT FK_Products_BrandModels FOREIGN KEY (BrandModelId)
 
 --ALTER TABLE INV.Products
 --DROP COLUMN BrandId;
+
+
+ALTER TABLE INV.Products
+ALTER COLUMN ProductDescription NVARCHAR(MAX) NULL;
