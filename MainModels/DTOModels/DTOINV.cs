@@ -1,5 +1,7 @@
 ﻿
 
+using Newtonsoft.Json;
+
 namespace MainModels.DTOModels
 {
     public class CategoryVM
@@ -201,6 +203,7 @@ namespace MainModels.DTOModels
         public DateTime? ModifiedOn { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
+        public string? HarmonizedSystemCode { get; set; }
     }
     public partial class UomVM
     {
@@ -568,6 +571,92 @@ namespace MainModels.DTOModels
     }
 
 
+    public class InvoiceRequestFBR
+    {
+        public string InvoiceType { get; set; } = "Sale Invoice";
+        public string InvoiceDate { get; set; } =   DateTime.Now.ToString("yyyy-MM-dd");
+        public string SellerNTNCNIC { get; set; }
+        public string SellerBusinessName { get; set; }
+        public string SellerProvince { get; set; }
+        public string SellerAddress { get; set; }
+        public string BuyerNTNCNIC { get; set; }
+        public string BuyerBusinessName { get; set; }
+        public string BuyerProvince { get; set; }
+        public string BuyerAddress { get; set; }
+        public string BuyerRegistrationType { get; set; }
+        public string InvoiceRefNo { get; set; }
+        public string ScenarioId { get; set; }
+
+        public List<InvoiceItemFBR> Items { get; set; }
+    }
+
+    public class InvoiceItemFBR
+    {
+        public string HsCode { get; set; }
+        public string ProductDescription { get; set; }
+        public string Rate { get; set; }
+        public string UoM { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal TotalValues { get; set; }
+        public decimal ValueSalesExcludingST { get; set; }
+        public decimal FixedNotifiedValueOrRetailPrice { get; set; }
+        public decimal SalesTaxApplicable { get; set; }
+        public decimal SalesTaxWithheldAtSource { get; set; }
+        public decimal ExtraTax { get; set; }
+        public decimal FurtherTax { get; set; }
+        public string SroScheduleNo { get; set; }
+        public decimal FedPayable { get; set; }
+        public decimal Discount { get; set; }
+        public string SaleType { get; set; }
+        public string SroItemSerialNo { get; set; }
+    }
+    public class ErrorResponseFBR
+    {
+        [JsonProperty("invoiceNumber")]
+        public string InvoiceNumber { get; set; }
+
+        [JsonProperty("dated")]
+        public string Dated { get; set; }
+
+        [JsonProperty("validationResponse")]
+        public ValidationResponseFBR ValidationResponse { get; set; }
+    }
+
+    public class ValidationResponseFBR
+    {
+        [JsonProperty("statusCode")]
+        public string StatusCode { get; set; }
+
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        [JsonProperty("error")]
+        public string Error { get; set; }
+
+        [JsonProperty("invoiceStatuses")]
+        public List<InvoiceStatusFBR> InvoiceStatuses { get; set; }
+    }
+
+    public class InvoiceStatusFBR
+    {
+        [JsonProperty("itemSNo")]
+        public string ItemSNo { get; set; }
+
+        [JsonProperty("statusCode")]
+        public string StatusCode { get; set; }
+
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        [JsonProperty("invoiceNo")]
+        public string InvoiceNo { get; set; }
+
+        [JsonProperty("errorCode")]
+        public string ErrorCode { get; set; }
+
+        [JsonProperty("error")]
+        public string Error { get; set; }
+    }
 
 
     #region RequestVMs

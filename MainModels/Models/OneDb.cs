@@ -1490,7 +1490,6 @@ public partial class OneDb : DbContext
             entity.Property(e => e.ProductId).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-            entity.Property(e => e.ProductDescription).HasMaxLength(1000);
             entity.Property(e => e.ProductName).HasMaxLength(1000);
             entity.Property(e => e.ProductSlug).HasMaxLength(500);
             entity.Property(e => e.Qoh)
@@ -1786,6 +1785,7 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.SubCategoryId).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.HarmonizedSystemCode).HasMaxLength(500);
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.SubCategoryName).HasMaxLength(1000);
             entity.Property(e => e.SubCategorySlug).HasMaxLength(500);

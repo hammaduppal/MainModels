@@ -25,6 +25,8 @@ public partial class SubCategory
 
     public string SubCategorySlug { get; set; }
 
+    public string HarmonizedSystemCode { get; set; }
+
     public virtual Category Category { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();

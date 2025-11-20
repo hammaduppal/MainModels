@@ -237,3 +237,4 @@ ADD CONSTRAINT FK_Products_BrandModels FOREIGN KEY (BrandModelId)
 
 ALTER TABLE INV.Products
 ALTER COLUMN ProductDescription NVARCHAR(MAX) NULL;
+alter table Inv.Subcategory add HarmonizedSystemCode nvarchar(500) null
