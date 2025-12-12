@@ -1,9 +1,16 @@
 ﻿using System.ComponentModel;
+using Microsoft.Identity.Client;
 
 namespace MainModels.DTOModels
 {
     public class AppConstants
     {
+        public static class ProductType
+        {
+            public const int PhysicalInventory = 1;
+            public const int ServiceInventory = 2;
+        }
+
         public static class CoaAccounts
         {
             // ==== ASSETS ====

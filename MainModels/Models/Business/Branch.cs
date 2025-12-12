@@ -35,6 +35,8 @@ public partial class Branch
 
     public virtual BusinessStoreType BusinessStoreType { get; set; }
 
+    public virtual ICollection<Device> Devices { get; set; } = new List<Device>();
+
     public virtual Organization Organization { get; set; }
 
     public virtual ICollection<Person> People { get; set; } = new List<Person>();

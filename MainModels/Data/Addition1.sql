@@ -238,3 +238,73 @@ ADD CONSTRAINT FK_Products_BrandModels FOREIGN KEY (BrandModelId)
 ALTER TABLE INV.Products
 ALTER COLUMN ProductDescription NVARCHAR(MAX) NULL;
 alter table Inv.Subcategory add HarmonizedSystemCode nvarchar(500) null
+
+ALTER Table Inv.InvoiceMaster Add IsCancelled bit null
+ALTER Table Inv.InvoiceMaster Add CanceledDate date null
+
+CREATE TABLE System.Devices (
+    Id INT IDENTITY PRIMARY KEY,
+    BranchId UNIQUEIDENTIFIER NOT NULL,
+	DeviceUniqueId VARCHAR(200) NOT NULL,
+    DevicePayload VARBINARY(MAX) NOT NULL,  -- encrypted JSON
+    CreatedAt DATETIME DEFAULT GETDATE(),
+
+    CONSTRAINT FK_Devices_Branches FOREIGN KEY (BranchId)
+        REFERENCES Business.Branches(BranchId)
+        ON DELETE CASCADE  -- optional, deletes devices if branch deleted
+);
+ALTER TABLE System.Devices
+ALTER COLUMN DevicePayload NVARCHAR(MAX) NOT NULL;
+
+
+CREATE TABLE System.ServiceLicense
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    LicenseKey NVARCHAR(1000) NOT NULL,
+    CustomerName NVARCHAR(200) NULL,
+    DeviceId NVARCHAR(200) NULL,
+    ProductName NVARCHAR(200) NOT NULL,
+    ValidTill DATETIME NOT NULL,
+    IsActive BIT NOT NULL DEFAULT 1,
+    CreatedAt DATETIME NOT NULL DEFAULT GETUTCDATE(),
+    UpdatedAt DATETIME NULL
+);
+
+
+CREATE TABLE System.ClientLicenses (
+    Id INT IDENTITY PRIMARY KEY,
+    LicenseKey NVARCHAR(200) NOT NULL,
+    MachineFingerprint NVARCHAR(200) NULL,
+    ValidFrom DATETIME2 NULL,
+    ValidTo DATETIME2 NULL,
+    IsActive BIT NOT NULL DEFAULT 1,
+    Signature NVARCHAR(MAX) NULL,
+    CreatedAt DATETIME2 DEFAULT GETDATE()
+);
+
+ALTER TABLE INV.Products Add ProductType int
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 21
+WHERE CoaId IN (22, 23, 24);
+
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 25
+WHERE CoaId IN (26, 27, 28, 29);
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 30
+WHERE CoaId IN (31,32,33,34,35,36,37,38);
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 12
+WHERE CoaId IN (13,14,15,16);
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 17
+WHERE CoaId IN (18,19,20);
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 9
+WHERE CoaId IN (10, 11);

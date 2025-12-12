@@ -171,6 +171,7 @@ namespace MainModels.DTOModels
         public List<BranchVM> AllowedBranches { get; set; }
         public string ImageUrl { get; set; }
         public string SubCategoryName { get; set; }
+        public int? ProductType { get; set; }
 
     }
     public class SubCategoryProductsVM
@@ -320,7 +321,7 @@ namespace MainModels.DTOModels
         public string CustomerRemarks { get; set; }
         public string OfficeRemarks { get; set; }
 
-        public int InvoiceStatusId { get; set; }
+        //public int InvoiceStatusId { get; set; }
         public bool IsReturn { get; set; }
         public Guid? ReturnInvoiceId { get; set; }
 

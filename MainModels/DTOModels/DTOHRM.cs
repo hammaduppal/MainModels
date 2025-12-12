@@ -1,6 +1,14 @@
 ﻿
 namespace MainModels.DTOModels
 {
+    public class LoginUserRequestModel
+    {
+        public string UserName { get; set; }
+
+        public string Password { get; set; }
+        public bool Remember { get; set; }
+        public DeviceRequestModelVM Device { get; set; }
+    }
     public partial class LoginUserVM
     {
         public int Id { get; set; }

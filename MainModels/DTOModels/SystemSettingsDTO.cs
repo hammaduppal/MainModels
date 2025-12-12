@@ -122,4 +122,34 @@
 
         public DateTime? ModifiedOn { get; set; }
     }
+
+    public class DeviceRequestModelVM
+    {
+        
+        public string DeviceUniqueId { get; set; }    // GUID stored in localStorage
+
+        public string DeviceName { get; set; }        // hostname or browser name
+
+        public string IpAddress { get; set; }         // optional, captured from request
+
+        public string BrowserName { get; set; }       // e.g., Chrome, Edge, Firefox
+
+        public string OperatingSystem { get; set; }   // Windows, MacOS, Linux, etc.
+
+        public string AppVersion { get; set; }        // optional, version of your app
+    }
+    public class LicenseModelVM
+    {
+        public string DeviceId { get; set; }
+        public string CustomerName { get; set; }
+        public string ProductName { get; set; }
+        public DateTime ValidTill { get; set; }
+      
+
+
+
+    }
+
+
+
 }

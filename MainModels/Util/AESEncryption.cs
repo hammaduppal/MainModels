@@ -162,5 +162,37 @@ namespace MainModels.Util
                 return BitConverter.ToString(bytes).Replace("-", "").ToLower();
             }
         }
+
+
+
+
+
+
+
+
+        public static string EncryptWithPrivateKey(string plainText, string privateKey)
+        {
+            var rsa = RSA.Create();
+            rsa.ImportFromPem(privateKey.ToCharArray());
+
+            byte[] data = Encoding.UTF8.GetBytes(plainText);
+            byte[] encrypted = rsa.Encrypt(data, RSAEncryptionPadding.Pkcs1);
+
+            return Convert.ToBase64String(encrypted);
+        }
+
+        public static string DecryptWithPublicKey(string cipherText, string publicKey)
+        {
+            var rsa = RSA.Create();
+            rsa.ImportFromPem(publicKey.ToCharArray());
+
+            byte[] data = Convert.FromBase64String(cipherText);
+            byte[] decrypted = rsa.Decrypt(data, RSAEncryptionPadding.Pkcs1);
+
+            return Encoding.UTF8.GetString(decrypted);
+        }
+
+
+
     }
 }

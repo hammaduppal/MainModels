@@ -283,6 +283,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[SYSTEM].[ClientLicenses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[Devices]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[SYSTEM].[ErpPermissions]",
          "ObjectType": 0
       },
@@ -296,6 +304,10 @@
       },
       {
          "Name": "[SYSTEM].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[ServiceLicense]",
          "ObjectType": 0
       },
       {

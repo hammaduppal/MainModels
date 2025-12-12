@@ -49,6 +49,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<City> Cities { get; set; }
 
+    public virtual DbSet<ClientLicense> ClientLicenses { get; set; }
+
     public virtual DbSet<CmsContentSharedCategory> CmsContentSharedCategories { get; set; }
 
     public virtual DbSet<CmsEmail> CmsEmails { get; set; }
@@ -74,6 +76,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<Customer> Customers { get; set; }
 
     public virtual DbSet<Department> Departments { get; set; }
+
+    public virtual DbSet<Device> Devices { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
 
@@ -148,6 +152,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<Review> Reviews { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<ServiceLicense> ServiceLicenses { get; set; }
 
     public virtual DbSet<ServingTable> ServingTables { get; set; }
 
@@ -579,6 +585,20 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK_Cities_StateProvince");
         });
 
+        modelBuilder.Entity<ClientLicense>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ClientLi__3214EC073941D325");
+
+            entity.ToTable("ClientLicenses", "SYSTEM");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.LicenseKey)
+                .IsRequired()
+                .HasMaxLength(200);
+            entity.Property(e => e.MachineFingerprint).HasMaxLength(200);
+        });
+
         modelBuilder.Entity<CmsContentSharedCategory>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__CmsConte__3214EC073ACDA7FC");
@@ -828,6 +848,26 @@ public partial class OneDb : DbContext
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<Device>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Devices__3214EC07861E42F1");
+
+            entity.ToTable("Devices", "SYSTEM");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DevicePayload).IsRequired();
+            entity.Property(e => e.DeviceUniqueId)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.Devices)
+                .HasForeignKey(d => d.BranchId)
+                .HasConstraintName("FK_Devices_Branches");
+        });
+
         modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F11C218845C");
@@ -993,6 +1033,7 @@ public partial class OneDb : DbContext
             entity.HasIndex(e => e.InvoiceNo, "UQ__InvoiceM__D796B2274B25F659").IsUnique();
 
             entity.Property(e => e.InvoiceMasterId).ValueGeneratedNever();
+            entity.Property(e => e.CanceledDate).HasColumnType("date");
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -1710,6 +1751,28 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<ServiceLicense>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ServiceL__3214EC07885361C5");
+
+            entity.ToTable("ServiceLicense", "SYSTEM");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.CustomerName).HasMaxLength(200);
+            entity.Property(e => e.DeviceId).HasMaxLength(200);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.LicenseKey)
+                .IsRequired()
+                .HasMaxLength(1000);
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(200);
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+            entity.Property(e => e.ValidTill).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<ServingTable>(entity =>

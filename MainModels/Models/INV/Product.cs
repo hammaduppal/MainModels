@@ -41,6 +41,8 @@ public partial class Product
 
     public Guid? BrandModelId { get; set; }
 
+    public int? ProductType { get; set; }
+
     public virtual Brand Brand { get; set; }
 
     public virtual BrandModel BrandModel { get; set; }
