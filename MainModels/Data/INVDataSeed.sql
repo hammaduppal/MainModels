@@ -1115,3 +1115,33 @@ VALUES
 ('1070', 'Input Tax (Purchase Tax)', 'Assets', 1),
 ('2041', 'Output Tax (Sales Tax)', 'Liability', 12);
 
+INSERT INTO INV.PurchaseType (Id, Code, Name, SortOrder)
+VALUES
+(1, 'PURCHASE',      'Purchase',        1),
+(2, 'OPENING_STOCK', 'Opening Stock',    2),
+(3, 'TRANSFER',      'Branch Transfer',  3),
+(4, 'ADJUST',        'Stock Adjustment', 4);
+GO
+    
+INSERT INTO Accounting.ChartOfAccounts
+    (
+        
+        AccountCode,
+        AccountName,
+        AccountType,
+        ParentCoaId,
+        IsActive,
+        CreatedAt,
+        UpdatedAt
+    )
+    VALUES
+    (
+        
+        3075,           -- AccountCode in 3000 range for Equity
+        'Opening Stock',
+        'Equity',       -- AccountType
+        17,             -- ParentCoaId (Equity)
+        1,              -- IsActive
+        GETDATE(),      -- CreatedAt
+        NULL            -- UpdatedAt
+    );

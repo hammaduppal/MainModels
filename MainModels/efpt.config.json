@@ -239,6 +239,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[INV].[PurchaseType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[INV].[Sizes]",
          "ObjectType": 0
       },

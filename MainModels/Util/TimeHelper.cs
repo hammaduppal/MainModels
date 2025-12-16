@@ -27,29 +27,7 @@
                 return createdOn.ToString("MMM dd, yyyy");
             }
         }
-        //public static string GetGreeting()
-        //{
-        //    int hour = DateTime.Now.Hour;
-
-        //    if (hour >= 4 && hour < 6)
-        //        return "🌄 A fresh start to the day—rise and shine!";
-        //    else if (hour >= 6 && hour < 12)
-        //        return "☀️ Good Morning! Wishing you a productive day.";
-        //    else if (hour >= 12 && hour < 13)
-        //        return "🌞 It's Noon—time to recharge with some energy!";
-        //    else if (hour >= 13 && hour < 16)
-        //        return "🌤️ Good Afternoon! Keep up the great work.";
-        //    else if (hour >= 16 && hour < 18)
-        //        return "🌆 Wrapping up strong—you're almost there!";
-        //    else if (hour >= 18 && hour < 21)
-        //        return "🌇 Good Evening! Hope you had a fulfilling day.";
-        //    else if (hour >= 21 && hour < 23)
-        //        return "🌙 The day winds down—time to relax and reflect.";
-        //    else if (hour >= 23 || hour < 2)
-        //        return "🌌 Burning the midnight oil? Stay focused and take care.";
-        //    else // 2 AM – 4 AM
-        //        return "🌠 Still awake? A new day is just around the corner.";
-        //}
+        
 
 
     }

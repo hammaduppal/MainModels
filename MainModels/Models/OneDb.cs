@@ -147,6 +147,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<PurchaseMaster> PurchaseMasters { get; set; }
 
+    public virtual DbSet<PurchaseType> PurchaseTypes { get; set; }
+
     public virtual DbSet<ReconciliationLog> ReconciliationLogs { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
@@ -1671,6 +1673,8 @@ public partial class OneDb : DbContext
 
             entity.ToTable("PurchaseMaster", "INV");
 
+            entity.HasIndex(e => e.PurchaseTypeId, "IX_INV_PurchaseMaster_PurchaseTypeId");
+
             entity.HasIndex(e => e.PurchaseNumber, "UQ__Purchase__373B5B6EE9029448").IsUnique();
 
             entity.Property(e => e.PurchaseMasterId).ValueGeneratedNever();
@@ -1695,9 +1699,32 @@ public partial class OneDb : DbContext
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
+            entity.HasOne(d => d.PurchaseTypeNavigation).WithMany(p => p.PurchaseMasters)
+                .HasForeignKey(d => d.PurchaseTypeId)
+                .HasConstraintName("FK_INV_PurchaseMaster_PurchaseType");
+
             entity.HasOne(d => d.Supplier).WithMany(p => p.PurchaseMasters)
                 .HasForeignKey(d => d.SupplierId)
                 .HasConstraintName("FK_PurchaseMaster_Supplier");
+        });
+
+        modelBuilder.Entity<PurchaseType>(entity =>
+        {
+            entity.ToTable("PurchaseType", "INV");
+
+            entity.HasIndex(e => e.Code, "UQ_PurchaseType_Code").IsUnique();
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Code)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedOn).HasDefaultValueSql("(sysdatetime())");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<ReconciliationLog>(entity =>

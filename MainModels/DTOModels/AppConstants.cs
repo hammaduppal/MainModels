@@ -40,6 +40,8 @@ namespace MainModels.DTOModels
             public const int OwnersCapital = 18;             // 3010
             public const int OwnersDrawings = 19;            // 3020
             public const int RetainedEarnings = 20;          // 3030
+            public const int OpeningStock = 41;              // 3075
+
 
             // ==== REVENUE ====
             public const int Revenue = 21;
@@ -134,7 +136,14 @@ namespace MainModels.DTOModels
             Chargeback = 6,
             Failed = 7
         }
+        public static class PurchaseTypes
+        {
+            public const int Purchase = 1;
+            public const int OpeningStock = 2;
+            public const int Transfer = 3;
+            public const int Adjust = 4;
 
+        }
 
     }
 }

@@ -47,7 +47,11 @@ public partial class PurchaseMaster
 
     public decimal? TaxAmount { get; set; }
 
+    public int? PurchaseTypeId { get; set; }
+
     public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
+
+    public virtual PurchaseType PurchaseTypeNavigation { get; set; }
 
     public virtual Supplier Supplier { get; set; }
 }

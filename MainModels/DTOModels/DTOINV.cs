@@ -261,6 +261,7 @@ namespace MainModels.DTOModels
         public Guid? ServingTableId { get; set; }
         public Guid? CustomerId { get; set; }
         public int? PaymentMethodId { get; set; }
+        public int PurchaseTypeId { get; set; }
     }
 
     public class BillItems
@@ -658,7 +659,23 @@ namespace MainModels.DTOModels
         [JsonProperty("error")]
         public string Error { get; set; }
     }
+    public partial class PurchaseTypeVM
+    {
+        public int PurchaseTypeId { get; set; }
 
+        public string Code { get; set; }
+
+        public string Name { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public int SortOrder { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public int? CreatedBy { get; set; }
+
+    }
 
     #region RequestVMs
     public class ProductRequestVM

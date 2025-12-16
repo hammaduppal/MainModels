@@ -308,3 +308,34 @@ WHERE CoaId IN (18,19,20);
 UPDATE Accounting.ChartOfAccounts
 SET ParentCoaId = 9
 WHERE CoaId IN (10, 11);
+
+CREATE TABLE INV.PurchaseType
+(
+    Id          INT         NOT NULL,  -- Must match code constants
+    Code        VARCHAR(50) NOT NULL,
+    Name        VARCHAR(100) NOT NULL,
+    IsActive    BIT         NOT NULL CONSTRAINT DF_PurchaseType_IsActive DEFAULT (1),
+    SortOrder   INT         NOT NULL,
+    CreatedOn   DATETIME2   NOT NULL CONSTRAINT DF_PurchaseType_CreatedOn DEFAULT (SYSDATETIME()),
+    CreatedBy   INT         NULL,
+
+    CONSTRAINT PK_PurchaseType PRIMARY KEY (Id),
+    CONSTRAINT UQ_PurchaseType_Code UNIQUE (Code)
+);
+--One time only after disable
+--UPDATE INV.PurchaseType
+--SET IsActive = 0
+--WHERE Code = 'OPENING_STOCK';
+
+ALTER TABLE INV.PurchaseMaster
+ADD PurchaseTypeId INT NULL;
+GO
+ALTER TABLE INV.PurchaseMaster
+ADD CONSTRAINT FK_INV_PurchaseMaster_PurchaseType
+FOREIGN KEY (PurchaseTypeId)
+REFERENCES INV.PurchaseType (Id);
+GO
+CREATE NONCLUSTERED INDEX IX_INV_PurchaseMaster_PurchaseTypeId
+ON INV.PurchaseMaster (PurchaseTypeId);
+GO
+

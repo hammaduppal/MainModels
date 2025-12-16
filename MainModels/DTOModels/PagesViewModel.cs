@@ -24,6 +24,7 @@ namespace MainModels.DTOModels
 
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
+        public List<PurchaseTypeVM> PurchaseTypes { get; set; }
         public SystemPreferencesVM SystemPreferences { get; set; }
         public AccountingPreferencesVM AccountingPreferences { get; set; }
         public List<AccountReceivableVM> AccountReceiables { get; set; }
