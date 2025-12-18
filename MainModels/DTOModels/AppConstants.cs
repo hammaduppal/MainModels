@@ -93,7 +93,10 @@ namespace MainModels.DTOModels
             PurchaseOrder = 2,
 
             [Description("Receiving")]
-            Receiving = 3
+            Receiving = 3,
+
+            [Description("Opening Stock")]
+            OpeningStock = 4
         }
         //public enum RequisitionTypes
         //{
