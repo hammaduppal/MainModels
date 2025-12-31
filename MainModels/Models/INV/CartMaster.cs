@@ -11,13 +11,13 @@ public partial class CartMaster
 
     public Guid? CustomerId { get; set; }
 
-    public string SessionId { get; set; }
-
     public DateTime? CreatedDate { get; set; }
 
     public DateTime? UpdatedDate { get; set; }
 
     public bool? IsCheckedOut { get; set; }
+
+    public Guid? SessionId { get; set; }
 
     public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
 }

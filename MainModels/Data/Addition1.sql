@@ -339,3 +339,14 @@ CREATE NONCLUSTERED INDEX IX_INV_PurchaseMaster_PurchaseTypeId
 ON INV.PurchaseMaster (PurchaseTypeId);
 GO
 
+ALTER TABLE INV.CartMaster
+DROP COLUMN SessionId;
+
+Alter Table Inv.CartMaster
+add SessionId uniqueidentifier null
+
+Alter Table INv.CartDetail
+Add ImageUrl nvarchar (max)
+
+ALTER TABLE INV.CartDetail
+ALTER COLUMN ProductId UNIQUEIDENTIFIER NULL;

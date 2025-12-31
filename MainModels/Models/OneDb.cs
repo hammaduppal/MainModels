@@ -507,7 +507,6 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.CartDetails)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__CartDetai__Produ__038683F8");
 
             entity.HasOne(d => d.Variant).WithMany(p => p.CartDetails)
@@ -526,9 +525,6 @@ public partial class OneDb : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.IsCheckedOut).HasDefaultValue(false);
-            entity.Property(e => e.SessionId)
-                .HasMaxLength(100)
-                .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 

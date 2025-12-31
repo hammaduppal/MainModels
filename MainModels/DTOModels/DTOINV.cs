@@ -1,5 +1,6 @@
 ﻿
 
+using MainModels.Models;
 using Newtonsoft.Json;
 
 namespace MainModels.DTOModels
@@ -98,7 +99,11 @@ namespace MainModels.DTOModels
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
     }
-
+    public class AddItemToCartVM
+    {
+        public Guid SessionId { get; set; }
+        public ProductVariantVM Item { get; set; }
+    }
     public partial class ProductVariantVM
     {
         public Guid VariantId { get; set; }
@@ -677,6 +682,50 @@ namespace MainModels.DTOModels
 
     }
 
+    public partial class CartMasterVM
+    {
+        public Guid CartId { get; set; }
+
+        public Guid? CustomerId { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public DateTime? UpdatedDate { get; set; }
+
+        public bool? IsCheckedOut { get; set; }
+
+        public Guid? SessionId { get; set; }
+
+        public virtual ICollection<CartDetailVM> CartDetails { get; set; } = new List<CartDetailVM>();
+    }
+    public partial class CartDetailVM
+    {
+        public Guid CartDetailId { get; set; }
+
+        public Guid CartId { get; set; }
+
+        public Guid ProductId { get; set; }
+
+        public Guid? VariantId { get; set; }
+
+        public decimal Quantity { get; set; }
+
+        public decimal UnitPrice { get; set; }
+
+        public decimal? Discount { get; set; }
+
+        public decimal? Tax { get; set; }
+
+        public decimal? TotalAmount { get; set; }
+        public string ImageUrl { get; set; }
+
+        public virtual CartMasterVM Cart { get; set; }
+
+        public virtual ProductVM Product { get; set; }
+
+        public virtual ProductVariantVM Variant { get; set; }
+    }
+   
     #region RequestVMs
     public class ProductRequestVM
     {

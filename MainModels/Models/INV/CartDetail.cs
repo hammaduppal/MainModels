@@ -11,7 +11,7 @@ public partial class CartDetail
 
     public Guid CartId { get; set; }
 
-    public Guid ProductId { get; set; }
+    public Guid? ProductId { get; set; }
 
     public Guid? VariantId { get; set; }
 
@@ -24,6 +24,8 @@ public partial class CartDetail
     public decimal? Tax { get; set; }
 
     public decimal? TotalAmount { get; set; }
+
+    public string ImageUrl { get; set; }
 
     public virtual CartMaster Cart { get; set; }
 

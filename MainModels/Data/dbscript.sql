@@ -500,11 +500,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [INV].[CartDetail](
 	[CartDetailId] [uniqueidentifier] NOT NULL,
-	[CartId] [uniqueidentifier] NOT NULL,
-	[ProductId] [uniqueidentifier] NOT NULL,
+	[CartId] [uniqueidentifier]  NULL,
+	[ProductId] [uniqueidentifier]  NULL,
 	[VariantId] [uniqueidentifier] NULL,
-	[Quantity] [decimal](18, 2) NOT NULL,
-	[UnitPrice] [decimal](18, 2) NOT NULL,
+	[Quantity] [decimal](18, 2)  NULL,
+	[UnitPrice] [decimal](18, 2)  NULL,
 	[Discount] [decimal](18, 2) NULL,
 	[Tax] [decimal](18, 2) NULL,
 	[TotalAmount]  AS (([Quantity]*[UnitPrice]-[Discount])+[Tax]) PERSISTED,
