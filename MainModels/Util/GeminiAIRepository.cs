@@ -26,7 +26,9 @@ namespace MainModels.Util
     }
     public interface IDataRepository
     {
-        Task<string> AnalyzeTextAsync(string textToAnalyze);
+        Task<string> GenerateProductDescription(string textToAnalyze);
+        Task<string> ProductAdditionalInformation(string textToAnalyze);
+
 
     }
     public class DataRepository : IDataRepository
@@ -38,7 +40,7 @@ namespace MainModels.Util
             _geminiService = geminiService;
         }
 
-        public async Task<string> AnalyzeTextAsync(string productName)
+        public async Task<string> GenerateProductDescription(string productName)
         {
             string prompt = $@"
         You are a professional e-commerce copywriter. 
@@ -60,6 +62,30 @@ namespace MainModels.Util
                 return "Analysis failed due to an external service error.";
             }
         }
+
+        public async Task<string> ProductAdditionalInformation(string productName)
+        {
+            string prompt = $@"
+        You are a professional e-commerce copywriter. 
+        Write a detailed, realistic, and engaging product AdditionalDetail for the following product: ""{productName}"".
+        
+        The entire response **MUST** be formatted using valid HTML (including <p> and <b> tags for structure). 
+        Do not include any introductory text, markdown, or explanation outside of the HTML structure.
+        The additional information should be concise and under 250 words.
+    ";
+            try
+            {
+                string analysisResult = await _geminiService.GenerateContent(prompt);
+
+                return analysisResult;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Gemini API Error: {ex.Message}");
+                return "Analysis failed due to an external service error.";
+            }
+        }
+
     }
 
 }

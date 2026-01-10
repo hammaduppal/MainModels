@@ -43,6 +43,8 @@ public partial class Product
 
     public int? ProductType { get; set; }
 
+    public string AdditionalInformation { get; set; }
+
     public virtual Brand Brand { get; set; }
 
     public virtual BrandModel BrandModel { get; set; }

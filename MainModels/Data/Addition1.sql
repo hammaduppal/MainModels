@@ -350,3 +350,42 @@ Add ImageUrl nvarchar (max)
 
 ALTER TABLE INV.CartDetail
 ALTER COLUMN ProductId UNIQUEIDENTIFIER NULL;
+
+ALTER TABLE INV.Products
+Add  AdditionalInformation nvarchar (max)
+CREATE TABLE ProductReviews (
+    ReviewId BIGINT IDENTITY PRIMARY KEY,
+
+    ProductId uniqueIdentifier NULL,
+    UserId int  NULL,
+    OrderId uniqueIdentifier NULL, -- Nullable FK
+
+    Rating TINYINT NOT NULL CHECK (Rating BETWEEN 1 AND 5),
+    Title NVARCHAR(200) NULL,
+    Comment NVARCHAR(MAX) NOT NULL,
+
+    IsVerifiedPurchase BIT NOT NULL DEFAULT 0,
+    IsApproved BIT NOT NULL DEFAULT 0,
+    IsDeleted BIT NOT NULL DEFAULT 0,
+
+    HelpfulCount INT NOT NULL DEFAULT 0,
+    NotHelpfulCount INT NOT NULL DEFAULT 0,
+
+    AdminReply NVARCHAR(MAX) NULL,
+
+    IPAddress VARCHAR(45) NULL,
+    UserAgent NVARCHAR(255) NULL,
+
+    CreatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+    UpdatedAt DATETIME2 NULL,
+
+    -- 🔗 Foreign Keys
+    CONSTRAINT FK_ProductReviews_Product
+        FOREIGN KEY (ProductId) REFERENCES Inv.Products(ProductId),
+
+    CONSTRAINT FK_ProductReviews_User
+        FOREIGN KEY (UserId) REFERENCES Hrm.LoginUsers(Id),
+
+    CONSTRAINT FK_ProductReviews_Order
+        FOREIGN KEY (OrderId) REFERENCES Inv.OrderMaster(OrderMasterId)
+);

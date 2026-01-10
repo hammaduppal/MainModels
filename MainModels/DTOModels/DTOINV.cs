@@ -60,6 +60,7 @@ namespace MainModels.DTOModels
         public Guid ProductId { get; set; }
         public string? ProductName { get; set; }
         public string? ProductDescription { get; set; }
+        public string AdditionalInformation { get; set; }
         public decimal? Qoh { get; set; }
         public Guid? SubCategoryId { get; set; }
         public string? SubCategoryName { get; set; }
