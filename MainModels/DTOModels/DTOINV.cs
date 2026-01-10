@@ -1,6 +1,5 @@
 ﻿
 
-using MainModels.Models;
 using Newtonsoft.Json;
 
 namespace MainModels.DTOModels
@@ -740,7 +739,48 @@ namespace MainModels.DTOModels
 
         public virtual ProductVariantVM Variant { get; set; }
     }
-   
+    public partial class ProductReviewVM
+    {
+        public Guid ReviewId { get; set; }
+
+        public Guid? ProductId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public Guid? OrderId { get; set; }
+
+        public byte Rating { get; set; }
+
+        public string Title { get; set; }
+
+        public string Comment { get; set; }
+
+        public bool IsVerifiedPurchase { get; set; }
+
+        public bool IsApproved { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public int HelpfulCount { get; set; }
+
+        public int NotHelpfulCount { get; set; }
+
+        public string AdminReply { get; set; }
+
+        public string Ipaddress { get; set; }
+
+        public string UserAgent { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+
+        public virtual OrderMasterVM Order { get; set; }
+
+        public virtual ProductVM Product { get; set; }
+
+        public virtual LoginUserVM User { get; set; }
+    }
     #region RequestVMs
     public class ProductRequestVM
     {

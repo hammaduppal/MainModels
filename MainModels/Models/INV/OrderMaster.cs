@@ -69,6 +69,8 @@ public partial class OrderMaster
 
     public virtual PaymentStatus PaymentStatus { get; set; }
 
+    public virtual ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
+
     public virtual ServingTable ServingTable { get; set; }
 
     public virtual ShippingType ShippingType { get; set; }

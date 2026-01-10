@@ -47,6 +47,8 @@ public partial class LoginUser
 
     public virtual Person Person { get; set; }
 
+    public virtual ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
+
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Setting Settings { get; set; }

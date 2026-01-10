@@ -141,6 +141,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<ProductImage> ProductImages { get; set; }
 
+    public virtual DbSet<ProductReview> ProductReviews { get; set; }
+
     public virtual DbSet<ProductVariant> ProductVariants { get; set; }
 
     public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
@@ -1593,6 +1595,35 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.ProductImages)
                 .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("FK_ProductImages_Products");
+        });
+
+        modelBuilder.Entity<ProductReview>(entity =>
+        {
+            entity.HasKey(e => e.ReviewId).HasName("PK__ProductR__74BC79CE27A653FE");
+
+            entity.ToTable("ProductReviews", "INV");
+
+            entity.Property(e => e.ReviewId).ValueGeneratedNever();
+            entity.Property(e => e.Comment).IsRequired();
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetime())");
+            entity.Property(e => e.Ipaddress)
+                .HasMaxLength(45)
+                .IsUnicode(false)
+                .HasColumnName("IPAddress");
+            entity.Property(e => e.Title).HasMaxLength(200);
+            entity.Property(e => e.UserAgent).HasMaxLength(255);
+
+            entity.HasOne(d => d.Order).WithMany(p => p.ProductReviews)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("FK_ProductReviews_Order");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductReviews)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK_ProductReviews_Product");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ProductReviews)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_ProductReviews_User");
         });
 
         modelBuilder.Entity<ProductVariant>(entity =>
