@@ -65,6 +65,9 @@ namespace MainModels.DTOModels
         public string? SubCategoryName { get; set; }
         public string? CategoryName { get; set; }
         public string? DepartmentName { get; set; }
+        public string? SubCategorySlug { get; set; }
+        public string? CategorySlug { get; set; }
+        public string? DepartmentSlug { get; set; }
         public BrandVM Brand { get; set; }
         public Guid? BusinessStoreId { get; set; }
         public DateTime? CreatedOn { get; set; }
@@ -79,6 +82,8 @@ namespace MainModels.DTOModels
         public string BrandName { get; set; }
         public Guid? BrandModelId { get; set; }
         public string? ModelName { get; set; }
+    
+
         public List<ProductVariantVM> ProductVariants { get; set; }
         public virtual ICollection<ProductImageVM> ProductImages { get; set; } = new List<ProductImageVM>();
 
@@ -101,7 +106,7 @@ namespace MainModels.DTOModels
     }
     public class AddItemToCartVM
     {
-        public Guid SessionId { get; set; }
+        public Guid CartId { get; set; }
         public ProductVariantVM Item { get; set; }
     }
     public partial class ProductVariantVM
@@ -197,6 +202,15 @@ namespace MainModels.DTOModels
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
         public string SizeSlug { get; set; }
+    }
+    public class DCSNameAndSlug
+    {
+        public string? SubCategoryName { get; set; }
+        public string? CategoryName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? SubCategorySlug { get; set; }
+        public string? CategorySlug { get; set; }
+        public string? DepartmentSlug { get; set; }
     }
     public partial class SubCategoryVM
     {
@@ -707,7 +721,7 @@ namespace MainModels.DTOModels
         public Guid ProductId { get; set; }
 
         public Guid? VariantId { get; set; }
-
+        public string ProductName { get; set; }
         public decimal Quantity { get; set; }
 
         public decimal UnitPrice { get; set; }
