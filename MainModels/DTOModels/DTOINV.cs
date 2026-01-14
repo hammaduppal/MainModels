@@ -82,8 +82,8 @@ namespace MainModels.DTOModels
         public string BrandName { get; set; }
         public Guid? BrandModelId { get; set; }
         public string? ModelName { get; set; }
-    
 
+        public List<ProductReviewVM> Reviews { get; set; }=new List<ProductReviewVM>();
         public List<ProductVariantVM> ProductVariants { get; set; }
         public virtual ICollection<ProductImageVM> ProductImages { get; set; } = new List<ProductImageVM>();
 
@@ -781,6 +781,7 @@ namespace MainModels.DTOModels
 
         public virtual LoginUserVM User { get; set; }
     }
+
     #region RequestVMs
     public class ProductRequestVM
     {

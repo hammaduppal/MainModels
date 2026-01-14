@@ -389,3 +389,54 @@ CREATE TABLE ProductReviews (
     CONSTRAINT FK_ProductReviews_Order
         FOREIGN KEY (OrderId) REFERENCES Inv.OrderMaster(OrderMasterId)
 );
+
+CREATE TABLE INV.Coupons (
+    CouponId UNIQUEIDENTIFIER PRIMARY KEY,
+    CouponCode VARCHAR(50) NOT NULL UNIQUE,
+    CouponName VARCHAR(100) NOT NULL,
+
+    UsageLimitPerUser INT NULL,
+    MaxTotalUsage INT NULL,
+
+    StartDate DATETIME NOT NULL,
+    EndDate DATETIME NOT NULL,
+
+    MinQuantity INT NULL,
+    MinCartAmount DECIMAL(18,2) NULL,
+
+    DiscountType VARCHAR(20) NOT NULL,
+    DiscountValue DECIMAL(18,2) NOT NULL,
+
+    AllowStacking BIT DEFAULT 0,
+    IsActive BIT DEFAULT 1,
+
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    UpdatedDate DATETIME DEFAULT GETDATE()
+);
+GO
+
+CREATE TABLE INV.CouponProduct (
+    CouponProductId UNIQUEIDENTIFIER PRIMARY KEY,
+    CouponId UNIQUEIDENTIFIER NOT NULL,
+    ProductId UNIQUEIDENTIFIER NOT NULL,
+
+    CONSTRAINT FK_CouponProduct_Coupon
+        FOREIGN KEY (CouponId) REFERENCES INV.Coupons (CouponId),
+
+    CONSTRAINT FK_CouponProduct_Product
+        FOREIGN KEY (ProductId) REFERENCES INV.Products (ProductId)
+);
+GO
+
+CREATE TABLE INV.CouponCategory (
+    CouponCategoryId UNIQUEIDENTIFIER PRIMARY KEY,
+    CouponId UNIQUEIDENTIFIER NOT NULL,
+    CategoryId UNIQUEIDENTIFIER NOT NULL,
+
+    CONSTRAINT FK_CouponCategory_Coupon
+        FOREIGN KEY (CouponId) REFERENCES INV.Coupons (CouponId),
+
+    CONSTRAINT FK_CouponCategory_Category
+        FOREIGN KEY (CategoryId) REFERENCES INV.Categories (CategoryId)
+);
+GO
