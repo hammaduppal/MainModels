@@ -21,7 +21,7 @@ namespace MainModels.DTOModels
         public List<AccountPayableVM> AccountPayables { get; set; }
         public List<TrialBalanceVM> TrialBalances { get; set; }
         public List<LedgerVM> Ledgers { get; set; }
-
+        public CouponVM Coupon { get; set; }
         public IEnumerable<BusinessEntityTypeVM> BusinessEntities { get; set; }
         public List<SupplierVM> Suppliers { get; set; }
         public List<PurchaseTypeVM> PurchaseTypes { get; set; }
@@ -32,7 +32,7 @@ namespace MainModels.DTOModels
         public AppConstants.PurchaseStatus PurchaseStatus { get; set; }
         public List<CollectionMasterVM> Collections { get; set; }
         public CollectionMasterVM Collection { get; set; }
-
+        public List<CouponVM> Coupons { get; set; }
         public List<PurchaseMasterVM> PurchaseMasters { get; set; }
         public PurchaseMasterVM PurchaseMaster { get; set; }
 

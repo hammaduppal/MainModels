@@ -183,6 +183,18 @@
          "ObjectType": 0
       },
       {
+         "Name": "[INV].[CouponCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[CouponProduct]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[INV].[Coupons]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[INV].[Departments]",
          "ObjectType": 0
       },

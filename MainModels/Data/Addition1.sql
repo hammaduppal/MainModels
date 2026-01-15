@@ -415,18 +415,20 @@ CREATE TABLE INV.Coupons (
 );
 GO
 
+
 CREATE TABLE INV.CouponProduct (
     CouponProductId UNIQUEIDENTIFIER PRIMARY KEY,
     CouponId UNIQUEIDENTIFIER NOT NULL,
-    ProductId UNIQUEIDENTIFIER NOT NULL,
+    ProductVariantId UNIQUEIDENTIFIER NOT NULL,
 
     CONSTRAINT FK_CouponProduct_Coupon
         FOREIGN KEY (CouponId) REFERENCES INV.Coupons (CouponId),
 
-    CONSTRAINT FK_CouponProduct_Product
-        FOREIGN KEY (ProductId) REFERENCES INV.Products (ProductId)
+    CONSTRAINT FK_CouponProduct_ProductVariant
+        FOREIGN KEY (ProductVariantId) REFERENCES INV.ProductVariants (VariantId)
 );
 GO
+
 
 CREATE TABLE INV.CouponCategory (
     CouponCategoryId UNIQUEIDENTIFIER PRIMARY KEY,

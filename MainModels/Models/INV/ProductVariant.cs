@@ -59,6 +59,8 @@ public partial class ProductVariant
 
     public virtual Color Color { get; set; }
 
+    public virtual ICollection<CouponProduct> CouponProducts { get; set; } = new List<CouponProduct>();
+
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
 
     public virtual Material Material { get; set; }

@@ -73,6 +73,12 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Country> Countries { get; set; }
 
+    public virtual DbSet<Coupon> Coupons { get; set; }
+
+    public virtual DbSet<CouponCategory> CouponCategories { get; set; }
+
+    public virtual DbSet<CouponProduct> CouponProducts { get; set; }
+
     public virtual DbSet<Customer> Customers { get; set; }
 
     public virtual DbSet<Department> Departments { get; set; }
@@ -821,6 +827,79 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.CountryId).ValueGeneratedNever();
             entity.Property(e => e.CountryName).HasMaxLength(1000);
+        });
+
+        modelBuilder.Entity<Coupon>(entity =>
+        {
+            entity.HasKey(e => e.CouponId).HasName("PK__Coupons__384AF1BA5D0AAC2F");
+
+            entity.ToTable("Coupons", "INV");
+
+            entity.HasIndex(e => e.CouponCode, "UQ__Coupons__D3490800C8EF6C20").IsUnique();
+
+            entity.Property(e => e.CouponId).ValueGeneratedNever();
+            entity.Property(e => e.AllowStacking).HasDefaultValue(false);
+            entity.Property(e => e.CouponCode)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CouponName)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DiscountType)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.DiscountValue).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.EndDate).HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.MinCartAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.StartDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<CouponCategory>(entity =>
+        {
+            entity.HasKey(e => e.CouponCategoryId).HasName("PK__CouponCa__799E5F0B392E41DC");
+
+            entity.ToTable("CouponCategory", "INV");
+
+            entity.Property(e => e.CouponCategoryId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Category).WithMany(p => p.CouponCategories)
+                .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CouponCategory_Category");
+
+            entity.HasOne(d => d.Coupon).WithMany(p => p.CouponCategories)
+                .HasForeignKey(d => d.CouponId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CouponCategory_Coupon");
+        });
+
+        modelBuilder.Entity<CouponProduct>(entity =>
+        {
+            entity.HasKey(e => e.CouponProductId).HasName("PK__CouponPr__6E82B6FF8039BD7E");
+
+            entity.ToTable("CouponProduct", "INV");
+
+            entity.Property(e => e.CouponProductId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Coupon).WithMany(p => p.CouponProducts)
+                .HasForeignKey(d => d.CouponId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CouponProduct_Coupon");
+
+            entity.HasOne(d => d.ProductVariant).WithMany(p => p.CouponProducts)
+                .HasForeignKey(d => d.ProductVariantId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CouponProduct_ProductVariant");
         });
 
         modelBuilder.Entity<Customer>(entity =>

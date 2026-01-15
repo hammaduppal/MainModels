@@ -25,6 +25,8 @@ public partial class Category
 
     public string CategorySlug { get; set; }
 
+    public virtual ICollection<CouponCategory> CouponCategories { get; set; } = new List<CouponCategory>();
+
     public virtual Department Department { get; set; }
 
     public virtual ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();

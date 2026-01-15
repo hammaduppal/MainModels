@@ -1,5 +1,6 @@
 ﻿
 
+using MainModels.Models;
 using Newtonsoft.Json;
 
 namespace MainModels.DTOModels
@@ -781,7 +782,66 @@ namespace MainModels.DTOModels
 
         public virtual LoginUserVM User { get; set; }
     }
+    public partial class CouponVM
+    {
+        public Guid CouponId { get; set; }
 
+        public string CouponCode { get; set; }
+
+        public string CouponName { get; set; }
+
+        public int? UsageLimitPerUser { get; set; }
+
+        public int? MaxTotalUsage { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public int? MinQuantity { get; set; }
+
+        public decimal? MinCartAmount { get; set; }
+
+        public string DiscountType { get; set; }
+
+        public decimal DiscountValue { get; set; }
+
+        public bool? AllowStacking { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public DateTime? UpdatedDate { get; set; }
+
+        public virtual ICollection<CouponCategoryVM> CouponCategories { get; set; } = new List<CouponCategoryVM>();
+
+        public virtual ICollection<CouponProductVM> CouponProducts { get; set; } = new List<CouponProductVM>();
+    }
+    public partial class CouponProductVM
+    {
+        public Guid CouponProductId { get; set; }
+
+        public Guid CouponId { get; set; }
+
+        public Guid ProductVariantId { get; set; }
+
+        public virtual CouponVM Coupon { get; set; }
+
+        public virtual ProductVariantVM ProductVariant { get; set; }
+    }
+    public partial class CouponCategoryVM
+    {
+        public Guid CouponCategoryId { get; set; }
+
+        public Guid CouponId { get; set; }
+
+        public Guid CategoryId { get; set; }
+
+        public virtual CategoryVM Category { get; set; }
+
+        public virtual CouponVM Coupon { get; set; }
+    }
     #region RequestVMs
     public class ProductRequestVM
     {
