@@ -45,11 +45,20 @@ VALUES
 (7, 'Cooperative', GETDATE(), 1, 1),
 (8, 'Joint Venture', GETDATE(), 1, 1);
 
+
+INSERT INTO Business.BusinessStoreType(BusinessStoreTypeId,BusinessStoreTypeName,IsActive,CreatedOn,ModifiedOn)
+Values(1,'Branch',1,GETDATE(),GETDATE())
+INSERT INTO Business.BusinessStoreType(BusinessStoreTypeId,BusinessStoreTypeName,IsActive,CreatedOn,ModifiedOn)
+Values(2,'Franchise',1,GETDATE(),GETDATE())
+
 insert into Business.Organizations (OrganizationName,IsActive,CreatedOn,ModifiedOn,IsDeleted)
 Values('Inspire Nation',1,GetDate(),GetDate(),0)
 
 insert into Business.Branches (BranchId,BranchName,OrganizationId,BusinessCategoryId,BusinessEntityTYpeId,BranchCode,IsMasterBranch)
 Values(NEWID(),'HeadOffice',1,1,1,'',1)
+
+
+
 INSERT INTO System.Roles (Id, Name, IsActive)
 VALUES(1, 'SuperAdmin', 1),
 (2, 'Admin', 1),

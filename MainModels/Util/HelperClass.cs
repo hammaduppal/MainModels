@@ -8,10 +8,10 @@ namespace MainModels.Util
     {
         private readonly IConfiguration _config;
         private readonly DBManager _db;
-        public HelperClass(IConfiguration config)
+        public HelperClass(IConfiguration config, DBManager db)
         {
             _config = config;
-            _db = new DBManager(_config);
+            _db = db;
         }
         private static readonly Random random = new Random();
 

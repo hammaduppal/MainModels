@@ -310,7 +310,7 @@ namespace MainModels.DTOModels
     }
     public partial class InvoiceMasterVM
     {
-
+        public int? InvoiceSourceId { get; set; }
         public Guid InvoiceMasterId { get; set; }
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
@@ -441,7 +441,6 @@ namespace MainModels.DTOModels
     public partial class OrderMasterVM
     {
         public Guid OrderMasterId { get; set; }
-
         public Guid? ParentOrderId { get; set; }
 
         public string OrderNo { get; set; }
@@ -507,7 +506,7 @@ namespace MainModels.DTOModels
     public partial class OrderDetailVM
     {
         public Guid OrderDetailId { get; set; }
-
+        public string ProductName { get; set; }
         public Guid OrderMasterId { get; set; }
 
         public Guid ProductId { get; set; }

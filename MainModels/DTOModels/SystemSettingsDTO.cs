@@ -28,6 +28,8 @@
         public string CompanyName { get; set; }
         public Guid BranchId { get; set; }
         public bool IsRestaurantApplication { get; set; }
+        public bool IsEcommerece { get; set; } = true;
+        public bool IsPointOfSale { get; set; }
         public string CompanyLogoUrl { get; set; }
         public string DefaultLanguage { get; set; }
         public string TimeZone { get; set; }

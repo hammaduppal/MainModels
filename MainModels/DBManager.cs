@@ -10,7 +10,6 @@ namespace MainModels
         public DBManager(IConfiguration config)
         {
             _config = config;
-
             _dap = new DapperContext(_config);
         }
         public async Task<IEnumerable<T>> GetDataListWithQueryAndParam<T>(string query, object parameters = null)

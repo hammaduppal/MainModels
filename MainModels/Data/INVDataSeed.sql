@@ -1145,3 +1145,38 @@ INSERT INTO Accounting.ChartOfAccounts
         GETDATE(),      -- CreatedAt
         NULL            -- UpdatedAt
     );
+
+    INSERT INTO INV.OrderStatus (OrderStatusName)
+VALUES
+('Pending'),
+('Confirmed'),
+('Processing'),
+('Shipped'),
+('Delivered'),
+('Cancelled');
+
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 21
+WHERE CoaId IN (22, 23, 24);
+
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 25
+WHERE CoaId IN (26, 27, 28, 29);
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 30
+WHERE CoaId IN (31,32,33,34,35,36,37,38);
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 12
+WHERE CoaId IN (13,14,15,16);
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 17
+WHERE CoaId IN (18,19,20);
+
+UPDATE Accounting.ChartOfAccounts
+SET ParentCoaId = 9
+WHERE CoaId IN (10, 11);

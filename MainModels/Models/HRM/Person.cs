@@ -35,6 +35,10 @@ public partial class Person
 
     public Guid? BranchId { get; set; }
 
+    public bool? IsVerifiedUser { get; set; }
+
+    public string PasswordResetToken { get; set; }
+
     public virtual Branch Branch { get; set; }
 
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();

@@ -1,4 +1,7 @@
 ﻿
+CREATE SCHEMA Accounting
+go
+
 CREATE TABLE Accounting.ChartOfAccounts (
     CoaId INT IDENTITY(1,1) PRIMARY KEY,
     AccountCode VARCHAR(20) NOT NULL UNIQUE,
@@ -175,21 +178,7 @@ CREATE TABLE Accounting.ReconciliationLogs (
     BranchId UNIQUEIDENTIFIER NOT NULL
 );
 
-CREATE TABLE Accounting.Payments (
-    PaymentId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-    PaymentType VARCHAR(20) NOT NULL,       -- 'Customer', 'Supplier', 'Expense', 'Refund'
-    ReferenceId INT NULL,                   -- e.g., InvoiceId or PurchaseId
-    PaymentMethod VARCHAR(20) NOT NULL,     -- 'Cash', 'Bank', 'Cheque', 'Online'
-    PaymentDate DATETIME NOT NULL DEFAULT GETDATE(),
-    Amount DECIMAL(18,2) NOT NULL,
-    Description NVARCHAR(500) NULL,
-    JournalEntryId UNIQUEIDENTIFIER NULL,   -- Link to Journal Entry
-    BranchId UNIQUEIDENTIFIER NOT NULL,
-    CreatedBy INT NULL,
-    CreatedAt DATETIME DEFAULT GETDATE(),
 
-    FOREIGN KEY (JournalEntryId) REFERENCES Accounting.JournalEntries(JournalEntryId)
-);
 --M Hammad Ali
 --04/10/2025
 Alter Table INV.PurchaseMaster ADD TaxAmount Decimal(18,2) null
@@ -284,30 +273,6 @@ CREATE TABLE System.ClientLicenses (
 
 ALTER TABLE INV.Products Add ProductType int
 
-UPDATE Accounting.ChartOfAccounts
-SET ParentCoaId = 21
-WHERE CoaId IN (22, 23, 24);
-
-
-UPDATE Accounting.ChartOfAccounts
-SET ParentCoaId = 25
-WHERE CoaId IN (26, 27, 28, 29);
-
-UPDATE Accounting.ChartOfAccounts
-SET ParentCoaId = 30
-WHERE CoaId IN (31,32,33,34,35,36,37,38);
-
-UPDATE Accounting.ChartOfAccounts
-SET ParentCoaId = 12
-WHERE CoaId IN (13,14,15,16);
-
-UPDATE Accounting.ChartOfAccounts
-SET ParentCoaId = 17
-WHERE CoaId IN (18,19,20);
-
-UPDATE Accounting.ChartOfAccounts
-SET ParentCoaId = 9
-WHERE CoaId IN (10, 11);
 
 CREATE TABLE INV.PurchaseType
 (
@@ -442,3 +407,23 @@ CREATE TABLE INV.CouponCategory (
         FOREIGN KEY (CategoryId) REFERENCES INV.Categories (CategoryId)
 );
 GO
+
+Alter Table HRM.Persons
+Add IsVerifiedUser bit null
+
+Alter Table HRM.Persons
+Add PasswordResetToken nvarchar(max) null
+
+ALTER TABLE HRM.Countries
+ADD 
+    ISOCode NVARCHAR(5) NULL,
+    CountryDialCode NVARCHAR(10) NULL,
+    CurrencyFormat NVARCHAR(20) NULL,
+    TopLevelDomain NVARCHAR(10) NULL;
+
+    ALTER TABLE webcms.ContentCategory
+ADD 
+    ImageURL nvarchar(2048),
+    ShortDescription nvarchar(3000),
+    Description nvarchar(4000),
+    Icon nvarchar(255);
