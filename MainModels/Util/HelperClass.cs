@@ -39,6 +39,28 @@ namespace MainModels.Util
 
 
         }
+        public static string CreateProductLink(string productName, Guid categoryId)
+        {
+            // 1. Join and Clean: Remove everything except letters and numbers
+            // (Handles your 'no dashes, no spaces' rule perfectly)
+            string cleanName = Regex.Replace(productName ?? string.Empty, @"[^a-zA-Z0-9]", string.Empty);
+
+            // 2. Trim name to 10 characters if it's longer
+            if (cleanName.Length > 10)
+            {
+                cleanName = cleanName.Substring(0, 10);
+            }
+
+            // 3. Get GUID digits only (32 chars, no dashes)
+            string guidDigits = categoryId.ToString("N");
+
+            // 4. Generate the 6-character random string using your helper
+            string randomSuffix = RandomHelper.GenerateRandomAlphaNumeric(6);
+
+            // 5. Combine all parts
+            // Result: [Name(0-10)][GUID(32)][Random(6)]
+            return $"{cleanName}{randomSuffix}";
+        }
         public async Task<ReturnDataofQuery> BuildDataTableQueryAsync(string baseQuery, DataTableRequest request, List<string> columnMap, string tableName)
         {
             int totalRecords = await _db.ExecuteQuery<int>($"SELECT COUNT(*) FROM {tableName}");

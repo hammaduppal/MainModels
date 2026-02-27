@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using MainModels.Util;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace MainModels
@@ -12,6 +13,7 @@ namespace MainModels
     //        var customerId = httprequest.Headers["CompanyCode"].ToString();
     //        if (string.IsNullOrEmpty(customerId))
     //        {
+
     //            customerId = "None";
     //        }
     //        _connectionString = configuration.GetConnectionString(customerId);

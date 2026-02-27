@@ -318,6 +318,7 @@ ALTER COLUMN ProductId UNIQUEIDENTIFIER NULL;
 
 ALTER TABLE INV.Products
 Add  AdditionalInformation nvarchar (max)
+
 CREATE TABLE ProductReviews (
     ReviewId BIGINT IDENTITY PRIMARY KEY,
 
@@ -427,3 +428,31 @@ ADD
     ShortDescription nvarchar(3000),
     Description nvarchar(4000),
     Icon nvarchar(255);
+
+
+    CREATE TABLE WebCMS.Subscriber (
+    -- Primary Key: Required
+    SubscriberID INT IDENTITY(1,1) PRIMARY KEY,
+    Email NVARCHAR(255) NOT NULL,
+
+    -- Subscription Preferences: Nullable (as per your instructions)
+    WantsEmailNewsletter BIT NULL,
+    WantsWhatsappNewsletter BIT NULL,
+
+    -- Standard Metadata Fields: All Nullable
+    FirstName NVARCHAR(100) NULL,
+    LastName NVARCHAR(100) NULL,
+    PhoneNumber NVARCHAR(20) NULL,
+    City NVARCHAR(100) NULL,
+    Country NVARCHAR(100) NULL,
+    
+    -- Audit Fields: All Nullable
+    CreatedDate DATETIME NULL DEFAULT GETDATE(),
+    LastModifiedDate DATETIME NULL,
+    IPAddress NVARCHAR(45) NULL,
+    IsActive BIT NULL DEFAULT 1,
+
+    -- Constraints
+    CONSTRAINT UQ_Subscriber_Email UNIQUE (Email)
+);
+GO

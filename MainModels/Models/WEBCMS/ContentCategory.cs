@@ -17,6 +17,14 @@ public partial class ContentCategory
 
     public string Slug { get; set; }
 
+    public string ImageUrl { get; set; }
+
+    public string ShortDescription { get; set; }
+
+    public string Description { get; set; }
+
+    public string Icon { get; set; }
+
     public virtual ICollection<CmsContentSharedCategory> CmsContentSharedCategories { get; set; } = new List<CmsContentSharedCategory>();
 
     public virtual ContentType Type { get; set; }

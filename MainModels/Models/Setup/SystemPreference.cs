@@ -83,5 +83,9 @@ public partial class SystemPreference
 
     public Guid BranchId { get; set; }
 
+    public bool? IsEcommOnly { get; set; }
+
+    public int? EcommTaxRate { get; set; }
+
     public virtual Branch Branch { get; set; }
 }

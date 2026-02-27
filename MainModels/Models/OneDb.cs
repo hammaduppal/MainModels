@@ -797,7 +797,13 @@ public partial class OneDb : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedOn).HasMaxLength(50);
+            entity.Property(e => e.Description).HasMaxLength(4000);
+            entity.Property(e => e.Icon).HasMaxLength(255);
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(2048)
+                .HasColumnName("ImageURL");
             entity.Property(e => e.Name).HasMaxLength(501);
+            entity.Property(e => e.ShortDescription).HasMaxLength(3000);
             entity.Property(e => e.Slug).HasMaxLength(501);
 
             entity.HasOne(d => d.Type).WithMany(p => p.ContentCategories)
@@ -2044,6 +2050,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.DefaultLanguage).HasMaxLength(50);
             entity.Property(e => e.DefaultTaxRate).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.DefaultWarehouse).HasMaxLength(100);
+            entity.Property(e => e.EcommTaxRate).HasColumnName("ECommTaxRate");
             entity.Property(e => e.InvoicePrefix).HasMaxLength(20);
             entity.Property(e => e.QuotationPrefix).HasMaxLength(20);
             entity.Property(e => e.ReceiptPrefix).HasMaxLength(20);

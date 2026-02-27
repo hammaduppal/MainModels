@@ -75,6 +75,9 @@
         public bool EnableAutoBackup { get; set; }
         public int? AutoBackupIntervalDays { get; set; }
         public string BackupLocation { get; set; }
+        public bool? IsEcommOnly { get; set; }
+
+        public int? EcommTaxRate { get; set; }
     }
     public class AccountingPreferencesVM
     {

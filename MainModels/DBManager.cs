@@ -7,10 +7,11 @@ namespace MainModels
     {
         private readonly IConfiguration _config;
         private readonly DapperContext _dap;
-        public DBManager(IConfiguration config)
+        public DBManager(IConfiguration config/*,DapperContext dap*/)
         {
             _config = config;
-            _dap = new DapperContext(_config);
+            //_dap =  dap;
+             _dap = new DapperContext(_config);
         }
         public async Task<IEnumerable<T>> GetDataListWithQueryAndParam<T>(string query, object parameters = null)
         {

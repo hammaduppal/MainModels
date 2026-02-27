@@ -2151,3 +2151,13 @@ GO
 ALTER TABLE [WEBCMS].[Reviews]  WITH CHECK ADD FOREIGN KEY([LoginUserId])
 REFERENCES [HRM].[LoginUsers] ([Id])
 GO
+
+Alter Table Setup.SystemPreferences
+Add IsEcommOnly bit null
+
+
+ALTER TABLE Setup.SystemPreferences
+DROP COLUMN ECommTaxRate;
+
+ALTER TABLE Setup.SystemPreferences
+ADD ECommTaxRate decimal(5, 2) NULL;
