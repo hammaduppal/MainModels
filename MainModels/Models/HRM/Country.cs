@@ -11,5 +11,13 @@ public partial class Country
 
     public string CountryName { get; set; }
 
+    public string Isocode { get; set; }
+
+    public string CountryDialCode { get; set; }
+
+    public string CurrencyFormat { get; set; }
+
+    public string TopLevelDomain { get; set; }
+
     public virtual ICollection<StateProvince> StateProvinces { get; set; } = new List<StateProvince>();
 }

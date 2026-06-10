@@ -4,14 +4,18 @@
    "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1382",
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Models",
+   "PluralRules": null,
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "MainModels",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 2,
    "SelectedToBeGenerated": 0,
+   "SingularRules": null,
    "T4TemplatePath": null,
    "Tables": [
       {
@@ -279,6 +283,34 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Project].[ProjectColumns]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Project].[Projects]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Project].[ProjectTasks]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Project].[ProjectUsers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Project].[TaskAssignedUsers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Project].[TaskAttachments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Project].[TaskComments]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Setup].[AccountingPreferences]",
          "ObjectType": 0
       },
@@ -413,5 +445,6 @@
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
    "UseT4": false,
-   "UseT4Split": false
+   "UseT4Split": false,
+   "UseTypedTvpParameters": true
 }

@@ -151,6 +151,14 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<ProductVariant> ProductVariants { get; set; }
 
+    public virtual DbSet<Project> Projects { get; set; }
+
+    public virtual DbSet<ProjectColumn> ProjectColumns { get; set; }
+
+    public virtual DbSet<ProjectTask> ProjectTasks { get; set; }
+
+    public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
+
     public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
 
     public virtual DbSet<PurchaseMaster> PurchaseMasters { get; set; }
@@ -182,6 +190,12 @@ public partial class OneDb : DbContext
     public virtual DbSet<SupplierContact> SupplierContacts { get; set; }
 
     public virtual DbSet<SystemPreference> SystemPreferences { get; set; }
+
+    public virtual DbSet<TaskAssignedUser> TaskAssignedUsers { get; set; }
+
+    public virtual DbSet<TaskAttachment> TaskAttachments { get; set; }
+
+    public virtual DbSet<TaskComment> TaskComments { get; set; }
 
     public virtual DbSet<TaxSlab> TaxSlabs { get; set; }
 
@@ -310,7 +324,9 @@ public partial class OneDb : DbContext
 
             entity.ToTable("AccountingPreferences", "Setup");
 
-            entity.Property(e => e.AccountingPreferenceId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.AccountingPreferenceId)
+                .HasDefaultValueSql("(newid())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_AccountingPreferences_Id");
             entity.Property(e => e.BaseCurrencyCode).HasMaxLength(10);
             entity.Property(e => e.DefaultExchangeRateSource).HasMaxLength(50);
             entity.Property(e => e.DefaultPurchaseAccount).HasMaxLength(100);
@@ -355,7 +371,9 @@ public partial class OneDb : DbContext
                 .HasMaxLength(500)
                 .IsUnicode(false);
             entity.Property(e => e.BranchName).HasMaxLength(500);
-            entity.Property(e => e.IsMasterBranch).HasDefaultValue(false);
+            entity.Property(e => e.IsMasterBranch)
+                .HasDefaultValue(false)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_Branches_IsMasterBranch");
 
             entity.HasOne(d => d.BusinessCategory).WithMany(p => p.Branches)
                 .HasForeignKey(d => d.BusinessCategoryId)
@@ -832,7 +850,13 @@ public partial class OneDb : DbContext
             entity.ToTable("Countries", "HRM");
 
             entity.Property(e => e.CountryId).ValueGeneratedNever();
+            entity.Property(e => e.CountryDialCode).HasMaxLength(10);
             entity.Property(e => e.CountryName).HasMaxLength(1000);
+            entity.Property(e => e.CurrencyFormat).HasMaxLength(20);
+            entity.Property(e => e.Isocode)
+                .HasMaxLength(5)
+                .HasColumnName("ISOCode");
+            entity.Property(e => e.TopLevelDomain).HasMaxLength(10);
         });
 
         modelBuilder.Entity<Coupon>(entity =>
@@ -1121,15 +1145,18 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CanceledDate).HasColumnType("date");
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__InvoiceMa__Creat__52793849")
                 .HasColumnType("datetime");
             entity.Property(e => e.CustomerRemarks).HasMaxLength(500);
             entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.DueDate).HasColumnType("date");
             entity.Property(e => e.GrandTotal)
                 .HasDefaultValue(0m)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__InvoiceMa__Grand__51851410")
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.InvoiceDate)
                 .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__InvoiceMa__Invoi__4F9CCB9E")
                 .HasColumnType("datetime");
             entity.Property(e => e.InvoiceNo)
                 .IsRequired()
@@ -1138,6 +1165,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValue(0m)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__InvoiceMa__Total__5090EFD7")
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
@@ -1392,8 +1420,11 @@ public partial class OneDb : DbContext
 
             entity.HasIndex(e => new { e.UserId, e.IsRead }, "IX_Notifications_UserId_IsRead");
 
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__Notificat__Creat__2F9A1060");
             entity.Property(e => e.GroupName).HasMaxLength(255);
+            entity.Property(e => e.IsRead).HasAnnotation("Relational:DefaultConstraintName", "DF__Notificat__IsRea__2EA5EC27");
             entity.Property(e => e.Message).IsRequired();
 
             entity.HasOne(d => d.NotificationType).WithMany(p => p.Notifications)
@@ -1416,6 +1447,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.OrderDetailId).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__OrderDeta__Creat__0F824689")
                 .HasColumnType("datetime");
             entity.Property(e => e.Discount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.LineTotal).HasColumnType("decimal(18, 2)");
@@ -1451,21 +1483,27 @@ public partial class OneDb : DbContext
             entity.Property(e => e.OrderMasterId).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__OrderMast__Creat__0ABD916C")
                 .HasColumnType("datetime");
             entity.Property(e => e.CustomerRemarks).HasMaxLength(500);
             entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.GrandTotal)
                 .HasDefaultValue(0m)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__OrderMast__Grand__09C96D33")
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.OfficeRemarks).HasMaxLength(500);
             entity.Property(e => e.OrderDate)
                 .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__OrderMast__Order__07E124C1")
                 .HasColumnType("datetime");
             entity.Property(e => e.OrderNo).HasMaxLength(50);
-            entity.Property(e => e.OrderStatusId).HasDefaultValue(1);
+            entity.Property(e => e.OrderStatusId)
+                .HasDefaultValue(1)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_OrderMaster_OrderStatusId");
             entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValue(0m)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__OrderMast__Total__08D548FA")
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
@@ -1750,6 +1788,93 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK_ProductVariants_TaxSlabs");
         });
 
+        modelBuilder.Entity<Project>(entity =>
+        {
+            entity.HasKey(e => e.ProjectId).HasName("PK__Projects__761ABEF0C36E7031");
+
+            entity.ToTable("Projects", "Project");
+
+            entity.Property(e => e.ProjectId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.ColorCode).HasMaxLength(20);
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.EndDate).HasColumnType("datetime");
+            entity.Property(e => e.Icon).HasMaxLength(250);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.Property(e => e.IsModified).HasDefaultValue(false);
+            entity.Property(e => e.ProjectCode).HasMaxLength(50);
+            entity.Property(e => e.ProjectName).HasMaxLength(250);
+            entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Branch).WithMany(p => p.Projects)
+                .HasForeignKey(d => d.BranchId)
+                .HasConstraintName("FK_Projects_Branch");
+        });
+
+        modelBuilder.Entity<ProjectColumn>(entity =>
+        {
+            entity.HasKey(e => e.ColumnId).HasName("PK__ProjectC__1AA1420F22C9374A");
+
+            entity.ToTable("ProjectColumns", "Project");
+
+            entity.Property(e => e.ColumnId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.ColumnName).HasMaxLength(150);
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.Property(e => e.IsModified).HasDefaultValue(false);
+
+            entity.HasOne(d => d.Project).WithMany(p => p.ProjectColumns)
+                .HasForeignKey(d => d.ProjectId)
+                .HasConstraintName("FK_ProjectColumns_Projects");
+        });
+
+        modelBuilder.Entity<ProjectTask>(entity =>
+        {
+            entity.HasKey(e => e.TaskId).HasName("PK__ProjectT__7C6949B11D3BE1D7");
+
+            entity.ToTable("ProjectTasks", "Project");
+
+            entity.Property(e => e.TaskId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.ActualHours).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DueDate).HasColumnType("datetime");
+            entity.Property(e => e.EstimatedHours).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.Property(e => e.IsModified).HasDefaultValue(false);
+            entity.Property(e => e.Priority).HasMaxLength(50);
+            entity.Property(e => e.StartDate).HasColumnType("datetime");
+            entity.Property(e => e.Status).HasMaxLength(50);
+            entity.Property(e => e.Title).HasMaxLength(500);
+
+            entity.HasOne(d => d.Column).WithMany(p => p.ProjectTasks)
+                .HasForeignKey(d => d.ColumnId)
+                .HasConstraintName("FK_ProjectTasks_ProjectColumns");
+        });
+
+        modelBuilder.Entity<ProjectUser>(entity =>
+        {
+            entity.ToTable("ProjectUsers", "Project");
+
+            entity.Property(e => e.ProjectUserId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Project).WithMany(p => p.ProjectUsers)
+                .HasForeignKey(d => d.ProjectId)
+                .HasConstraintName("FK_ProjectUsers_Projects");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ProjectUsers)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_ProjectUsers_LoginUsers");
+        });
+
         modelBuilder.Entity<PurchaseDetail>(entity =>
         {
             entity.ToTable("PurchaseDetail", "INV");
@@ -1758,6 +1883,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.DiscountAmount)
                 .HasDefaultValue(0m)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__PurchaseD__Disco__17C286CF")
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.LineTotal)
                 .HasComputedColumnSql("([Qty]*[UnitPrice]-[DiscountAmount])", true)
@@ -1793,21 +1919,29 @@ public partial class OneDb : DbContext
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.DiscountAmount)
                 .HasDefaultValue(0m)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__PurchaseM__Disco__0A688BB1")
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.GrandTotal)
                 .HasDefaultValue(0m)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__PurchaseM__Grand__0C50D423")
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.PurchaseDate)
                 .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__PurchaseM__Purch__09746778")
                 .HasColumnType("datetime");
             entity.Property(e => e.PurchaseNumber).HasMaxLength(50);
-            entity.Property(e => e.PurchaseType).HasDefaultValue(1);
+            entity.Property(e => e.PurchaseType)
+                .HasDefaultValue(1)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__PurchaseM__Purch__0880433F");
             entity.Property(e => e.Remarks).HasMaxLength(500);
-            entity.Property(e => e.Status).HasDefaultValue(1);
+            entity.Property(e => e.Status)
+                .HasDefaultValue(1)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__PurchaseM__Statu__0D44F85C");
             entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValue(0m)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__PurchaseM__Total__0B5CAFEA")
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
@@ -1831,8 +1965,12 @@ public partial class OneDb : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.CreatedOn).HasDefaultValueSql("(sysdatetime())");
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(sysdatetime())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_PurchaseType_CreatedOn");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_PurchaseType_IsActive");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100)
@@ -2038,7 +2176,9 @@ public partial class OneDb : DbContext
 
             entity.ToTable("SystemPreferences", "Setup");
 
-            entity.Property(e => e.SystemPreferenceId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.SystemPreferenceId)
+                .HasDefaultValueSql("(newid())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_SystemPreferences_Id");
             entity.Property(e => e.BackupLocation).HasMaxLength(500);
             entity.Property(e => e.CompanyLogoUrl).HasMaxLength(500);
             entity.Property(e => e.CompanyName).HasMaxLength(200);
@@ -2064,6 +2204,59 @@ public partial class OneDb : DbContext
                 .HasForeignKey(d => d.BranchId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SystemPreferences_Branch");
+        });
+
+        modelBuilder.Entity<TaskAssignedUser>(entity =>
+        {
+            entity.HasKey(e => e.TaskAssignedUserId).HasName("PK__TaskAssi__83FF2C8A278DDE42");
+
+            entity.ToTable("TaskAssignedUsers", "Project");
+
+            entity.Property(e => e.TaskAssignedUserId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.AssignedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.CreatedOn)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.Property(e => e.IsModified).HasDefaultValue(false);
+
+            entity.HasOne(d => d.Task).WithMany(p => p.TaskAssignedUsers)
+                .HasForeignKey(d => d.TaskId)
+                .HasConstraintName("FK_TaskAssignedUsers_Task");
+
+            entity.HasOne(d => d.User).WithMany(p => p.TaskAssignedUsers)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_TaskAssignedUsers_LoginUsers");
+        });
+
+        modelBuilder.Entity<TaskAttachment>(entity =>
+        {
+            entity.ToTable("TaskAttachments", "Project");
+
+            entity.Property(e => e.TaskAttachmentId).ValueGeneratedNever();
+            entity.Property(e => e.AttachmentUrl)
+                .HasMaxLength(1000)
+                .HasColumnName("AttachmentURL");
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Task).WithMany(p => p.TaskAttachments)
+                .HasForeignKey(d => d.TaskId)
+                .HasConstraintName("FK_TaskAttachments_ProjectTasks");
+        });
+
+        modelBuilder.Entity<TaskComment>(entity =>
+        {
+            entity.ToTable("TaskComments", "Project");
+
+            entity.Property(e => e.TaskCommentId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Task).WithMany(p => p.TaskComments)
+                .HasForeignKey(d => d.TaskId)
+                .HasConstraintName("FK_TaskComments_ProjectTasks");
         });
 
         modelBuilder.Entity<TaxSlab>(entity =>

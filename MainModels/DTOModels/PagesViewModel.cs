@@ -5,6 +5,11 @@ namespace MainModels.DTOModels
 {
     public class PagesViewModel
     {
+        #region PM
+        public ProjectVM Project { get; set; }
+        public List<ProjectVM> Projects { get; set; }
+        public ProjectTaskVM Task { get; set; }
+        #endregion
         public List<LoginUserVM> LoginUsers { get; set; }
         public LoginUserVM LoginUser { get; set; }
         public List<RolesVM> Roles { get; set; }

@@ -49,9 +49,13 @@ public partial class LoginUser
 
     public virtual ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
 
+    public virtual ICollection<ProjectUser> ProjectUsers { get; set; } = new List<ProjectUser>();
+
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Setting Settings { get; set; }
+
+    public virtual ICollection<TaskAssignedUser> TaskAssignedUsers { get; set; } = new List<TaskAssignedUser>();
 
     public virtual ICollection<UserAssignedBranch> UserAssignedBranches { get; set; } = new List<UserAssignedBranch>();
 }
