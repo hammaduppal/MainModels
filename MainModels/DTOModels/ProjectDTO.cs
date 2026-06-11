@@ -9,7 +9,29 @@ namespace MainModels.DTOModels
         Normal,
         High
     }
+    public class UserWorkloadReportVM
+    {
+        public int UserId { get; set; }
+        public string FullName { get; set; }
+        public string ImageUrl { get; set; }
+        public int BacklogCount { get; set; }    // Tasks in "To-Do / New" columns
+        public int InProgressCount { get; set; } // Tasks in "In Development / Active" columns
+        public int ReviewCount { get; set; }     // Tasks in "QA / Code Review"
+        public int CompletedCount { get; set; }  // Tasks in "Done"
+        public int TotalAssigned => BacklogCount + InProgressCount + ReviewCount + CompletedCount;
 
+        public int QACount { get; set; }
+    }
+    public class ProjectReportVM
+    {
+        public Guid ProjectId { get; set; }
+        public string ProjectName { get; set; }
+        public int TotalTasks { get; set; }
+        public int CompletedTasks { get; set; }
+        public int OverdueTasks { get; set; }
+        public double CompletionPercentage => TotalTasks > 0 ? ((double)CompletedTasks / TotalTasks) * 100 : 0;
+        public string HealthStatus => OverdueTasks > 0 ? "At Risk" : (TotalTasks == 0 ? "Stale" : "On Track");
+    }
     public partial class ProjectVM
     {
         public Guid ProjectId { get; set; }

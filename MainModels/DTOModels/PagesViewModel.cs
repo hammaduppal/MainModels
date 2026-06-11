@@ -9,6 +9,8 @@ namespace MainModels.DTOModels
         public ProjectVM Project { get; set; }
         public List<ProjectVM> Projects { get; set; }
         public ProjectTaskVM Task { get; set; }
+        public List<ProjectReportVM> ProjectReports { get; set; }
+        public List<UserWorkloadReportVM> UserReports { get; set; }
         #endregion
         public List<LoginUserVM> LoginUsers { get; set; }
         public LoginUserVM LoginUser { get; set; }
