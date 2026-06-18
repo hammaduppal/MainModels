@@ -155,6 +155,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<ProjectColumn> ProjectColumns { get; set; }
 
+    public virtual DbSet<ProjectNotificationEmail> ProjectNotificationEmails { get; set; }
+
     public virtual DbSet<ProjectTask> ProjectTasks { get; set; }
 
     public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
@@ -1831,6 +1833,18 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Project).WithMany(p => p.ProjectColumns)
                 .HasForeignKey(d => d.ProjectId)
                 .HasConstraintName("FK_ProjectColumns_Projects");
+        });
+
+        modelBuilder.Entity<ProjectNotificationEmail>(entity =>
+        {
+            entity.ToTable("ProjectNotificationEmail", "Project");
+
+            entity.Property(e => e.ProjectNotificationEmailId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedOn).HasColumnType("date");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ProjectNotificationEmails)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_ProjectNotificationEmail_LoginUsers");
         });
 
         modelBuilder.Entity<ProjectTask>(entity =>

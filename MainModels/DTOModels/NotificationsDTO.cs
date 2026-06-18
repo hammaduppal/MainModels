@@ -23,4 +23,13 @@
         public string OrderNumber { get; set; }
 
     }
+    public enum NotificationTypeENUM
+    {
+        Invoices =1,
+        Project = 2
+    }
+    public class NewProjectTasksNotification
+    {
+        public string Title { get; set; }
+    }
 }

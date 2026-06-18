@@ -49,6 +49,8 @@ public partial class LoginUser
 
     public virtual ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
 
+    public virtual ICollection<ProjectNotificationEmail> ProjectNotificationEmails { get; set; } = new List<ProjectNotificationEmail>();
+
     public virtual ICollection<ProjectUser> ProjectUsers { get; set; } = new List<ProjectUser>();
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();

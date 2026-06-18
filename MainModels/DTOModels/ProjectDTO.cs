@@ -1,5 +1,5 @@
 ﻿
-using MainModels.Models;
+
 
 namespace MainModels.DTOModels
 {
@@ -9,18 +9,42 @@ namespace MainModels.DTOModels
         Normal,
         High
     }
+
+    public enum ProjectNotificationType
+    {
+        YouAreAddedToProject =1,
+        SomeOneAddedToProject =2,
+        NewTaskCreated = 3,
+        GenericTaskChanges = 4
+    }
+    
+    public class NewTaskToBoard
+    {
+        public Guid ProjectId { get; set; }
+        public string ProjectName { get; set; }
+        public string ColumnName { get; set; }
+        public string TaskName { get; set; }
+
+        public DateTime ActionDate { get; set; }
+        public string DirectBoardUrl { get; set; }
+    }
+    public class AddedToProjectData { public string ProjectName { get; set; } public string DirectBoardUrl { get; set; } }
+    public class SomeoneAddedData { public string ProjectName { get; set; } public string AddedPersonName { get; set; } public string DirectBoardUrl { get; set; } }
+    public class GenericTaskChangesData { public string ProjectName { get; set; } public string TaskName { get; set; } public string ChangeDetails { get; set; } public string DirectBoardUrl { get; set; } }
     public class UserWorkloadReportVM
     {
         public int UserId { get; set; }
         public string FullName { get; set; }
         public string ImageUrl { get; set; }
-        public int BacklogCount { get; set; }    // Tasks in "To-Do / New" columns
-        public int InProgressCount { get; set; } // Tasks in "In Development / Active" columns
-        public int ReviewCount { get; set; }     // Tasks in "QA / Code Review"
-        public int CompletedCount { get; set; }  // Tasks in "Done"
-        public int TotalAssigned => BacklogCount + InProgressCount + ReviewCount + CompletedCount;
-
+        public int BacklogCount { get; set; }
+        public int InProgressCount { get; set; }
+        public int ReviewCount { get; set; }
         public int QACount { get; set; }
+        public int CompletedCount { get; set; }
+        public int TotalAssigned => BacklogCount + InProgressCount + ReviewCount + QACount + CompletedCount;
+
+        // Add this flag to distinguish actual team members from orphaned rows
+        public bool IsUnassignedQueue { get; set; } = false;
     }
     public class ProjectReportVM
     {
@@ -68,6 +92,22 @@ namespace MainModels.DTOModels
 
 
 
+    }
+    public partial class ProjectNotificationEmailVM
+    {
+        public Guid ProjectNotificationEmailId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public short? ProjectEmailNotificationType { get; set; }
+
+        public bool IsSent { get; set; }
+
+        public bool? IsRead { get; set; }
+
+        public string MessageJson { get; set; }
+
+        public virtual LoginUserVM User { get; set; }
     }
     public partial class ProjectColumnVM
     {
@@ -253,5 +293,5 @@ namespace MainModels.DTOModels
     //public class AssignUserModel { public Guid TaskId { get; set; } public int UserId { get; set; } }
 
 
-
+   
 }
