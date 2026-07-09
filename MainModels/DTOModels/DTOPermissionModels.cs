@@ -4,9 +4,25 @@ namespace MainModels.DTOModels
 {
     public static class CheckPermissions
     {
+        private static IServiceProvider _serviceProvider;
+
+        // Call this once in Program.cs at startup
+        public static void Configure(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
         public static bool HasAnyRole(params string[] allowedRoles)
         {
-            var userRoles = AppDataUtility.SessionUser?.Roles;
+            // 1. Get HttpContext safely for the current request thread
+            var httpContextAccessor = _serviceProvider?.GetService<IHttpContextAccessor>();
+            var currentContext = httpContextAccessor?.HttpContext;
+
+            // 2. Resolve the isolated, request-scoped ISessionService
+            var sessionService = currentContext?.RequestServices?.GetService<ISessionService>();
+
+            // 3. Run your original permission logic cleanly and safely
+            var userRoles = sessionService?.SessionUser?.Roles;
             if (userRoles == null || !userRoles.Any())
                 return false;
 

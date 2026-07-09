@@ -3,69 +3,88 @@ using Newtonsoft.Json;
 
 namespace MainModels.Util
 {
-    public class AppDataUtility
+    public static class AppDataUtility
     {
-        private const string SessionKey = "SessionManager";
-        private const string notificationKey = "NotificationKey";
+        private static IServiceProvider _serviceProvider;
 
-        private static IHttpContextAccessor _contextAccessor;
-
-        public static void Configure(IHttpContextAccessor contextAccessor)
+        public static void Configure(IServiceProvider serviceProvider)
         {
-            _contextAccessor = contextAccessor;
+            _serviceProvider = serviceProvider;
         }
+
         public static LoginUserVM SessionUser
         {
             get
             {
-                var session = _contextAccessor?.HttpContext?.Session;
-                var result = session?.GetString(SessionKey);
-                return result == null ? null : JsonConvert.DeserializeObject<LoginUserVM>(result);
+                var httpContextAccessor = _serviceProvider?.GetService<IHttpContextAccessor>();
+                var currentContext = httpContextAccessor?.HttpContext;
+                var sessionService = currentContext?.RequestServices?.GetService<ISessionService>();
+
+                return sessionService?.SessionUser;
             }
-            set
+        }
+        public static SystemPreferencesVM SystemPreferences
+        {
+            get
             {
-                var session = _contextAccessor?.HttpContext?.Session;
-                if (session != null)
-                {
-                    session.SetString(SessionKey, JsonConvert.SerializeObject(value));
-                }
+                var httpContextAccessor = _serviceProvider?.GetService<IHttpContextAccessor>();
+                var currentContext = httpContextAccessor?.HttpContext;
+                var sessionService = currentContext?.RequestServices?.GetService<ISessionService>();
+
+                return sessionService?.SystemPreferences;
             }
         }
         public static List<NotificationsDTO> UserNotifications
         {
             get
             {
-                var session = _contextAccessor?.HttpContext?.Session;
-                var result = session?.GetString(notificationKey);
-                return result == null ? null : JsonConvert.DeserializeObject<List<NotificationsDTO>>(result);
-            }
-            set
-            {
-                var session = _contextAccessor?.HttpContext?.Session;
-                if (session != null)
-                {
-                    session.SetString(notificationKey, JsonConvert.SerializeObject(value));
-                }
+                var httpContextAccessor = _serviceProvider?.GetService<IHttpContextAccessor>();
+                var currentContext = httpContextAccessor?.HttpContext;
+                var sessionService = currentContext?.RequestServices?.GetService<ISessionService>();
+
+                return sessionService?.UserNotifications;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public static SystemPreferencesVM SystemPreferences { get;set; }
-        public static AccountingPreferencesVM AccountingPrefrences { get { return SystemSettingsDTO.GetAccountingPreferences(); } }
-
     }
 
+    public interface ISessionService
+    {
+        LoginUserVM SessionUser { get; set; }
+        List<NotificationsDTO> UserNotifications { get; set; }
+        SystemPreferencesVM SystemPreferences { get; set; }
+    }
+
+    public class SessionService : ISessionService
+    {
+        private readonly IHttpContextAccessor _contextAccessor;
+        private const string SessionKey = "SessionManager";
+        private const string NotificationKey = "NotificationKey";
+        private const string SystemPreferencesKey = "SystemPreferencesKey";
+
+        public SessionService(IHttpContextAccessor contextAccessor)
+        {
+            _contextAccessor = contextAccessor;
+        }
+
+        private ISession Session => _contextAccessor?.HttpContext?.Session;
+
+        public LoginUserVM SessionUser
+        {
+            get => Session?.GetString(SessionKey) == null ? null : JsonConvert.DeserializeObject<LoginUserVM>(Session.GetString(SessionKey));
+            set => Session?.SetString(SessionKey, JsonConvert.SerializeObject(value));
+        }
+
+        public List<NotificationsDTO> UserNotifications
+        {
+            get => Session?.GetString(NotificationKey) == null ? null : JsonConvert.DeserializeObject<List<NotificationsDTO>>(Session.GetString(NotificationKey));
+            set => Session?.SetString(NotificationKey, JsonConvert.SerializeObject(value));
+        }
+        public SystemPreferencesVM SystemPreferences
+        {
+            get => Session?.GetString(SystemPreferencesKey) == null ? null : JsonConvert.DeserializeObject<SystemPreferencesVM>(Session.GetString(NotificationKey));
+            set => Session?.SetString(SystemPreferencesKey, JsonConvert.SerializeObject(value));
+        }
+    }
 
 
 }

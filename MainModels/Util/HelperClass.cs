@@ -104,19 +104,27 @@ namespace MainModels.Util
     }
     public static class CommonParamHelper
     {
-        public static CommonParams GetCommonParams()
+        public static CommonParams GetCommonParams(this ISessionService sessionService)
         {
+            var currentUser = sessionService.SessionUser;
+
+            if (currentUser == null)
+            {
+                throw new InvalidOperationException("Cannot generate common parameters because no user session exists.");
+            }
+
             return new CommonParams
             {
-                BranchId= AppDataUtility.SessionUser.Person.BranchId,
-                OrganizationId = AppDataUtility.SessionUser.Person.Branch.Organization.OrganizationId,
-                CreatedBy = AppDataUtility.SessionUser.Id,
+                BranchId = currentUser.Person?.BranchId,
+                OrganizationId = currentUser.Person?.Branch?.Organization?.OrganizationId ?? 0,
+                CreatedBy = currentUser.Id,
                 CreatedOn = DateTime.UtcNow,
                 IsActive = true,
                 IsDeleted = false,
                 ModifiedOn = DateTime.UtcNow
             };
         }
+
         public class CommonParams
         {
             public Guid? BranchId { get; set; }
@@ -128,7 +136,6 @@ namespace MainModels.Util
             public int? CreatedBy { get; set; }
             public bool? IsDeleted { get; set; }
         }
-     
     }
     public static class RandomHelper
     {
