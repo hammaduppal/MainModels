@@ -1,4 +1,6 @@
 ﻿
+using MainModels.Models;
+
 namespace MainModels.DTOModels
 {
     public class LoginUserRequestModel
@@ -147,6 +149,34 @@ namespace MainModels.DTOModels
         public int? CountryId { get; set; }
         public StateProvinceVM? StateProvince { get; set; }
 
+    }
+    public class LocalityVM
+    {
+        public int LocalityId { get; set; }
+
+        public int? CityId { get; set; }
+
+        public string? LocalityName { get; set; }
+
+        public bool? IsApproved { get; set; }
+
+        public CityVM? City { get; set; }
+
+        public List<RepropertyVM> Reproperties { get; set; } = new List<RepropertyVM>();
+
+        public List<SubLocalityVM> SubLocalities { get; set; } = new List<SubLocalityVM>();
+    }
+    public class SubLocalityVM
+    {
+        public int SubLocalityId { get; set; }
+
+        public int? LocalityId { get; set; }
+
+        public string? SubLocalityName { get; set; }
+
+        public LocalityVM? Locality { get; set; }
+
+        public List<RepropertyVM> Reproperties { get; set; } = new List<RepropertyVM>();
     }
     public partial class StateProvinceVM
     {

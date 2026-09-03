@@ -119,6 +119,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[HRM].[Localities]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[HRM].[LoginHistory]",
          "ObjectType": 0
       },
@@ -136,6 +140,10 @@
       },
       {
          "Name": "[HRM].[StateProvince]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[SubLocalities]",
          "ObjectType": 0
       },
       {
@@ -315,6 +323,54 @@
          "ObjectType": 0
       },
       {
+         "Name": "[RealEstate].[Amenities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[PropertyAmenities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[PropertyEnquiries]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[PropertyMedia]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[PropertyPurposeType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[PropertySizeUnit]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[REAddress]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[RECompany]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[RECompanyContacts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[REContactType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[REProperties]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[REPropertyTypes]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Setup].[AccountingPreferences]",
          "ObjectType": 0
       },
@@ -340,6 +396,10 @@
       },
       {
          "Name": "[SYSTEM].[ClientLicenses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[CMSSettings]",
          "ObjectType": 0
       },
       {
@@ -420,6 +480,10 @@
       },
       {
          "Name": "[WEBCMS].[Reviews]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[Subscriber]",
          "ObjectType": 0
       }
    ],

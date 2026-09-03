@@ -12,6 +12,12 @@ namespace MainModels.DTOModels
         public List<ProjectReportVM> ProjectReports { get; set; }
         public List<UserWorkloadReportVM> UserReports { get; set; }
         #endregion
+        #region RealEstate
+        public List<RecompanyContactVM> CompanyContacts { get; set; }
+        public RecompanyContactVM CompanyContact { get; set; }
+        public List<RepropertyTypeVM> PropertyTypes { get; set; }
+
+        #endregion
         public List<LoginUserVM> LoginUsers { get; set; }
         public LoginUserVM LoginUser { get; set; }
         public List<RolesVM> Roles { get; set; }
@@ -76,6 +82,8 @@ namespace MainModels.DTOModels
 
         public DTOPermissionModels Permission { get; set; }
         public List<ChartOfAccountVM> ChartofAccounts { get; set; }
+        public List<PropertyPurposeTypeVM> PropertyPurposes { get; set; }
+        public List<CityVM> Cities { get; set; }
     }
     public class ThemeSettings
     {

@@ -17,5 +17,11 @@ public partial class City
 
     public virtual ICollection<LaneAddress> LaneAddresses { get; set; } = new List<LaneAddress>();
 
+    public virtual ICollection<Locality> Localities { get; set; } = new List<Locality>();
+
+    public virtual ICollection<Readdress> Readdresses { get; set; } = new List<Readdress>();
+
+    public virtual ICollection<Reproperty> Reproperties { get; set; } = new List<Reproperty>();
+
     public virtual StateProvince StateProvince { get; set; }
 }

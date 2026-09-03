@@ -21,6 +21,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<AccountingPreference> AccountingPreferences { get; set; }
 
+    public virtual DbSet<Amenity> Amenities { get; set; }
+
     public virtual DbSet<AssignedRole> AssignedRoles { get; set; }
 
     public virtual DbSet<Branch> Branches { get; set; }
@@ -56,6 +58,8 @@ public partial class OneDb : DbContext
     public virtual DbSet<CmsEmail> CmsEmails { get; set; }
 
     public virtual DbSet<CmsemailSent> CmsemailSents { get; set; }
+
+    public virtual DbSet<Cmssetting> Cmssettings { get; set; }
 
     public virtual DbSet<CollectionDetail> CollectionDetails { get; set; }
 
@@ -113,6 +117,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<LinkedContentItem> LinkedContentItems { get; set; }
 
+    public virtual DbSet<Locality> Localities { get; set; }
+
     public virtual DbSet<LoginHistory> LoginHistories { get; set; }
 
     public virtual DbSet<LoginUser> LoginUsers { get; set; }
@@ -161,13 +167,33 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
 
+    public virtual DbSet<PropertyEnquiry> PropertyEnquiries { get; set; }
+
+    public virtual DbSet<PropertyMedium> PropertyMedia { get; set; }
+
+    public virtual DbSet<PropertyPurposeType> PropertyPurposeTypes { get; set; }
+
+    public virtual DbSet<PropertySizeUnit> PropertySizeUnits { get; set; }
+
     public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
 
     public virtual DbSet<PurchaseMaster> PurchaseMasters { get; set; }
 
     public virtual DbSet<PurchaseType> PurchaseTypes { get; set; }
 
+    public virtual DbSet<Readdress> Readdresses { get; set; }
+
+    public virtual DbSet<Recompany> Recompanies { get; set; }
+
+    public virtual DbSet<RecompanyContact> RecompanyContacts { get; set; }
+
     public virtual DbSet<ReconciliationLog> ReconciliationLogs { get; set; }
+
+    public virtual DbSet<RecontactType> RecontactTypes { get; set; }
+
+    public virtual DbSet<Reproperty> Reproperties { get; set; }
+
+    public virtual DbSet<RepropertyType> RepropertyTypes { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
 
@@ -186,6 +212,10 @@ public partial class OneDb : DbContext
     public virtual DbSet<StateProvince> StateProvinces { get; set; }
 
     public virtual DbSet<SubCategory> SubCategories { get; set; }
+
+    public virtual DbSet<SubLocality> SubLocalities { get; set; }
+
+    public virtual DbSet<Subscriber> Subscribers { get; set; }
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
@@ -343,6 +373,21 @@ public partial class OneDb : DbContext
                 .HasForeignKey(d => d.BranchId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_AccountingPreferences_Branch");
+        });
+
+        modelBuilder.Entity<Amenity>(entity =>
+        {
+            entity.HasKey(e => e.AmenityId).HasName("PK__Amenitie__842AF50B3C904DF9");
+
+            entity.ToTable("Amenities", "RealEstate");
+
+            entity.Property(e => e.AmenityCategory)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.AmenityName)
+                .IsRequired()
+                .HasMaxLength(100);
+            entity.Property(e => e.IconClass).HasMaxLength(50);
         });
 
         modelBuilder.Entity<AssignedRole>(entity =>
@@ -692,6 +737,16 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSents)
                 .HasForeignKey(d => d.EmailId)
                 .HasConstraintName("FK__CMSEmailS__Email__3E1D39E1");
+        });
+
+        modelBuilder.Entity<Cmssetting>(entity =>
+        {
+            entity.HasKey(e => e.CmssettingId).HasName("PK__CMSSetti__DE2938843CBB7AE1");
+
+            entity.ToTable("CMSSettings", "SYSTEM");
+
+            entity.Property(e => e.CmssettingId).HasColumnName("CMSSettingId");
+            entity.Property(e => e.Aiapikey).HasColumnName("AIAPIKEY");
         });
 
         modelBuilder.Entity<CollectionDetail>(entity =>
@@ -1345,6 +1400,23 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK__LinkedCon__Linke__44CA3770");
         });
 
+        modelBuilder.Entity<Locality>(entity =>
+        {
+            entity.HasKey(e => e.LocalityId).HasName("PK__Localiti__179EA722C2BE7BF7");
+
+            entity.ToTable("Localities", "HRM");
+
+            entity.Property(e => e.IsApproved).HasDefaultValue(true);
+            entity.Property(e => e.LocalityName)
+                .IsRequired()
+                .HasMaxLength(150);
+
+            entity.HasOne(d => d.City).WithMany(p => p.Localities)
+                .HasForeignKey(d => d.CityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Localities_Cities");
+        });
+
         modelBuilder.Entity<LoginHistory>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__LoginHis__3214EC079BF58EC4");
@@ -1889,6 +1961,69 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK_ProjectUsers_LoginUsers");
         });
 
+        modelBuilder.Entity<PropertyEnquiry>(entity =>
+        {
+            entity.HasKey(e => e.EnquiryId).HasName("PK__Property__0A019B7D09502F58");
+
+            entity.ToTable("PropertyEnquiries", "RealEstate");
+
+            entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.Email).HasMaxLength(150);
+            entity.Property(e => e.EnquiryStatusTypeId).HasDefaultValue((byte)1);
+            entity.Property(e => e.FullName)
+                .IsRequired()
+                .HasMaxLength(150);
+            entity.Property(e => e.Phone)
+                .IsRequired()
+                .HasMaxLength(30);
+
+            entity.HasOne(d => d.Property).WithMany(p => p.PropertyEnquiries)
+                .HasForeignKey(d => d.PropertyId)
+                .HasConstraintName("FK_PropertyEnquiries_REProperties");
+        });
+
+        modelBuilder.Entity<PropertyMedium>(entity =>
+        {
+            entity.HasKey(e => e.PropertyMediaId).HasName("PK__Property__89DF6D284634714B");
+
+            entity.ToTable("PropertyMedia", "RealEstate");
+
+            entity.Property(e => e.Caption).HasMaxLength(200);
+            entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.MediaUrl)
+                .IsRequired()
+                .HasMaxLength(500);
+
+            entity.HasOne(d => d.Property).WithMany(p => p.PropertyMedia)
+                .HasForeignKey(d => d.PropertyId)
+                .HasConstraintName("FK_PropertyMedia_REProperties");
+        });
+
+        modelBuilder.Entity<PropertyPurposeType>(entity =>
+        {
+            entity.HasKey(e => e.PurposeTypeId);
+
+            entity.ToTable("PropertyPurposeType", "RealEstate");
+
+            entity.Property(e => e.PurposeTypeName).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<PropertySizeUnit>(entity =>
+        {
+            entity.HasKey(e => e.PropertySizeUnitId).HasName("PK__Property__D110EA446173F349");
+
+            entity.ToTable("PropertySizeUnit", "RealEstate");
+
+            entity.Property(e => e.PropertySizeUnitId).ValueGeneratedNever();
+            entity.Property(e => e.SqFtConversionFactor).HasColumnType("decimal(18, 6)");
+            entity.Property(e => e.UnitCode)
+                .IsRequired()
+                .HasMaxLength(10);
+            entity.Property(e => e.UnitName)
+                .IsRequired()
+                .HasMaxLength(50);
+        });
+
         modelBuilder.Entity<PurchaseDetail>(entity =>
         {
             entity.ToTable("PurchaseDetail", "INV");
@@ -1991,6 +2126,71 @@ public partial class OneDb : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<Readdress>(entity =>
+        {
+            entity.ToTable("REAddress", "RealEstate");
+
+            entity.Property(e => e.ReaddressId).HasColumnName("REAddressId");
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.ReaddressName)
+                .HasMaxLength(1000)
+                .HasColumnName("REAddressName");
+            entity.Property(e => e.ReaddressType)
+                .HasMaxLength(50)
+                .HasColumnName("REAddressType");
+            entity.Property(e => e.RecompanyContactId).HasColumnName("RECompanyContactId");
+
+            entity.HasOne(d => d.City).WithMany(p => p.Readdresses)
+                .HasForeignKey(d => d.CityId)
+                .HasConstraintName("FK_REAddress_Cities");
+
+            entity.HasOne(d => d.RecompanyContact).WithMany(p => p.Readdresses)
+                .HasForeignKey(d => d.RecompanyContactId)
+                .HasConstraintName("FK_REAddress_RECompanyContacts");
+        });
+
+        modelBuilder.Entity<Recompany>(entity =>
+        {
+            entity.ToTable("RECompany", "RealEstate");
+
+            entity.Property(e => e.RecompanyId)
+                .ValueGeneratedNever()
+                .HasColumnName("RECompanyId");
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.RecontactName)
+                .HasMaxLength(500)
+                .HasColumnName("REContactName");
+        });
+
+        modelBuilder.Entity<RecompanyContact>(entity =>
+        {
+            entity.ToTable("RECompanyContacts", "RealEstate");
+
+            entity.Property(e => e.RecompanyContactId).HasColumnName("RECompanyContactId");
+            entity.Property(e => e.Cnic)
+                .HasMaxLength(50)
+                .HasColumnName("CNIC");
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(500);
+            entity.Property(e => e.FullName).HasMaxLength(500);
+            entity.Property(e => e.LandLine).HasMaxLength(50);
+            entity.Property(e => e.MobileHome).HasMaxLength(50);
+            entity.Property(e => e.MobileWork).HasMaxLength(50);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.RecompanyId).HasColumnName("RECompanyId");
+            entity.Property(e => e.RecontactTypeId).HasColumnName("REContactTypeId");
+
+            entity.HasOne(d => d.Recompany).WithMany(p => p.RecompanyContacts)
+                .HasForeignKey(d => d.RecompanyId)
+                .HasConstraintName("FK_RECompanyContacts_RECompany");
+
+            entity.HasOne(d => d.RecontactType).WithMany(p => p.RecompanyContacts)
+                .HasForeignKey(d => d.RecontactTypeId)
+                .HasConstraintName("FK_RECompanyContacts_REContactType");
+        });
+
         modelBuilder.Entity<ReconciliationLog>(entity =>
         {
             entity.HasKey(e => e.ReconciliationId).HasName("PK__Reconcil__096DC80051808EBD");
@@ -2009,6 +2209,101 @@ public partial class OneDb : DbContext
                 .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<RecontactType>(entity =>
+        {
+            entity.ToTable("REContactType", "RealEstate");
+
+            entity.Property(e => e.RecontactTypeId)
+                .ValueGeneratedNever()
+                .HasColumnName("REContactTypeId");
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.RecontactTypeName)
+                .HasMaxLength(500)
+                .HasColumnName("REContactTypeName");
+        });
+
+        modelBuilder.Entity<Reproperty>(entity =>
+        {
+            entity.HasKey(e => e.PropertyId).HasName("PK__REProper__70C9A735AF32100D");
+
+            entity.ToTable("REProperties", "RealEstate");
+
+            entity.Property(e => e.AddressDetails).HasMaxLength(500);
+            entity.Property(e => e.BaseSizeInSqFt).HasColumnType("decimal(18, 4)");
+            entity.Property(e => e.CoveredAreaSqFt).HasColumnType("decimal(18, 4)");
+            entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.DimensionDepth).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.DimensionFront).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.HasElectricity).HasDefaultValue(true);
+            entity.Property(e => e.HasSewerage).HasDefaultValue(true);
+            entity.Property(e => e.HasWaterSupply).HasDefaultValue(true);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsPriceNegotiable).HasDefaultValue(true);
+            entity.Property(e => e.KhasraNumber).HasMaxLength(100);
+            entity.Property(e => e.KhatoniNumber).HasMaxLength(100);
+            entity.Property(e => e.KhewatNumber).HasMaxLength(100);
+            entity.Property(e => e.Latitude).HasColumnType("decimal(9, 6)");
+            entity.Property(e => e.Longitude).HasColumnType("decimal(9, 6)");
+            entity.Property(e => e.MaintenanceFee).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.MouzaName).HasMaxLength(100);
+            entity.Property(e => e.OwnershipTypeId).HasDefaultValue((byte)1);
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.PropertyCode).HasMaxLength(50);
+            entity.Property(e => e.SecurityDeposit).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.HasOne(d => d.City).WithMany(p => p.Reproperties)
+                .HasForeignKey(d => d.CityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_REProperties_Cities");
+
+            entity.HasOne(d => d.Locality).WithMany(p => p.Reproperties)
+                .HasForeignKey(d => d.LocalityId)
+                .HasConstraintName("FK_REProperties_Localities");
+
+            entity.HasOne(d => d.PropertyType).WithMany(p => p.Reproperties)
+                .HasForeignKey(d => d.PropertyTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_REProperties_REPropertyTypes");
+
+            entity.HasOne(d => d.PurposeType).WithMany(p => p.Reproperties)
+                .HasForeignKey(d => d.PurposeTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_REProperties_PropertyPurposeType");
+
+            entity.HasOne(d => d.SubLocality).WithMany(p => p.Reproperties)
+                .HasForeignKey(d => d.SubLocalityId)
+                .HasConstraintName("FK_REProperties_SubLocalities");
+
+            entity.HasMany(d => d.Amenities).WithMany(p => p.Properties)
+                .UsingEntity<Dictionary<string, object>>(
+                    "PropertyAmenity",
+                    r => r.HasOne<Amenity>().WithMany()
+                        .HasForeignKey("AmenityId")
+                        .HasConstraintName("FK_PropertyAmenities_Amenities"),
+                    l => l.HasOne<Reproperty>().WithMany()
+                        .HasForeignKey("PropertyId")
+                        .HasConstraintName("FK_PropertyAmenities_REProperties"),
+                    j =>
+                    {
+                        j.HasKey("PropertyId", "AmenityId");
+                        j.ToTable("PropertyAmenities", "RealEstate");
+                    });
+        });
+
+        modelBuilder.Entity<RepropertyType>(entity =>
+        {
+            entity.HasKey(e => e.PropertyTypeId);
+
+            entity.ToTable("REPropertyTypes", "RealEstate");
+
+            entity.Property(e => e.PropertyTypeId).ValueGeneratedNever();
+            entity.Property(e => e.PropertyTypeName).HasMaxLength(500);
         });
 
         modelBuilder.Entity<Review>(entity =>
@@ -2147,6 +2442,49 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Category).WithMany(p => p.SubCategories)
                 .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK_SubCategoryId_Categories");
+        });
+
+        modelBuilder.Entity<SubLocality>(entity =>
+        {
+            entity.HasKey(e => e.SubLocalityId).HasName("PK__SubLocal__443F43AF4D56BE62");
+
+            entity.ToTable("SubLocalities", "HRM");
+
+            entity.Property(e => e.SubLocalityName)
+                .IsRequired()
+                .HasMaxLength(150);
+
+            entity.HasOne(d => d.Locality).WithMany(p => p.SubLocalities)
+                .HasForeignKey(d => d.LocalityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SubLocalities_Localities");
+        });
+
+        modelBuilder.Entity<Subscriber>(entity =>
+        {
+            entity.HasKey(e => e.SubscriberId).HasName("PK__Subscrib__7DFEB63492BF8EF7");
+
+            entity.ToTable("Subscriber", "WEBCMS");
+
+            entity.HasIndex(e => e.Email, "UQ_Subscriber_Email").IsUnique();
+
+            entity.Property(e => e.SubscriberId).HasColumnName("SubscriberID");
+            entity.Property(e => e.City).HasMaxLength(100);
+            entity.Property(e => e.Country).HasMaxLength(100);
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.FirstName).HasMaxLength(100);
+            entity.Property(e => e.Ipaddress)
+                .HasMaxLength(45)
+                .HasColumnName("IPAddress");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.LastModifiedDate).HasColumnType("datetime");
+            entity.Property(e => e.LastName).HasMaxLength(100);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(20);
         });
 
         modelBuilder.Entity<Supplier>(entity =>
