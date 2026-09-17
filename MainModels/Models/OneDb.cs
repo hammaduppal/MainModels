@@ -191,6 +191,10 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<RecontactType> RecontactTypes { get; set; }
 
+    public virtual DbSet<RelinksDatum> RelinksData { get; set; }
+
+    public virtual DbSet<RelinksFile> RelinksFiles { get; set; }
+
     public virtual DbSet<Reproperty> Reproperties { get; set; }
 
     public virtual DbSet<RepropertyType> RepropertyTypes { get; set; }
@@ -2223,6 +2227,34 @@ public partial class OneDb : DbContext
             entity.Property(e => e.RecontactTypeName)
                 .HasMaxLength(500)
                 .HasColumnName("REContactTypeName");
+        });
+
+        modelBuilder.Entity<RelinksDatum>(entity =>
+        {
+            entity.HasKey(e => e.RelinksDataId);
+
+            entity.ToTable("RELinksData", "RealEstate");
+
+            entity.Property(e => e.RelinksDataId).HasColumnName("RELinksDataId");
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.Description).HasMaxLength(1000);
+            entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+            entity.Property(e => e.Title).HasMaxLength(500);
+        });
+
+        modelBuilder.Entity<RelinksFile>(entity =>
+        {
+            entity.HasKey(e => e.ReLinkFileId);
+
+            entity.ToTable("RELinksFiles", "RealEstate");
+
+            entity.Property(e => e.ReLinkFileCaption).HasMaxLength(500);
+            entity.Property(e => e.ReLinkFileUrl).HasMaxLength(1000);
+            entity.Property(e => e.RelinkDataId).HasColumnName("RELinkDataId");
+
+            entity.HasOne(d => d.RelinkData).WithMany(p => p.RelinksFiles)
+                .HasForeignKey(d => d.RelinkDataId)
+                .HasConstraintName("FK_RELinksFiles_RELinksData");
         });
 
         modelBuilder.Entity<Reproperty>(entity =>

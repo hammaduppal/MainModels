@@ -16,7 +16,9 @@ namespace MainModels.DTOModels
         public List<RecompanyContactVM> CompanyContacts { get; set; }
         public RecompanyContactVM CompanyContact { get; set; }
         public List<RepropertyTypeVM> PropertyTypes { get; set; }
-
+        public RealEstateMediaTypes SelectedMediaType { get; set; }
+        public List<RelinksDatumVM> MediaData { get; set; }
+        public RelinksDatumVM MediaDataItem { get; set; }
         #endregion
         public List<LoginUserVM> LoginUsers { get; set; }
         public LoginUserVM LoginUser { get; set; }
@@ -84,6 +86,8 @@ namespace MainModels.DTOModels
         public List<ChartOfAccountVM> ChartofAccounts { get; set; }
         public List<PropertyPurposeTypeVM> PropertyPurposes { get; set; }
         public List<CityVM> Cities { get; set; }
+        public List<RepropertyVM> Properties { get; set; }
+        public List<RecontactTypeVM> ContactTypes { get; set; }
     }
     public class ThemeSettings
     {

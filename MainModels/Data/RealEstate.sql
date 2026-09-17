@@ -30,31 +30,10 @@ VALUES
     (21, 'CrushSupplier',   GETDATE(), 1, NULL, NULL),
     (22, 'CementSupplier',  GETDATE(), 1, NULL, NULL),
     (23, 'InteriorSupplier',GETDATE(), 1, NULL, NULL),
+    (24, 'Lawyer',GETDATE(), 1, NULL, NULL),
 
     (99, 'Other',           GETDATE(), 1, NULL, NULL);
 
-
-    INSERT INTO RealEstate.PropertySizeUnit (PropertySizeUnitId, PropertySizeUnitName)
-VALUES 
-    -- Primary Urban & Housing Society Units
-    (1, N'Marla'),
-    (2, N'Kanal'),
-    (3, N'Square Feet'),
-    (4, N'Square Yards'), -- Commonly referred to as 'Gaz' in Karachi/Sindh
-    
-    -- Large Land & Commercial Units
-    (5, N'Acre'),
-    (6, N'Hectare'),
-    
-    -- Traditional & Agricultural / Revenue Record Units (Punjab / KP / Rural)
-    (7, N'Killa'),        -- 1 Killa = 1 Acre (8 Kanals)
-    (8, N'Bigha'),        -- 1 Bigha = 4 Kanals (varies by region)
-    (9, N'Murabba'),      -- 1 Murabba = 25 Acres / 200 Kanals
-    (10, N'Biswa'),       -- 1/20th of a Bigha
-    (11, N'Sarsahi'),     -- Also known as Karam (1/9th of a Marla)
-    
-    -- Modern / International Metric Units
-    (12, N'Square Meters');
 
 
 

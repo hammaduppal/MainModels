@@ -363,6 +363,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[RealEstate].[RELinksData]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[RealEstate].[RELinksFiles]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[RealEstate].[REProperties]",
          "ObjectType": 0
       },

@@ -1,9 +1,4 @@
-﻿
-
-
-
-using MainModels.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MainModels.DTOModels
 {
@@ -351,10 +346,56 @@ namespace MainModels.DTOModels
         public bool HasWaterSupply { get; set; }
         public bool HasSewerage { get; set; }
 
-        // Multiple video urls with same name in form
-        public List<string> VideoUrls { get; set; }
+        public List<string>? VideoUrls { get; set; }
 
         // Files uploaded
-        public List<IFormFile> PropertyMediaFiles { get; set; }
+        public List<IFormFile>? PropertyMediaFiles { get; set; }
     }
+    public class PropertyMediumFormSubmit
+    {
+        public int RelinksDataId { get; set; }
+        public string Title { get; set; }
+        public int SelectedMediaType { get; set; }
+        public List<string>? VideoUrls { get; set; }
+        public List<IFormFile>? PropertyMediaFiles { get; set; }
+        public string Description { get; set; }
+    }
+
+    public partial class RelinksDatumVM
+    {
+        public int RelinksDataId { get; set; }
+
+        public string Title { get; set; }
+
+        public int? LinkDataTypeId { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+
+        public bool? IsDeleted { get; set; }
+
+        public int? Createdby { get; set; }
+
+        public virtual ICollection<RelinksFileVM> RelinksFiles { get; set; } = new List<RelinksFileVM>();
+    }
+    public partial class RelinksFileVM
+    {
+        public int ReLinkFileId { get; set; }
+
+        public string ReLinkFileCaption { get; set; }
+
+        public int? ReLinkFileSortOrder { get; set; }
+
+        public string ReLinkFileUrl { get; set; }
+
+        public int? RelinkDataId { get; set; }
+
+        public virtual RelinksDatumVM RelinkData { get; set; }
+    }
+   
 }
