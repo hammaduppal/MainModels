@@ -81,7 +81,7 @@ namespace MainModels.Util
         }
         public SystemPreferencesVM SystemPreferences
         {
-            get => Session?.GetString(SystemPreferencesKey) == null ? null : JsonConvert.DeserializeObject<SystemPreferencesVM>(Session.GetString(NotificationKey));
+            get => Session?.GetString(SystemPreferencesKey) == null ? null : JsonConvert.DeserializeObject<SystemPreferencesVM>(Session.GetString(SystemPreferencesKey));
             set => Session?.SetString(SystemPreferencesKey, JsonConvert.SerializeObject(value));
         }
     }
