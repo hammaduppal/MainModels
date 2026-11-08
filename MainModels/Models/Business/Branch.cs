@@ -23,6 +23,14 @@ public partial class Branch
 
     public bool? IsMasterBranch { get; set; }
 
+    public string Address { get; set; }
+
+    public string Email { get; set; }
+
+    public string Phone { get; set; }
+
+    public int? CityId { get; set; }
+
     public virtual ICollection<AccountingPreference> AccountingPreferences { get; set; } = new List<AccountingPreference>();
 
     public virtual ICollection<BranchStock> BranchStocks { get; set; } = new List<BranchStock>();
@@ -34,6 +42,8 @@ public partial class Branch
     public virtual BusinessEntityType BusinessEntityType { get; set; }
 
     public virtual BusinessStoreType BusinessStoreType { get; set; }
+
+    public virtual City City { get; set; }
 
     public virtual ICollection<Device> Devices { get; set; } = new List<Device>();
 

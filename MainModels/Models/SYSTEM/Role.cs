@@ -14,4 +14,6 @@ public partial class Role
     public bool? IsActive { get; set; }
 
     public virtual ICollection<AssignedRole> AssignedRoles { get; set; } = new List<AssignedRole>();
+
+    public virtual ICollection<UserGroupMenu> UserGroupMenus { get; set; } = new List<UserGroupMenu>();
 }

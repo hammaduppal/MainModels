@@ -419,6 +419,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[SYSTEM].[Menus]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[SYSTEM].[Notifications]",
          "ObjectType": 0
       },
@@ -439,11 +443,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[SYSTEM].[SystemApplications]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[SYSTEM].[TaxSlabs]",
          "ObjectType": 0
       },
       {
          "Name": "[SYSTEM].[UrlMenu]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[UserGroupMenus]",
          "ObjectType": 0
       },
       {

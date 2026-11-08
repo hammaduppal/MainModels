@@ -84,8 +84,10 @@ namespace MainModels.DTOModels
             SalesPrice = 1,
             PromotionPrice = 2
         }
+
         public enum PurchaseType
         {
+            // Procurement
             [Description("Requisition")]
             Requisition = 1,
 
@@ -95,9 +97,53 @@ namespace MainModels.DTOModels
             [Description("Receiving")]
             Receiving = 3,
 
+            [Description("Purchase Return")]
+            PurchaseReturn = 4,
+
+            // Opening Inventory
             [Description("Opening Stock")]
-            OpeningStock = 4
+            OpeningStock = 5,
+
+            // Inventory Transactions
+            [Description("Stock Adjustment")]
+            StockAdjustment = 6,
+
+            [Description("Branch Transfer")]
+            BranchTransfer = 7,
+
+            [Description("Stock In")]
+            StockIn = 8,
+
+            [Description("Stock Out")]
+            StockOut = 9,
+
+            [Description("Stock Return")]
+            StockReturn = 10,
+
+            // Inventory Audit
+            [Description("Stock Audit")]
+            StockAudit = 11,
+
+            [Description("Stock Count")]
+            StockCount = 12,
+
+            // Additional Inventory Operations
+            [Description("Stock Write Off")]
+            StockWriteOff = 13,
+
+            [Description("Stock Consumption")]
+            StockConsumption = 14,
+
+            [Description("Stock Reservation")]
+            StockReservation = 15,
+
+            [Description("Stock Release")]
+            StockRelease = 16,
+
+            [Description("Warehouse Transfer")]
+            WarehouseTransfer = 17
         }
+
         //public enum RequisitionTypes
         //{
         //    [Description("Requisition")]

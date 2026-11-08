@@ -15,6 +15,8 @@ public partial class City
 
     public int? CountryId { get; set; }
 
+    public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
+
     public virtual ICollection<LaneAddress> LaneAddresses { get; set; } = new List<LaneAddress>();
 
     public virtual ICollection<Locality> Localities { get; set; } = new List<Locality>();

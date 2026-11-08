@@ -127,6 +127,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<Material> Materials { get; set; }
 
+    public virtual DbSet<Menu> Menus { get; set; }
+
     public virtual DbSet<Notification> Notifications { get; set; }
 
     public virtual DbSet<NotificationType> NotificationTypes { get; set; }
@@ -225,6 +227,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<SupplierContact> SupplierContacts { get; set; }
 
+    public virtual DbSet<SystemApplication> SystemApplications { get; set; }
+
     public virtual DbSet<SystemPreference> SystemPreferences { get; set; }
 
     public virtual DbSet<TaskAssignedUser> TaskAssignedUsers { get; set; }
@@ -245,6 +249,8 @@ public partial class OneDb : DbContext
 
     public virtual DbSet<UserAssignedBranch> UserAssignedBranches { get; set; }
 
+    public virtual DbSet<UserGroupMenu> UserGroupMenus { get; set; }
+
     public virtual DbSet<Website> Websites { get; set; }
 
     public virtual DbSet<WebsiteDatum> WebsiteData { get; set; }
@@ -253,7 +259,7 @@ public partial class OneDb : DbContext
     {
         modelBuilder.Entity<AccountBalance>(entity =>
         {
-            entity.HasKey(e => e.BalanceId).HasName("PK__AccountB__A760D5BEFF817707");
+            entity.HasKey(e => e.BalanceId).HasName("PK__AccountB__A760D5BE64C9E8DF");
 
             entity.ToTable("AccountBalances", "Accounting");
 
@@ -277,12 +283,12 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Coa).WithMany(p => p.AccountBalances)
                 .HasForeignKey(d => d.CoaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__AccountBa__CoaId__3572E547");
+                .HasConstraintName("FK__AccountBa__CoaId__3CBF0154");
         });
 
         modelBuilder.Entity<AccountPayable>(entity =>
         {
-            entity.HasKey(e => e.Apid).HasName("PK__AccountP__4C29F34F4F4C8EDA");
+            entity.HasKey(e => e.Apid).HasName("PK__AccountP__4C29F34FD7ED83D7");
 
             entity.ToTable("AccountPayables", "Accounting");
 
@@ -307,7 +313,7 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.JournalEntry).WithMany(p => p.AccountPayables)
                 .HasForeignKey(d => d.JournalEntryId)
-                .HasConstraintName("FK__AccountPa__Journ__40E497F3");
+                .HasConstraintName("FK__AccountPa__Journ__3DB3258D");
 
             entity.HasOne(d => d.Supplier).WithMany(p => p.AccountPayables)
                 .HasForeignKey(d => d.SupplierId)
@@ -317,7 +323,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<AccountReceivable>(entity =>
         {
-            entity.HasKey(e => e.Arid).HasName("PK__AccountR__4CB5C49BB3B78494");
+            entity.HasKey(e => e.Arid).HasName("PK__AccountR__4CB5C49B406D57A8");
 
             entity.ToTable("AccountReceivables", "Accounting");
 
@@ -343,15 +349,15 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Customer).WithMany(p => p.AccountReceivables)
                 .HasForeignKey(d => d.CustomerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__AccountRe__Custo__61516785");
+                .HasConstraintName("FK__AccountRe__Custo__3F9B6DFF");
 
             entity.HasOne(d => d.Invoice).WithMany(p => p.AccountReceivables)
                 .HasForeignKey(d => d.InvoiceId)
-                .HasConstraintName("FK__AccountRe__Invoi__62458BBE");
+                .HasConstraintName("FK__AccountRe__Invoi__408F9238");
 
             entity.HasOne(d => d.JournalEntry).WithMany(p => p.AccountReceivables)
                 .HasForeignKey(d => d.JournalEntryId)
-                .HasConstraintName("FK__AccountRe__Journ__6339AFF7");
+                .HasConstraintName("FK__AccountRe__Journ__4183B671");
         });
 
         modelBuilder.Entity<AccountingPreference>(entity =>
@@ -381,7 +387,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Amenity>(entity =>
         {
-            entity.HasKey(e => e.AmenityId).HasName("PK__Amenitie__842AF50B3C904DF9");
+            entity.HasKey(e => e.AmenityId).HasName("PK__Amenitie__842AF50BA5D96E27");
 
             entity.ToTable("Amenities", "RealEstate");
 
@@ -396,7 +402,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<AssignedRole>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Assigned__3214EC079F2A4CCC");
+            entity.HasKey(e => e.Id).HasName("PK__Assigned__3214EC07F2597419");
 
             entity.ToTable("AssignedRoles", "SYSTEM");
 
@@ -406,11 +412,11 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.AssignedRoles)
                 .HasForeignKey(d => d.LoginId)
-                .HasConstraintName("FK__AssignedR__Login__3587F3E0");
+                .HasConstraintName("FK__AssignedR__Login__37C5420D");
 
             entity.HasOne(d => d.Role).WithMany(p => p.AssignedRoles)
                 .HasForeignKey(d => d.RoleId)
-                .HasConstraintName("FK__AssignedR__RoleI__367C1819");
+                .HasConstraintName("FK__AssignedR__RoleI__38B96646");
         });
 
         modelBuilder.Entity<Branch>(entity =>
@@ -418,13 +424,16 @@ public partial class OneDb : DbContext
             entity.ToTable("Branches", "Business");
 
             entity.Property(e => e.BranchId).ValueGeneratedNever();
+            entity.Property(e => e.Address).HasMaxLength(500);
             entity.Property(e => e.BranchCode)
                 .HasMaxLength(500)
                 .IsUnicode(false);
             entity.Property(e => e.BranchName).HasMaxLength(500);
+            entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.IsMasterBranch)
                 .HasDefaultValue(false)
                 .HasAnnotation("Relational:DefaultConstraintName", "DF_Branches_IsMasterBranch");
+            entity.Property(e => e.Phone).HasMaxLength(50);
 
             entity.HasOne(d => d.BusinessCategory).WithMany(p => p.Branches)
                 .HasForeignKey(d => d.BusinessCategoryId)
@@ -438,6 +447,10 @@ public partial class OneDb : DbContext
                 .HasForeignKey(d => d.BusinessStoreTypeId)
                 .HasConstraintName("FK_Branches_BusinessStoreType");
 
+            entity.HasOne(d => d.City).WithMany(p => p.Branches)
+                .HasForeignKey(d => d.CityId)
+                .HasConstraintName("FK_Branches_Cities");
+
             entity.HasOne(d => d.Organization).WithMany(p => p.Branches)
                 .HasForeignKey(d => d.OrganizationId)
                 .HasConstraintName("FK_Branches_Organizations");
@@ -445,13 +458,9 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<BranchStock>(entity =>
         {
-            entity.HasKey(e => e.BranchStockId).HasName("PK__BranchSt__13C9002F0FFED5A1");
+            entity.HasKey(e => e.BranchStockId).HasName("PK__BranchSt__13C9002F8FE732E8");
 
             entity.ToTable("BranchStock", "INV");
-
-            entity.HasIndex(e => e.BranchId, "IX_BranchStock_Branch");
-
-            entity.HasIndex(e => e.ProductVariantId, "IX_BranchStock_ProductVariant");
 
             entity.Property(e => e.BranchStockId).ValueGeneratedNever();
             entity.Property(e => e.Cost).HasColumnType("decimal(18, 2)");
@@ -488,7 +497,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<BrandModel>(entity =>
         {
-            entity.HasKey(e => e.BrandModelId).HasName("PK__BrandMod__6981FE0A6582C4BF");
+            entity.HasKey(e => e.BrandModelId).HasName("PK__BrandMod__6981FE0A80F2B4DD");
 
             entity.ToTable("BrandModels", "INV");
 
@@ -524,7 +533,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<BusinessCategory>(entity =>
         {
-            entity.HasKey(e => e.BusinessCategoryId).HasName("PK__Business__4024A26D5C2BB52F");
+            entity.HasKey(e => e.BusinessCategoryId).HasName("PK__Business__4024A26D4C2BF3FD");
 
             entity.ToTable("BusinessCategory", "Business");
 
@@ -536,7 +545,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<BusinessEntityType>(entity =>
         {
-            entity.HasKey(e => e.BusinessEntityTypeId).HasName("PK__Business__837393DA16DC05EE");
+            entity.HasKey(e => e.BusinessEntityTypeId).HasName("PK__Business__837393DA64F76EE5");
 
             entity.ToTable("BusinessEntityType", "Business");
 
@@ -560,7 +569,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<CartDetail>(entity =>
         {
-            entity.HasKey(e => e.CartDetailId).HasName("PK__CartDeta__01B6A6B406F29BBA");
+            entity.HasKey(e => e.CartDetailId).HasName("PK__CartDeta__01B6A6B4007440F2");
 
             entity.ToTable("CartDetail", "INV");
 
@@ -580,7 +589,7 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Cart).WithMany(p => p.CartDetails)
                 .HasForeignKey(d => d.CartId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CartDetai__CartI__02925FBF");
+                .HasConstraintName("FK__CartDetai__CartI__65C116E7");
 
             entity.HasOne(d => d.Product).WithMany(p => p.CartDetails)
                 .HasForeignKey(d => d.ProductId)
@@ -588,12 +597,12 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Variant).WithMany(p => p.CartDetails)
                 .HasForeignKey(d => d.VariantId)
-                .HasConstraintName("FK__CartDetai__Varia__047AA831");
+                .HasConstraintName("FK__CartDetai__Varia__67A95F59");
         });
 
         modelBuilder.Entity<CartMaster>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__CartMast__51BCD7B7F938D4BF");
+            entity.HasKey(e => e.CartId).HasName("PK__CartMast__51BCD7B7F80BE481");
 
             entity.ToTable("CartMaster", "INV");
 
@@ -622,11 +631,11 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ChartOfAccount>(entity =>
         {
-            entity.HasKey(e => e.CoaId).HasName("PK__ChartOfA__FA4C03A7DA9218BC");
+            entity.HasKey(e => e.CoaId).HasName("PK__ChartOfA__FA4C03A77F8A4B05");
 
             entity.ToTable("ChartOfAccounts", "Accounting");
 
-            entity.HasIndex(e => e.AccountCode, "UQ__ChartOfA__38D0C56ACB837515").IsUnique();
+            entity.HasIndex(e => e.AccountCode, "UQ__ChartOfA__38D0C56A7635988F").IsUnique();
 
             entity.Property(e => e.AccountCode)
                 .IsRequired()
@@ -648,7 +657,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<City>(entity =>
         {
-            entity.HasKey(e => e.CityId).HasName("PK__Cities__F2D21B764D606662");
+            entity.HasKey(e => e.CityId).HasName("PK__Cities__F2D21B7678A00E81");
 
             entity.ToTable("Cities", "HRM");
 
@@ -662,7 +671,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ClientLicense>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ClientLi__3214EC073941D325");
+            entity.HasKey(e => e.Id).HasName("PK__ClientLi__3214EC07D0FF43EC");
 
             entity.ToTable("ClientLicenses", "SYSTEM");
 
@@ -676,7 +685,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<CmsContentSharedCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__CmsConte__3214EC073ACDA7FC");
+            entity.HasKey(e => e.Id).HasName("PK__CmsConte__3214EC070E80EB25");
 
             entity.ToTable("CmsContentSharedCategory", "WEBCMS");
 
@@ -685,16 +694,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Category).WithMany(p => p.CmsContentSharedCategories)
                 .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK__CmsConten__Categ__3A4CA8FD");
+                .HasConstraintName("FK__CmsConten__Categ__4242D080");
 
             entity.HasOne(d => d.Content).WithMany(p => p.CmsContentSharedCategories)
                 .HasForeignKey(d => d.ContentId)
-                .HasConstraintName("FK__CmsConten__Conte__3B40CD36");
+                .HasConstraintName("FK__CmsConten__Conte__4336F4B9");
         });
 
         modelBuilder.Entity<CmsEmail>(entity =>
         {
-            entity.HasKey(e => e.EmailId).HasName("PK__CmsEmail__7ED91ACF12AA153A");
+            entity.HasKey(e => e.EmailId).HasName("PK__CmsEmail__7ED91ACF4F5AE241");
 
             entity.ToTable("CmsEmail", "WEBCMS");
 
@@ -711,12 +720,12 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Website).WithMany(p => p.CmsEmails)
                 .HasForeignKey(d => d.WebsiteId)
-                .HasConstraintName("FK__CmsEmail__Websit__3C34F16F");
+                .HasConstraintName("FK__CmsEmail__Websit__442B18F2");
         });
 
         modelBuilder.Entity<CmsemailSent>(entity =>
         {
-            entity.HasKey(e => e.EmailSentId).HasName("PK__CMSEmail__456E5F9B17DB4AF3");
+            entity.HasKey(e => e.EmailSentId).HasName("PK__CMSEmail__456E5F9B1946F06E");
 
             entity.ToTable("CMSEmailSent", "WEBCMS");
 
@@ -736,16 +745,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Email).WithMany(p => p.CmsemailSents)
                 .HasForeignKey(d => d.EmailId)
-                .HasConstraintName("FK__CMSEmailS__Email__3D2915A8");
+                .HasConstraintName("FK__CMSEmailS__Email__451F3D2B");
 
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSents)
                 .HasForeignKey(d => d.EmailId)
-                .HasConstraintName("FK__CMSEmailS__Email__3E1D39E1");
+                .HasConstraintName("FK__CMSEmailS__Email__46136164");
         });
 
         modelBuilder.Entity<Cmssetting>(entity =>
         {
-            entity.HasKey(e => e.CmssettingId).HasName("PK__CMSSetti__DE2938843CBB7AE1");
+            entity.HasKey(e => e.CmssettingId).HasName("PK__CMSSetti__DE293884F39A4905");
 
             entity.ToTable("CMSSettings", "SYSTEM");
 
@@ -755,7 +764,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<CollectionDetail>(entity =>
         {
-            entity.HasKey(e => e.CollectionDetailId).HasName("PK__Collecti__944C6E15B085EF5D");
+            entity.HasKey(e => e.CollectionDetailId).HasName("PK__Collecti__944C6E15CB130EBC");
 
             entity.ToTable("CollectionDetail", "INV");
 
@@ -779,7 +788,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<CollectionMaster>(entity =>
         {
-            entity.HasKey(e => e.CollectionId).HasName("PK__Collecti__7DE6BC048291CABC");
+            entity.HasKey(e => e.CollectionId).HasName("PK__Collecti__7DE6BC04399E63F8");
 
             entity.ToTable("CollectionMaster", "INV");
 
@@ -810,7 +819,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFCAC79F5C92");
+            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFCA5E563E11");
 
             entity.ToTable("Comments", "WEBCMS");
 
@@ -826,12 +835,12 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Review).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.ReviewId)
-                .HasConstraintName("FK__Comments__Review__3F115E1A");
+                .HasConstraintName("FK__Comments__Review__4707859D");
         });
 
         modelBuilder.Entity<Content>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Content__3214EC0768F46D1C");
+            entity.HasKey(e => e.Id).HasName("PK__Content__3214EC075B49FB48");
 
             entity.ToTable("Content", "WEBCMS");
 
@@ -857,20 +866,20 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.ContentType).WithMany(p => p.Contents)
                 .HasForeignKey(d => d.ContentTypeId)
-                .HasConstraintName("FK__Content__Content__40058253");
+                .HasConstraintName("FK__Content__Content__47FBA9D6");
 
             entity.HasOne(d => d.LoginUser).WithMany(p => p.Contents)
                 .HasForeignKey(d => d.LoginUserId)
-                .HasConstraintName("FK__Content__LoginUs__40F9A68C");
+                .HasConstraintName("FK__Content__LoginUs__48EFCE0F");
 
             entity.HasOne(d => d.WebSite).WithMany(p => p.Contents)
                 .HasForeignKey(d => d.WebSiteId)
-                .HasConstraintName("FK__Content__WebSite__41EDCAC5");
+                .HasConstraintName("FK__Content__WebSite__49E3F248");
         });
 
         modelBuilder.Entity<ContentCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ContentC__3214EC07ACE3C490");
+            entity.HasKey(e => e.Id).HasName("PK__ContentC__3214EC0753511794");
 
             entity.ToTable("ContentCategory", "WEBCMS");
 
@@ -893,7 +902,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ContentType>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ContentT__3214EC07422DDA5D");
+            entity.HasKey(e => e.Id).HasName("PK__ContentT__3214EC072DD26EBD");
 
             entity.ToTable("ContentType", "WEBCMS");
 
@@ -906,7 +915,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.HasKey(e => e.CountryId).HasName("PK__Countrie__10D1609FE5FEC5C0");
+            entity.HasKey(e => e.CountryId).HasName("PK__Countrie__10D1609FC1E041E3");
 
             entity.ToTable("Countries", "HRM");
 
@@ -922,11 +931,11 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Coupon>(entity =>
         {
-            entity.HasKey(e => e.CouponId).HasName("PK__Coupons__384AF1BA5D0AAC2F");
+            entity.HasKey(e => e.CouponId).HasName("PK__Coupons__384AF1BA6032334F");
 
             entity.ToTable("Coupons", "INV");
 
-            entity.HasIndex(e => e.CouponCode, "UQ__Coupons__D3490800C8EF6C20").IsUnique();
+            entity.HasIndex(e => e.CouponCode, "UQ__Coupons__D3490800F08E2736").IsUnique();
 
             entity.Property(e => e.CouponId).ValueGeneratedNever();
             entity.Property(e => e.AllowStacking).HasDefaultValue(false);
@@ -957,7 +966,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<CouponCategory>(entity =>
         {
-            entity.HasKey(e => e.CouponCategoryId).HasName("PK__CouponCa__799E5F0B392E41DC");
+            entity.HasKey(e => e.CouponCategoryId).HasName("PK__CouponCa__799E5F0B40C5A49A");
 
             entity.ToTable("CouponCategory", "INV");
 
@@ -976,7 +985,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<CouponProduct>(entity =>
         {
-            entity.HasKey(e => e.CouponProductId).HasName("PK__CouponPr__6E82B6FF8039BD7E");
+            entity.HasKey(e => e.CouponProductId).HasName("PK__CouponPr__6E82B6FF087C5AE4");
 
             entity.ToTable("CouponProduct", "INV");
 
@@ -1020,7 +1029,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Device>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Devices__3214EC07861E42F1");
+            entity.HasKey(e => e.Id).HasName("PK__Devices__3214EC07A296E99E");
 
             entity.ToTable("Devices", "SYSTEM");
 
@@ -1040,7 +1049,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Employee>(entity =>
         {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F11C218845C");
+            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F1191D5B8B3");
 
             entity.ToTable("Employee", "HRM");
 
@@ -1071,7 +1080,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<EmployeeDesignation>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Employee__3214EC07D5D46053");
+            entity.HasKey(e => e.Id).HasName("PK__Employee__3214EC07813BAC4F");
 
             entity.ToTable("EmployeeDesignation", "HRM");
 
@@ -1081,7 +1090,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ErpPermission>(entity =>
         {
-            entity.HasKey(e => e.PermissionId).HasName("PK__ErpPermi__EFA6FB2FEE76B178");
+            entity.HasKey(e => e.PermissionId).HasName("PK__ErpPermi__EFA6FB2F4F09B442");
 
             entity.ToTable("ErpPermissions", "SYSTEM");
 
@@ -1089,16 +1098,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.UrlMenu).WithMany(p => p.ErpPermissions)
                 .HasForeignKey(d => d.UrlMenuId)
-                .HasConstraintName("FK__ErpPermis__UrlMe__37703C52");
+                .HasConstraintName("FK__ErpPermis__UrlMe__3AA1AEB8");
 
             entity.HasOne(d => d.User).WithMany(p => p.ErpPermissions)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__ErpPermis__UserI__3864608B");
+                .HasConstraintName("FK__ErpPermis__UserI__3B95D2F1");
         });
 
         modelBuilder.Entity<FileManager>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__FileMana__3214EC078B0E1999");
+            entity.HasKey(e => e.Id).HasName("PK__FileMana__3214EC0701639904");
 
             entity.ToTable("FileManager", "MEDIA");
 
@@ -1115,7 +1124,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<FiscalPeriod>(entity =>
         {
-            entity.HasKey(e => e.FiscalPeriodId).HasName("PK__FiscalPe__9E68FFEBBF5B3FA0");
+            entity.HasKey(e => e.FiscalPeriodId).HasName("PK__FiscalPe__9E68FFEBD581DB46");
 
             entity.ToTable("FiscalPeriods", "Accounting");
 
@@ -1133,7 +1142,7 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FiscalPeriods)
                 .HasForeignKey(d => d.CreatedBy)
-                .HasConstraintName("FK__FiscalPer__Creat__4A6E022D");
+                .HasConstraintName("FK__FiscalPer__Creat__4277DAAA");
         });
 
         modelBuilder.Entity<Floor>(entity =>
@@ -1152,13 +1161,9 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<InvoiceDetail>(entity =>
         {
-            entity.HasKey(e => e.InvoiceDetailId).HasName("PK__InvoiceD__1F15781148657E0E");
+            entity.HasKey(e => e.InvoiceDetailId).HasName("PK__InvoiceD__1F157811883E6EFA");
 
             entity.ToTable("InvoiceDetail", "INV");
-
-            entity.HasIndex(e => e.ProductId, "IX_InvoiceDetail_ProductId");
-
-            entity.HasIndex(e => e.VariantId, "IX_InvoiceDetail_VariantId");
 
             entity.Property(e => e.InvoiceDetailId).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate)
@@ -1169,6 +1174,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.LineTotalWithTax).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.SubUomid).HasColumnName("SubUOMId");
             entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.TaxRate).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
@@ -1193,12 +1199,6 @@ public partial class OneDb : DbContext
             entity.HasKey(e => e.InvoiceMasterId).HasName("PK__InvoiceM__FD3450D199F346FC");
 
             entity.ToTable("InvoiceMaster", "INV");
-
-            entity.HasIndex(e => e.CustomerId, "IX_InvoiceMaster_CustomerId");
-
-            entity.HasIndex(e => e.InvoiceDate, "IX_InvoiceMaster_Date");
-
-            entity.HasIndex(e => e.EmployeeId, "IX_InvoiceMaster_EmployeeId");
 
             entity.HasIndex(e => e.InvoiceNo, "UQ__InvoiceM__D796B2274B25F659").IsUnique();
 
@@ -1269,7 +1269,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<InvoiceSource>(entity =>
         {
-            entity.HasKey(e => e.InvoiceSourceId).HasName("PK__InvoiceS__F401E9D338EDE6C9");
+            entity.HasKey(e => e.InvoiceSourceId).HasName("PK__InvoiceS__F401E9D354141D36");
 
             entity.ToTable("InvoiceSources", "INV");
 
@@ -1286,15 +1286,11 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<JournalEntry>(entity =>
         {
-            entity.HasKey(e => e.JournalEntryId).HasName("PK__JournalE__575A70DBB8A729C3");
+            entity.HasKey(e => e.JournalEntryId).HasName("PK__JournalE__575A70DBDADB5C76");
 
             entity.ToTable("JournalEntries", "Accounting");
 
-            entity.HasIndex(e => e.BranchId, "IX_JournalEntries_BranchId");
-
-            entity.HasIndex(e => e.EntryDate, "IX_JournalEntries_EntryDate");
-
-            entity.HasIndex(e => e.EntryNumber, "UQ__JournalE__488B566FA9420781").IsUnique();
+            entity.HasIndex(e => e.EntryNumber, "UQ__JournalE__488B566F799CE8FD").IsUnique();
 
             entity.Property(e => e.JournalEntryId).ValueGeneratedNever();
             entity.Property(e => e.CreatedAt)
@@ -1326,16 +1322,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.JournalEntryCreatedByNavigations)
                 .HasForeignKey(d => d.CreatedBy)
-                .HasConstraintName("FK__JournalEn__Creat__2630A1B7");
+                .HasConstraintName("FK__JournalEn__Creat__436BFEE3");
 
             entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.JournalEntryUpdatedByNavigations)
                 .HasForeignKey(d => d.UpdatedBy)
-                .HasConstraintName("FK__JournalEn__Updat__2724C5F0");
+                .HasConstraintName("FK__JournalEn__Updat__4460231C");
         });
 
         modelBuilder.Entity<JournalLine>(entity =>
         {
-            entity.HasKey(e => e.JournalLineId).HasName("PK__JournalL__C4D84425A24B4A1A");
+            entity.HasKey(e => e.JournalLineId).HasName("PK__JournalL__C4D84425AC06DE8B");
 
             entity.ToTable("JournalLines", "Accounting");
 
@@ -1357,17 +1353,17 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Coa).WithMany(p => p.JournalLines)
                 .HasForeignKey(d => d.CoaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__JournalLi__CoaId__2EC5E7B8");
+                .HasConstraintName("FK__JournalLi__CoaId__45544755");
 
             entity.HasOne(d => d.JournalEntry).WithMany(p => p.JournalLines)
                 .HasForeignKey(d => d.JournalEntryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__JournalLi__Journ__2DD1C37F");
+                .HasConstraintName("FK__JournalLi__Journ__46486B8E");
         });
 
         modelBuilder.Entity<LaneAddress>(entity =>
         {
-            entity.HasKey(e => e.AddressId).HasName("PK__LaneAddr__091C2AFB0350FDCB");
+            entity.HasKey(e => e.AddressId).HasName("PK__LaneAddr__091C2AFBC81CE1B1");
 
             entity.ToTable("LaneAddresses", "HRM");
 
@@ -1389,7 +1385,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<LinkedContentItem>(entity =>
         {
-            entity.HasKey(e => e.LinkedItemId).HasName("PK__LinkedCo__6F9EA4BA4F9AEC90");
+            entity.HasKey(e => e.LinkedItemId).HasName("PK__LinkedCo__6F9EA4BAB10FEC3D");
 
             entity.ToTable("LinkedContentItems", "WEBCMS");
 
@@ -1397,16 +1393,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Content).WithMany(p => p.LinkedContentItemContents)
                 .HasForeignKey(d => d.ContentId)
-                .HasConstraintName("FK__LinkedCon__Conte__43D61337");
+                .HasConstraintName("FK__LinkedCon__Conte__4BCC3ABA");
 
             entity.HasOne(d => d.LinkedContent).WithMany(p => p.LinkedContentItemLinkedContents)
                 .HasForeignKey(d => d.LinkedContentId)
-                .HasConstraintName("FK__LinkedCon__Linke__44CA3770");
+                .HasConstraintName("FK__LinkedCon__Linke__4CC05EF3");
         });
 
         modelBuilder.Entity<Locality>(entity =>
         {
-            entity.HasKey(e => e.LocalityId).HasName("PK__Localiti__179EA722C2BE7BF7");
+            entity.HasKey(e => e.LocalityId).HasName("PK__Localiti__179EA7229848DFB1");
 
             entity.ToTable("Localities", "HRM");
 
@@ -1427,7 +1423,6 @@ public partial class OneDb : DbContext
 
             entity.ToTable("LoginHistory", "HRM");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.LastLogin).HasColumnType("datetime");
 
             entity.HasOne(d => d.LoginUser).WithMany(p => p.LoginHistories)
@@ -1437,7 +1432,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<LoginUser>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC076C4E1330");
+            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC075FC18A87");
 
             entity.ToTable("LoginUsers", "HRM");
 
@@ -1458,7 +1453,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<LoginUserDeviceDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC07E48F7649");
+            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC0700136CFD");
 
             entity.ToTable("LoginUserDeviceDetail", "HRM");
 
@@ -1484,19 +1479,34 @@ public partial class OneDb : DbContext
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<Menu>(entity =>
+        {
+            entity.HasKey(e => e.MenuId).HasName("PK__Menus__C99ED2307509EDFE");
+
+            entity.ToTable("Menus", "SYSTEM");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.IconName).HasMaxLength(50);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(100);
+            entity.Property(e => e.Url).HasMaxLength(255);
+
+            entity.HasOne(d => d.Application).WithMany(p => p.Menus)
+                .HasForeignKey(d => d.ApplicationId)
+                .HasConstraintName("FK__Menus__Applicati__3C89F72A");
+
+            entity.HasOne(d => d.ParentMenu).WithMany(p => p.InverseParentMenu)
+                .HasForeignKey(d => d.ParentMenuId)
+                .HasConstraintName("FK__Menus__ParentMen__3D7E1B63");
+        });
+
         modelBuilder.Entity<Notification>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC07C4159632");
 
             entity.ToTable("Notifications", "SYSTEM");
-
-            entity.HasIndex(e => e.GroupName, "IX_Notifications_GroupName");
-
-            entity.HasIndex(e => new { e.GroupName, e.IsRead }, "IX_Notifications_GroupName_IsRead");
-
-            entity.HasIndex(e => e.UserId, "IX_Notifications_UserId");
-
-            entity.HasIndex(e => new { e.UserId, e.IsRead }, "IX_Notifications_UserId_IsRead");
 
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getutcdate())")
@@ -1625,7 +1635,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<OrderStatus>(entity =>
         {
-            entity.HasKey(e => e.OrderStatusId).HasName("PK__OrderSta__BC674CA1280924C9");
+            entity.HasKey(e => e.OrderStatusId).HasName("PK__OrderSta__BC674CA1B4BAC574");
 
             entity.ToTable("OrderStatus", "INV");
 
@@ -1647,7 +1657,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A38A491B0AD");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A38510A087E");
 
             entity.ToTable("Payments", "Accounting");
 
@@ -1674,7 +1684,7 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.JournalEntry).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.JournalEntryId)
-                .HasConstraintName("FK__Payments__Journa__45A94D10");
+                .HasConstraintName("FK__Payments__Journa__473C8FC7");
         });
 
         modelBuilder.Entity<PaymentMethod>(entity =>
@@ -1688,7 +1698,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<PaymentStatus>(entity =>
         {
-            entity.HasKey(e => e.PaymentStatusId).HasName("PK__PaymentS__34F8AC3FD3FD306B");
+            entity.HasKey(e => e.PaymentStatusId).HasName("PK__PaymentS__34F8AC3F49FD68C7");
 
             entity.ToTable("PaymentStatus", "Setup");
 
@@ -1703,7 +1713,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Person>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Persons__3214EC0730ACEE27");
+            entity.HasKey(e => e.Id).HasName("PK__Persons__3214EC072BFD45A0");
 
             entity.ToTable("Persons", "HRM");
 
@@ -1800,7 +1810,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ProductReview>(entity =>
         {
-            entity.HasKey(e => e.ReviewId).HasName("PK__ProductR__74BC79CE27A653FE");
+            entity.HasKey(e => e.ReviewId).HasName("PK__ProductR__74BC79CE4D6B5FD5");
 
             entity.ToTable("ProductReviews", "INV");
 
@@ -1868,7 +1878,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Project>(entity =>
         {
-            entity.HasKey(e => e.ProjectId).HasName("PK__Projects__761ABEF0C36E7031");
+            entity.HasKey(e => e.ProjectId).HasName("PK__Projects__761ABEF03A49F014");
 
             entity.ToTable("Projects", "Project");
 
@@ -1893,7 +1903,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ProjectColumn>(entity =>
         {
-            entity.HasKey(e => e.ColumnId).HasName("PK__ProjectC__1AA1420F22C9374A");
+            entity.HasKey(e => e.ColumnId).HasName("PK__ProjectC__1AA1420F972735DD");
 
             entity.ToTable("ProjectColumns", "Project");
 
@@ -1925,7 +1935,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ProjectTask>(entity =>
         {
-            entity.HasKey(e => e.TaskId).HasName("PK__ProjectT__7C6949B11D3BE1D7");
+            entity.HasKey(e => e.TaskId).HasName("PK__ProjectT__7C6949B1535ADF1D");
 
             entity.ToTable("ProjectTasks", "Project");
 
@@ -1967,7 +1977,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<PropertyEnquiry>(entity =>
         {
-            entity.HasKey(e => e.EnquiryId).HasName("PK__Property__0A019B7D09502F58");
+            entity.HasKey(e => e.EnquiryId).HasName("PK__Property__0A019B7D1C75F01E");
 
             entity.ToTable("PropertyEnquiries", "RealEstate");
 
@@ -1988,7 +1998,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<PropertyMedium>(entity =>
         {
-            entity.HasKey(e => e.PropertyMediaId).HasName("PK__Property__89DF6D284634714B");
+            entity.HasKey(e => e.PropertyMediaId).HasName("PK__Property__89DF6D28C0AF669D");
 
             entity.ToTable("PropertyMedia", "RealEstate");
 
@@ -2014,7 +2024,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<PropertySizeUnit>(entity =>
         {
-            entity.HasKey(e => e.PropertySizeUnitId).HasName("PK__Property__D110EA446173F349");
+            entity.HasKey(e => e.PropertySizeUnitId).HasName("PK__Property__D110EA44E9011829");
 
             entity.ToTable("PropertySizeUnit", "RealEstate");
 
@@ -2063,8 +2073,6 @@ public partial class OneDb : DbContext
             entity.HasKey(e => e.PurchaseMasterId).HasName("PK__Purchase__5450C11901866B34");
 
             entity.ToTable("PurchaseMaster", "INV");
-
-            entity.HasIndex(e => e.PurchaseTypeId, "IX_INV_PurchaseMaster_PurchaseTypeId");
 
             entity.HasIndex(e => e.PurchaseNumber, "UQ__Purchase__373B5B6EE9029448").IsUnique();
 
@@ -2197,7 +2205,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ReconciliationLog>(entity =>
         {
-            entity.HasKey(e => e.ReconciliationId).HasName("PK__Reconcil__096DC80051808EBD");
+            entity.HasKey(e => e.ReconciliationId).HasName("PK__Reconcil__096DC800B71B3515");
 
             entity.ToTable("ReconciliationLogs", "Accounting");
 
@@ -2259,7 +2267,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Reproperty>(entity =>
         {
-            entity.HasKey(e => e.PropertyId).HasName("PK__REProper__70C9A735AF32100D");
+            entity.HasKey(e => e.PropertyId).HasName("PK__REProper__70C9A735589E65B2");
 
             entity.ToTable("REProperties", "RealEstate");
 
@@ -2340,7 +2348,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Review>(entity =>
         {
-            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79CEDF63D3BA");
+            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79CE7109E8E2");
 
             entity.ToTable("Reviews", "WEBCMS");
 
@@ -2354,16 +2362,16 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.Content).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.ContentId)
-                .HasConstraintName("FK__Reviews__Content__45BE5BA9");
+                .HasConstraintName("FK__Reviews__Content__4DB4832C");
 
             entity.HasOne(d => d.LoginUser).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.LoginUserId)
-                .HasConstraintName("FK__Reviews__LoginUs__46B27FE2");
+                .HasConstraintName("FK__Reviews__LoginUs__4EA8A765");
         });
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC07BCE7C156");
+            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC074C0D1914");
 
             entity.ToTable("Roles", "SYSTEM");
 
@@ -2373,7 +2381,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ServiceLicense>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ServiceL__3214EC07885361C5");
+            entity.HasKey(e => e.Id).HasName("PK__ServiceL__3214EC072A2550A1");
 
             entity.ToTable("ServiceLicense", "SYSTEM");
 
@@ -2407,7 +2415,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Setting>(entity =>
         {
-            entity.HasKey(e => e.SettingsId).HasName("PK__Settings__991B19FC516B0BB6");
+            entity.HasKey(e => e.SettingsId).HasName("PK__Settings__991B19FC79E1F25F");
 
             entity.ToTable("Settings", "SYSTEM");
 
@@ -2420,7 +2428,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<ShippingType>(entity =>
         {
-            entity.HasKey(e => e.ShippingTypeId).HasName("PK__Shipping__46789510DDA272C3");
+            entity.HasKey(e => e.ShippingTypeId).HasName("PK__Shipping__467895102D200278");
 
             entity.ToTable("ShippingType", "Setup");
 
@@ -2446,7 +2454,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<StateProvince>(entity =>
         {
-            entity.HasKey(e => e.StateProvinceId).HasName("PK__StatePro__9122A951D4833E19");
+            entity.HasKey(e => e.StateProvinceId).HasName("PK__StatePro__9122A951573FCEA1");
 
             entity.ToTable("StateProvince", "HRM");
 
@@ -2478,7 +2486,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<SubLocality>(entity =>
         {
-            entity.HasKey(e => e.SubLocalityId).HasName("PK__SubLocal__443F43AF4D56BE62");
+            entity.HasKey(e => e.SubLocalityId).HasName("PK__SubLocal__443F43AFD80D7391");
 
             entity.ToTable("SubLocalities", "HRM");
 
@@ -2494,7 +2502,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<Subscriber>(entity =>
         {
-            entity.HasKey(e => e.SubscriberId).HasName("PK__Subscrib__7DFEB63492BF8EF7");
+            entity.HasKey(e => e.SubscriberId).HasName("PK__Subscrib__7DFEB63453D138E6");
 
             entity.ToTable("Subscriber", "WEBCMS");
 
@@ -2554,6 +2562,19 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK_SupplierContact_Supplier");
         });
 
+        modelBuilder.Entity<SystemApplication>(entity =>
+        {
+            entity.HasKey(e => e.ApplicationId).HasName("PK__SystemAp__C93A4C99BA822027");
+
+            entity.ToTable("SystemApplications", "SYSTEM");
+
+            entity.Property(e => e.ApplicationName)
+                .IsRequired()
+                .HasMaxLength(150);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+        });
+
         modelBuilder.Entity<SystemPreference>(entity =>
         {
             entity.HasKey(e => e.SystemPreferenceId).HasName("PK_SystemPreferences_Id");
@@ -2592,7 +2613,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<TaskAssignedUser>(entity =>
         {
-            entity.HasKey(e => e.TaskAssignedUserId).HasName("PK__TaskAssi__83FF2C8A278DDE42");
+            entity.HasKey(e => e.TaskAssignedUserId).HasName("PK__TaskAssi__83FF2C8A615A99FD");
 
             entity.ToTable("TaskAssignedUsers", "Project");
 
@@ -2645,7 +2666,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<TaxSlab>(entity =>
         {
-            entity.HasKey(e => e.TaxSlabId).HasName("PK__TaxSlabs__4DA9C7B314BCC7A6");
+            entity.HasKey(e => e.TaxSlabId).HasName("PK__TaxSlabs__4DA9C7B39EF25404");
 
             entity.ToTable("TaxSlabs", "SYSTEM");
 
@@ -2663,7 +2684,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<TaxTransaction>(entity =>
         {
-            entity.HasKey(e => e.TaxTransactionId).HasName("PK__TaxTrans__D3DE177AC392AC1A");
+            entity.HasKey(e => e.TaxTransactionId).HasName("PK__TaxTrans__D3DE177ADA346A62");
 
             entity.ToTable("TaxTransactions", "Accounting");
 
@@ -2684,12 +2705,12 @@ public partial class OneDb : DbContext
 
             entity.HasOne(d => d.JournalEntry).WithMany(p => p.TaxTransactions)
                 .HasForeignKey(d => d.JournalEntryId)
-                .HasConstraintName("FK__TaxTransa__Journ__5026DB83");
+                .HasConstraintName("FK__TaxTransa__Journ__4830B400");
 
             entity.HasOne(d => d.TaxAccount).WithMany(p => p.TaxTransactions)
                 .HasForeignKey(d => d.TaxAccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TaxTransa__TaxAc__4F32B74A");
+                .HasConstraintName("FK__TaxTransa__TaxAc__4924D839");
         });
 
         modelBuilder.Entity<Uom>(entity =>
@@ -2718,7 +2739,7 @@ public partial class OneDb : DbContext
             entity.Property(e => e.SubUomid)
                 .ValueGeneratedNever()
                 .HasColumnName("SubUOMId");
-            entity.Property(e => e.ConversionFactor).HasColumnType("decimal(4, 2)");
+            entity.Property(e => e.ConversionFactor).HasColumnType("decimal(18, 4)");
             entity.Property(e => e.CreatedOn).HasColumnType("datetime");
             entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
             entity.Property(e => e.SubUomname)
@@ -2733,7 +2754,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<UrlMenu>(entity =>
         {
-            entity.HasKey(e => e.UrlMenuId).HasName("PK__UrlMenu__1E1429F7BC8DD63A");
+            entity.HasKey(e => e.UrlMenuId).HasName("PK__UrlMenu__1E1429F747901F78");
 
             entity.ToTable("UrlMenu", "SYSTEM");
 
@@ -2760,9 +2781,31 @@ public partial class OneDb : DbContext
                 .HasConstraintName("FK_UserAssignedBranches_LoginUsers");
         });
 
+        modelBuilder.Entity<UserGroupMenu>(entity =>
+        {
+            entity.HasKey(e => e.UserGroupMenuId).HasName("PK__UserGrou__8618ABD6760C5758");
+
+            entity.ToTable("UserGroupMenus", "SYSTEM");
+
+            entity.HasIndex(e => new { e.RoleId, e.MenuId }, "UK_Role_Menu").IsUnique();
+
+            entity.Property(e => e.CanView).HasDefaultValue(true);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Menu).WithMany(p => p.UserGroupMenus)
+                .HasForeignKey(d => d.MenuId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__UserGroup__MenuI__3F6663D5");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.UserGroupMenus)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__UserGroup__RoleI__405A880E");
+        });
+
         modelBuilder.Entity<Website>(entity =>
         {
-            entity.HasKey(e => e.WebsiteId).HasName("PK__Website__3F146DA9C3C22F69");
+            entity.HasKey(e => e.WebsiteId).HasName("PK__Website__3F146DA9E160C1AE");
 
             entity.ToTable("Website", "SYSTEM");
 
@@ -2773,7 +2816,7 @@ public partial class OneDb : DbContext
 
         modelBuilder.Entity<WebsiteDatum>(entity =>
         {
-            entity.HasKey(e => e.WebsiteDataId).HasName("PK__WebsiteD__E06C88F0846D487E");
+            entity.HasKey(e => e.WebsiteDataId).HasName("PK__WebsiteD__E06C88F0E51FBAB6");
 
             entity.ToTable("WebsiteData", "SYSTEM");
 
@@ -2786,7 +2829,7 @@ public partial class OneDb : DbContext
             entity.HasOne(d => d.Website).WithMany(p => p.WebsiteData)
                 .HasForeignKey(d => d.WebsiteId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__WebsiteDa__Websi__395884C4");
+                .HasConstraintName("FK__WebsiteDa__Websi__414EAC47");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -384,7 +384,7 @@ namespace MainModels.DTOModels
 
         public decimal LineTotal { get; set; }
         public decimal LineTotalWithTax { get; set; }
-
+        public Guid? SubUomId { get; set; }
         public decimal? Discount { get; set; }
         public string Remarks { get; set; }
 
@@ -849,4 +849,80 @@ namespace MainModels.DTOModels
 
     }
     #endregion
+
+
+    public partial class StockAdjustmentMasterVM
+    {
+        public Guid StockAdjustmentMasterId { get; set; }
+
+        public string AdjustmentNo { get; set; }
+
+        public DateTime AdjustmentDate { get; set; }
+
+        public int PurchaseTypeId { get; set; }
+
+        public int? WarehouseId { get; set; }
+
+        public string ReferenceNo { get; set; }
+
+        public string Remarks { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public int? CreatedBy { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public int? ModifiedBy { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public virtual PurchaseType PurchaseType { get; set; }
+
+        public virtual ICollection<StockAdjustmentDetailVM> StockAdjustmentDetails { get; set; } = new List<StockAdjustmentDetailVM>();
+    }
+
+    public partial class StockAdjustmentDetailVM
+    {
+        public Guid StockAdjustmentDetailsId { get; set; }
+
+        public Guid StockAdjustmentMasterId { get; set; }
+
+        public Guid ProductId { get; set; }
+
+        public int? UnitId { get; set; }
+
+        public decimal SystemQuantity { get; set; }
+
+        public decimal AdjustedQuantity { get; set; }
+
+        public decimal UnitCost { get; set; }
+
+        public decimal TotalCost { get; set; }
+
+        public string LineRemarks { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public int? CreatedBy { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public int? ModifiedBy { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public virtual ProductVM Product { get; set; }
+
+        public virtual StockAdjustmentMasterVM StockAdjustmentMaster { get; set; }
+    }
+
+
+
+
+
 }

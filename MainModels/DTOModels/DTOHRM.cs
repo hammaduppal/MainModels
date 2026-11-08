@@ -38,7 +38,7 @@ namespace MainModels.DTOModels
         public PersonVM? Person { get; set; }
         public Guid BusinessStoreId { get; set; }
 
-        public string WelcomeMessage { get; set; }
+        public string WelcomeMessage { get; set; } = string.Empty;
     }
 
     public partial class AssignedRoleVM

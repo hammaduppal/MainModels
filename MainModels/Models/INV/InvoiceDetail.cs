@@ -33,6 +33,8 @@ public partial class InvoiceDetail
 
     public DateTime CreatedDate { get; set; }
 
+    public Guid? SubUomid { get; set; }
+
     public virtual InvoiceMaster InvoiceMaster { get; set; }
 
     public virtual Product Product { get; set; }

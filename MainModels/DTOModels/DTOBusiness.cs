@@ -44,6 +44,15 @@ namespace MainModels.DTOModels
         public short? BusinessEntityTypeId { get; set; }
 
         public string BranchCode { get; set; }
+        public string? Address { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? Phone { get; set; }
+
+        public int? CityId { get; set; }
+        public string CityName { get; set; }
+
         public OrganizationVM Organization { get; set; }
     }
 
