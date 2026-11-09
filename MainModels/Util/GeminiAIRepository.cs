@@ -1,5 +1,8 @@
 ﻿
+using Microsoft.Extensions.Configuration;
 using Mscc.GenerativeAI;
+using Mscc.GenerativeAI.Types;
+using System;
 
 namespace MainModels.Util
 {
