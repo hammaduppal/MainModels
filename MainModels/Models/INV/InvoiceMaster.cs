@@ -57,6 +57,8 @@ public partial class InvoiceMaster
 
     public DateTime? CanceledDate { get; set; }
 
+    public short TillNo { get; set; }
+
     public virtual ICollection<AccountReceivable> AccountReceivables { get; set; } = new List<AccountReceivable>();
 
     public virtual Customer Customer { get; set; }

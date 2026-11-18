@@ -860,7 +860,6 @@ public partial class OneDb : DbContext
             entity.Property(e => e.Name).HasMaxLength(1000);
             entity.Property(e => e.Note).HasMaxLength(1000);
             entity.Property(e => e.OtherTitle).HasMaxLength(1500);
-            entity.Property(e => e.Tagline).HasMaxLength(1000);
             entity.Property(e => e.Thumbnail).HasMaxLength(500);
             entity.Property(e => e.VideoLink).HasMaxLength(500);
 
@@ -1166,6 +1165,7 @@ public partial class OneDb : DbContext
             entity.ToTable("InvoiceDetail", "INV");
 
             entity.Property(e => e.InvoiceDetailId).ValueGeneratedNever();
+            entity.Property(e => e.Cost).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -1224,6 +1224,9 @@ public partial class OneDb : DbContext
                 .HasMaxLength(50);
             entity.Property(e => e.OfficeRemarks).HasMaxLength(500);
             entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TillNo)
+                .HasDefaultValue((short)1)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_InvoiceMaster_TillNo");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValue(0m)
                 .HasAnnotation("Relational:DefaultConstraintName", "DF__InvoiceMa__Total__5090EFD7")

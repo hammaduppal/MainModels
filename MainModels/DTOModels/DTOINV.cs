@@ -59,6 +59,7 @@ namespace MainModels.DTOModels
     {
         public Guid ProductId { get; set; }
         public string? ProductName { get; set; }
+        public bool UseAiDescription { get; set; }
         public string? ProductDescription { get; set; }
         public string AdditionalInformation { get; set; }
         public decimal? Qoh { get; set; }
@@ -237,6 +238,7 @@ namespace MainModels.DTOModels
         public DateTime? ModifiedOn { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
+        public List<UomsubVM> subUom { get; set; }
     }
 
     public partial class UomsubVM
@@ -320,7 +322,7 @@ namespace MainModels.DTOModels
         public Guid? CustomerId { get; set; }
         public Guid? ServingTableId { get; set; }
         public int? EmployeeId { get; set; }
-
+        public short TillNo { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal? DiscountAmount { get; set; }
         public decimal? TotalTax { get; set; }
@@ -387,7 +389,7 @@ namespace MainModels.DTOModels
         public Guid? SubUomId { get; set; }
         public decimal? Discount { get; set; }
         public string Remarks { get; set; }
-
+        public decimal? Cost { get; set; }
         public virtual InvoiceMasterVM InvoiceMaster { get; set; }
         public virtual ProductVM Product { get; set; }
         public virtual ProductVariantVM Variant { get; set; }

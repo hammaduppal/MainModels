@@ -56,6 +56,8 @@ namespace MainModels.DTOModels
         public List<UomVM>? UOMs { get; set; }
         public List<OrderMasterVM>? OrderMaster { get; set; }
         public List<InvoiceMasterVM>? Invoices { get; set; }
+        public InvoiceMasterVM? Invoice { get; set; }
+
 
         public OrderMasterVM Order { get; set; }
 
@@ -101,7 +103,7 @@ namespace MainModels.DTOModels
         public string CompanyCode { get; set; }
         public string BranchId { get; set; }
         public int DecimalPoint { get; set; }
-
+        public int AllowedTills { get; set; }
 
     }
     public class UploadImage()
