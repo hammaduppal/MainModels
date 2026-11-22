@@ -75,6 +75,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Business].[BranchLicenses]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Business].[BusinessCategory]",
          "ObjectType": 0
       },
@@ -403,10 +407,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[SYSTEM].[ClientLicenses]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[SYSTEM].[CMSSettings]",
          "ObjectType": 0
       },
@@ -432,10 +432,6 @@
       },
       {
          "Name": "[SYSTEM].[Roles]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[SYSTEM].[ServiceLicense]",
          "ObjectType": 0
       },
       {
